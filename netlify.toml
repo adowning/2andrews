@@ -1,0 +1,26 @@
+# COMMENT: These are two basic redirect rules
+# COMMENT: This is an abbreviated syntax for rules that fit in one line
+redirects = [
+  {from = "/callback", to = "/index.html", status = 200, force=true},
+  {from = "/hardware", to = "/index.html", status = 200, force=true}]
+
+# COMMENT: These are two rules with all the fields expanded
+# COMMENT: This is an expanded syntax for rules that won't fit in one line
+# [[redirects]]
+#   from = "/old-path"
+#   to = "/new-path"
+#   status = 301
+#   force = false
+#   query = {path = ":path"} # COMMENT: apply this rule for /old-path?path=example
+#   conditions = {Language = "en", Country = "US"}
+
+# [[redirects]]
+#   from = "/callback"
+#   to = "/index.html"
+#   status = 200
+#   force = true # COMMENT: ensure that we always redirect
+
+[build]
+  Command = "yarn build"
+  Functions = "lambda"
+  Publish = "dist"

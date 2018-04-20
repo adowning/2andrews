@@ -1,0 +1,71 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './components/Home.vue'
+import SignIn from '@/components/auth/Signin'
+import Register from '@/components/auth/Register'
+import Registered from '@/components/auth/Registered'
+import Forgot from '@/components/auth/Forgot'
+import Confirm from '@/components/auth/Confirm'
+import Changed from '@/components/auth/Changed'
+import Profile from '@/components/Profile/Index'
+import Schedule from '@/components/Schedule'
+import Hardware from '@/components/Hardware'
+// import EmployeeApplication from '@/components/people/employeeApplication'
+import { store } from './store/'
+
+Vue.use(Router)
+
+const router = new Router({
+  routes: [
+    { path: '/', redirect: '/home' },
+    { path: '/home', name: 'Home', component: Home },
+    { path: '/signin', name: 'SignIn', component: SignIn },
+    { path: '/register', name: 'Register', component: Register },
+    { path: '/registered', name: 'Registered', component: Registered },
+    { path: '/forgot', name: 'Forgot', component: Forgot },
+    { path: '/confirm', name: 'Confirm', component: Confirm },
+    { path: '/changed', name: 'Changed', component: Changed },
+    { path: '/profile', name: 'Profile', component: Profile },
+    { path: '/schedule', name: 'Schedule', component: Schedule },
+    { path: '/hardware', name: 'Hardware', component: Hardware },
+    // { path: '/employeeApplication', name: 'EmployeeApplication', component: EmployeeApplication },
+  ],
+  mode: 'history'
+})
+router.beforeEach((to, from, next) => {
+  if(to.path == '/signin') next()
+  const currentUser = store.state.username
+  console.log(currentUser +' going to '+to.path) 
+  if (!currentUser && to.path != '/register') {
+    next('/signin')
+  } else {
+    next()
+  }
+})
+
+// router.beforeEach((to, from, next) => {
+//   console.log(store)
+//   const currentUser = store.state.user
+//   if (!currentUser) {
+//     next('/signin')
+//   } else if (currentUser) {
+//     next()
+//   } else {
+//     next()
+//   }
+// })
+export default router
+// export default new Router({
+//   routes: [
+//     { path: '/', redirect: '/home' },
+//     { path: '/home', name: 'Home', component: Home },
+//     { path: '/signin', name: 'SignIn', component: SignIn },
+//     { path: '/register', name: 'Register', component: Register },
+//     { path: '/registered', name: 'Registered', component: Registered },
+//     { path: '/forgot', name: 'Forgot', component: Forgot },
+//     { path: '/confirm', name: 'Confirm', component: Confirm },
+//     { path: '/changed', name: 'Changed', component: Changed },
+//     { path: '/profile', name: 'Profile', component: Profile }
+//   ],
+//   mode: 'history'
+// })
