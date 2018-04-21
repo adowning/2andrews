@@ -1,154 +1,84 @@
 <template>
   <div>
-    <div>
-      <v-tabs 
-        v-model="active"
-        class="pa-3"
-        color="accent"
-        dark
-        slider-color="primary"
-      >
-        <v-tab 
-          href="#tab-1" 
-          class="mr-4">
-          Manual
-          <v-icon>build</v-icon>
+    <v-tabs v-model="active" class="pa-3" color="accent" dark slider-color="primary">
+      <v-tab href="#tab-1" class="mr-4">
+        Manual
+        <v-icon>build</v-icon>
 
-        </v-tab>
-        <v-tab href="#tab-2">
-          Scan
-          <v-icon>line_style</v-icon>
-        </v-tab>
-        <v-tab-item id="tab-1">
-          <v-data-table
-            :headers="headers"
-            :items="items"
-            hide-actions
-            class="elevation-1"
-          >
-            <template 
-              slot="items" 
-              slot-scope="props">
-              <td>{{ props.item.id }}
-              </td><td>{{ props.item.asset_tag }}</td>
-              <td class="text-xs-right">{{ props.item.category }}</td>
-              <td class="text-xs-right">{{ props.item.model }}</td>
-              <td class="text-xs-right">{{ props.item.status_label }}</td>
-              <td class="text-xs-right">{{ props.item.assigned_to }}</td>
-              <td class="text-xs-right">{{ props.item.location }}</td>
-              <td class="justify-center layout px-0">
-                <v-btn 
-                  v-if="!props.item.assigned_to" 
-                  color="primary" 
-                  small 
-                  outline 
-                  @click="checkOut(props.item, props.assigned_to)">
-            <!-- <v-icon color="success">edit</v-icon>
-             --> CheckOut
-                </v-btn>
-                <v-btn 
-                  v-if="props.item.assigned_to" 
-                  color="warning" 
-                  small 
-                  outline 
-                  @click="checkIn(props.item, props.item.assigned_to)">
-                  <!-- <v-icon color="warning">edit</v-icon> -->
-                  CheckIn
-                </v-btn>
-              </td>
-            </template>
-            <template slot="no-data">
-              <v-progress-circular 
-                v-show="loading" 
-                :size="100" 
-                indeterminate 
-                color="primary"/>
-            </template>
-          </v-data-table>
+      </v-tab>
+      <v-tab href="#tab-2">
+        Scan
+        <v-icon>line_style</v-icon>
+      </v-tab>
+      <v-tab-item id="tab-1">
+        <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.id }}
+            </td>
+            <td>{{ props.item.asset_tag }}</td>
+            <td class="text-xs-right">{{ props.item.category }}</td>
+            <td class="text-xs-right">{{ props.item.model }}</td>
+            <td class="text-xs-right">{{ props.item.status_label }}</td>
+            <td class="text-xs-right">{{ props.item.assigned_to }}</td>
+            <td class="text-xs-right">{{ props.item.location }}</td>
+            <td class="justify-center layout px-0">
+              <v-btn v-if="!props.item.assigned_to" color="primary" small outline @click="checkOut(props.item, props.assigned_to)">
+                <!-- <v-icon color="success">edit</v-icon>
+             -->CheckOut
+              </v-btn>
+              <v-btn v-if="props.item.assigned_to" color="warning" small outline @click="checkIn(props.item, props.item.assigned_to)">
+                <!-- <v-icon color="warning">edit</v-icon> -->
+                CheckIn
+              </v-btn>
+            </td>
+          </template>
+          <template slot="no-data">
+            <v-progress-circular v-show="loading" :size="100" indeterminate color="primary" />
+          </template>
+        </v-data-table>
 
+      </v-tab-item>
+      <v-tab-item id="tab-2">
+        <v-progress-circular v-show="loading" :size="100" indeterminate color="primary" />
+        <v-layout v-show="!loading" row>
 
+          <v-flex xs6 1>
+            <v-card>
 
+              <qrcode-reader :active="active" @init="onInit" @decode="onDecode">
+                <b>{{ overlay }}</b>
+              </qrcode-reader>
+            </v-card>
+          </v-flex>
+          <v-flex xs6 2>
 
-        </v-tab-item>
-        <v-tab-item id="tab-2">
-          <v-progress-circular 
-            v-show="loading" 
-            :size="100" 
-            indeterminate 
-            color="primary"/>
-          <v-layout 
-            v-show="!loading" 
-            row>
+            <v-data-table v-model="selected" :items="qrItems" :headers="headers" hide-headers hide-actions class="elevation-1" item-key="id">
+              <template slot="items" slot-scope="props">
+                <tr v-if="props.item.search" :active="props.selected" @click="props.selected = !props.selected">
 
-            <v-flex 
-              xs6 
-              1>
-              <v-card >
+                  <td>
+                    <v-checkbox v-model="props.selected" primary hide-details />
+                  </td>
+                  <td>{{ props.item.asset_tag }}</td>
 
-                <qrcode-reader 
-                  @init="onInit" 
-                  @decode="onDecode">
-                  <b>{{ overlay }}</b>
-                </qrcode-reader>
-              </v-card>
-            </v-flex>
-            <v-flex 
-              xs6 
-              2>
+                  <td class="text-xs-right">{{ props.item.model }}</td>
 
-              <v-data-table
-                v-model="selected"
-                :items="qrItems"
-                :headers="headers"
-                hide-headers
-                hide-actions
-                class="elevation-1"
-                item-key="id"
-              >
-                <template 
-                  slot="items" 
-                  slot-scope="props" >
-                  <tr 
-                    v-if="props.item.search" 
-                    :active="props.selected" 
-                    @click="props.selected = !props.selected">
+                  <td class="text-xs-right">{{ props.item.location }}</td>
+                </tr>
+              </template>
+              <template slot="no-data">
+                Use QR scanner to select items
+              </template>
+            </v-data-table>
+            <v-btn color="primary" @click="submit">Submit</v-btn>
+          </v-flex>
 
-                    <td>
-                      <v-checkbox
-                        v-model="props.selected"
-                        primary
-                        hide-details
-                      />
-                    </td>
-                    <td>{{ props.item.asset_tag }}</td>
-
-                    <td class="text-xs-right">{{ props.item.model }}</td>
-
-                    <td class="text-xs-right">{{ props.item.location }}</td>
-                  </tr>
-                </template>
-                <template slot="no-data">
-                  Use QR scanner to select items
-                </template>
-              </v-data-table>
-              <v-btn 
-                color="primary" 
-                @click="submit">Submit</v-btn>
-            </v-flex>
-
-          </v-layout>
-          <v-alert
-            :value="alert"
-            type="warning"
-            transition="scale-transition"
-          >
-            {{ alert }}
-          </v-alert>
-        </v-tab-item>
-      </v-tabs>
-
-    </div>
-
+        </v-layout>
+        <v-alert :value="alert" type="warning" transition="scale-transition">
+          {{ alert }}
+        </v-alert>
+      </v-tab-item>
+    </v-tabs>
   </div>
 </template>
 <script>
@@ -164,7 +94,7 @@ export default {
     text:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     loading: true,
-    selectedTab: 'tab-1',
+    selectedTab: '',
     overlay: '',
     multipleSelect: [],
     userId: {},
@@ -227,23 +157,27 @@ export default {
     items: []
   }),
   computed: {
-    user () {
+    user() {
       return this.$store.getters.user
     },
-    error () {
+    error() {
       return this.$store.getters.error
     }
   },
   watch: {
-    user (value) {
+    user(value) {
       console.log(value)
       if (value === null || value === undefined) {
         // this.$router.push('/profile')
         console.log('lost user')
       }
+    },
+    selectedTab(value) {
+      console.log(value)
+      console.log(this.selectedTab)
     }
   },
-  mounted () {
+  mounted() {
     // once mounted, we need to trigger the initial server data fetch
     this.request({
       pagination: this.serverPagination,
@@ -251,11 +185,11 @@ export default {
     })
   },
   methods: {
-    checkedOutList () {
+    checkedOutList() {
       console.log('hi')
       return []
     },
-    async submit () {
+    async submit() {
       console.log(this.selected)
       var contents = {}
       for (let item of this.selected) {
@@ -263,24 +197,24 @@ export default {
         console.log(contents)
       }
     },
-    remove () {
+    remove() {
       console.log(this.selected)
     },
-    next () {
+    next() {
       const active = parseInt(this.active)
       this.active = (active < 2 ? active + 1 : 0).toString()
     },
-    selectThirdTab () {
+    selectThirdTab() {
       this.selectedTab = 'tab-3'
     },
-    onDecode (content) {
+    onDecode(content) {
       this.updateCheckOutList(content)
     },
 
-    onLocate (points) {
+    onLocate(points) {
       console.log(points)
     },
-    updateCheckOutList (url) {
+    updateCheckOutList(url) {
       this.alert = ''
       if (this.loading) {
         return
@@ -313,7 +247,7 @@ export default {
         }
       }
     },
-    async onInit (promise) {
+    async onInit(promise) {
       // show loading indicator
 
       this.loading = true
@@ -336,11 +270,10 @@ export default {
         }
       } finally {
         // hide loading indicator
-        console.log(this.loading)
         this.loading = false
       }
     },
-    checkIn (assetId, assigned_to) {
+    checkIn(assetId, assigned_to) {
       this.items = []
       this.qrItems = []
       this.idList = []
@@ -364,7 +297,7 @@ export default {
           console.log(e)
         })
     },
-    async checkOut (assetId, assigned_to) {
+    async checkOut(assetId, assigned_to) {
       this.idList = []
       this.qrItems = []
       this.loading = true
@@ -391,7 +324,7 @@ export default {
           //     assigned_asset: assId
           //   })
           .then(response => {
-          console.log(response)            
+            console.log(response)
             this.$router.go(this.$router.currentRoute)
             // this.selected = null
             // this.request({
@@ -410,7 +343,7 @@ export default {
         this.loading = false
       }
     },
-    request ({ pagination, filter, list }) {
+    request({ pagination, filter, list }) {
       this.loading = true
       if (list == 'qr') {
         this.qrItems = []
@@ -430,7 +363,7 @@ export default {
       console.log(process.env.LAMBDA_API)
       //  this.$http.get('http://localhost:9000/hello').then(result => {console.log(result)})
       this.$http
-      //eslint-disable-next-line      
+        //eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getHardware')
         .then(response => {
           this.serverPagination = pagination
@@ -450,9 +383,7 @@ export default {
               item.assigned_to = item.assigned_to.name
             }
             item.checky = 'xxx'
-            console.log('pushing to ... ')
             if (!filter) {
-              console.log('items')
               this.items.push(item)
             } else {
               for (let id of filter) {
@@ -476,7 +407,7 @@ export default {
           this.loading = false
         })
     }
-  },
+  }
 }
 </script>
 <style scoped>

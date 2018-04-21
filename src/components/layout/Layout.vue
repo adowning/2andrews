@@ -470,3 +470,8 @@ export default {
   }
 }
 </script>
+<style>
+.list__tile {
+  height: 34px;
+}
+</style>

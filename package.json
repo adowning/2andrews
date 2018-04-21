@@ -13,8 +13,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build:stats": "webpack --env production --json > stats.json",
-    "build": "node build/build.js --profile --progress"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "@capacitor/cli": "^1.0.0-alpha.34",

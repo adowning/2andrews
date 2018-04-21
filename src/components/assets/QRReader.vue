@@ -26,10 +26,15 @@ export default {
     videoConstraints: {
       type: [Object, Boolean],
       default: () => ({}) // empty object
-    }
+    },
+    active: { type: String, default: 'tab-1' }
   },
-  data () {
+  data() {
     return {
+      activated: {
+        type: [Object, Boolean],
+        default: false // empty object
+      },
       // current video stream instance returned by `getUserMedia`
       stream: null,
       // absolute resolution of the current video stream
@@ -47,33 +52,40 @@ export default {
     }
   },
   computed: {
+    //eslint-disable-next-line
+    // active(x) {
+    //   console.log(this.active)
+    //   console.log(x)
+
+    //   return this.active
+    // },
     /**
      * Conditions applying for both locating and decoding, joined in a single
      * computed property.
      */
-    shouldScan () {
-      return !this.paused && this.streamLoaded
+    shouldScan() {
+      return !this.paused && this.streamLoaded && this.activated
     },
     /**
      * QR codes should only be actively decoded if the parent component has an
      * event listener registered. Otherwise the rather expensive decoding
      * operation is continuously executed for nothing.
      */
-    shouldDecode () {
+    shouldDecode() {
       return this.shouldScan && this.$listeners.decode !== undefined
     },
     /**
      * Just like with `this.shouldDecode`, locating is not allowed when the
      * parent component has no event listener registered.
      */
-    shouldLocate () {
+    shouldLocate() {
       return this.shouldScan && this.$listeners.locate !== undefined
     },
     /**
      * Full constraints object which is passed to `getUserMedia` to request a
      * camera stream. Properties define if a certain camera is adequate or not.
      */
-    constraints () {
+    constraints() {
       let withDefaults
       if (isBoolean(this.videoConstraints)) {
         withDefaults = this.videoConstraints
@@ -95,11 +107,18 @@ export default {
      * methods expect parameters in this form and order. This is a nice little
      * helper to pass those values with the spread operator.
      */
-    streamBounds () {
+    streamBounds() {
       return [0, 0, this.streamWidth, this.streamHeight]
     }
   },
   watch: {
+    active() {
+      this.activated = false
+      if (this.active == 'tab-2') {
+        console.log(this.active)
+        this.activated = true
+      }
+    },
     /**
      * Propagate new decoding results to parent component. Since holding a
      * camera for a few seconds over a QR code, produces the same result
@@ -108,7 +127,7 @@ export default {
      * un-paused, decodeResult is set to null (see #8). Null values are never
      * emitted though.
      */
-    decodeResult (newValue) {
+    decodeResult(newValue) {
       if (newValue !== null) {
         this.$emit('decode', newValue)
       }
@@ -121,14 +140,14 @@ export default {
      * nearly each scanned frame anyway. While no QR code is detected though,
      * this makes sure that empty results are only emitted once.
      */
-    locateResult (newValue) {
+    locateResult(newValue) {
       this.$emit('locate', newValue)
     },
     /**
      * Automatically freezes the video stream when conditions for the scanning
      * process are not fullfilled anymore.
      */
-    shouldScan (shouldScan) {
+    shouldScan(shouldScan) {
       if (shouldScan) {
         this.$refs.video.play()
       } else {
@@ -140,7 +159,7 @@ export default {
      * fullfilled. The process stops itself automatically when the conditions
      * are not fullfilled anymore.
      */
-    shouldDecode (shouldDecode) {
+    shouldDecode(shouldDecode) {
       if (shouldDecode) {
         this.keepDecoding()
       }
@@ -150,7 +169,7 @@ export default {
      * fullfilled. The process stops itself automatically when the conditions
      * are not fullfilled anymore.
      */
-    shouldLocate (shouldLocate) {
+    shouldLocate(shouldLocate) {
       if (shouldLocate) {
         this.keepLocating()
       }
@@ -161,7 +180,7 @@ export default {
      * actually not frozen anymore. Otherwise the last frame from before
      * pausing would be rescanned.
      */
-    paused (newValue) {
+    paused(newValue) {
       if (newValue === false) {
         const resetDecodeResult = () => {
           this.decodeResult = null
@@ -176,7 +195,7 @@ export default {
      */
     constraints: {
       deep: true,
-      handler () {
+      handler() {
         this.$emit('init', this.startCamera())
       }
     }
@@ -186,15 +205,16 @@ export default {
    * is mounted. This can't be done in earlier livecycle hooks because it
    * requires the video and canvas element to be rendered already.
    */
-  mounted () {
+  mounted() {
     this.$emit('init', this.startCamera())
+    console.log(this.active)
   },
   /**
    * If the camera is not released before the component is destroyed, browsers
    * will indicate that it's still in use and it might be blocked for other
    * applications.
    */
-  beforeDestroy () {
+  beforeDestroy() {
     this.stopCamera()
   },
   methods: {
@@ -243,7 +263,7 @@ export default {
     /**
      * Releases the current camera stream and resets related instance properties.
      */
-    stopCamera () {
+    stopCamera() {
       this.streamLoaded = false
       if (this.stream !== null) {
         this.stream.getTracks().forEach(track => track.stop())
@@ -258,7 +278,7 @@ export default {
      * step is necessary because it's not possible to read image data from a
      * video element directly.
      */
-    captureFrame () {
+    captureFrame() {
       this.canvasContext.drawImage(this.$refs.video, ...this.streamBounds)
       return this.canvasContext.getImageData(...this.streamBounds)
     },
@@ -266,7 +286,7 @@ export default {
      * Continuously extracts frames from camera stream and tries to decode
      * potentially pictured QR codes.
      */
-    keepDecoding () {
+    keepDecoding() {
       if (this.shouldDecode) {
         const imageData = this.captureFrame()
         window.requestAnimationFrame(() => {
@@ -287,7 +307,7 @@ export default {
      * video element is responsive and scales with space available. Therefore
      * the coordinates are re-calculated to be relative to the video element.
      */
-    keepLocating () {
+    keepLocating() {
       if (this.shouldLocate) {
         const imageData = this.captureFrame()
         window.requestAnimationFrame(() => {
