@@ -8,7 +8,7 @@ const snipeit = axios.create( {
   }
 } )
 exports.handler = ( event, context, callback ) => {
-  snipeit.get( 'http://47.219.112.177:83/api/v1/hardware' ).then( data => {
+  snipeit.get( 'http://47.219.112.177:83/api/v1/consumables' ).then( data => {
     var cache = [];
     var x = JSON.stringify( data.data, function ( key, value ) {
       if ( typeof value === 'object' && value !== null ) {

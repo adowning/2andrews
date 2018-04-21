@@ -21,14 +21,14 @@ import store from './store/'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-Vue.use(VueAxios, axios)
+Vue.use( VueAxios, axios )
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
-Vue.use(Vuetify, {
+Vue.use( Vuetify, {
   theme: {
     // primary: '#1976D2',
-    
+
     primary: '#3FBA84',
     secondary: '#424242',
     accent: '#82B1FF',
@@ -44,30 +44,32 @@ Vue.use(Vuetify, {
     // success: '#4CAF50',
     // warning: '#FFC107'
   }
-})
+} )
 
 Vue.config.productionTip = false
 
 // Vue.component('app-layout', AppLayout)
-Vue.component('app-layout', function (resolve) {
-//eslint-disable-next-line
-  require(['./components/layout/Layout.vue'],resolve)
-  })
-Vue.component('app-home', AppHome)
-Vue.component('app-signin', AppSignin)
-Vue.component('app-register', AppRegister)
-Vue.component('app-registered', AppRegistered)
-Vue.component('app-forgot', AppForgot)
-Vue.component('app-confirm', AppConfirm)
-Vue.component('app-changed', AppChanged)
-Vue.component('app-profile', AppProfile)
+Vue.component( 'app-layout', function ( resolve ) {
+  //eslint-disable-next-line
+  require( [ './components/layout/Layout.vue' ], resolve )
+} )
+Vue.component( 'app-home', AppHome )
+Vue.component( 'app-signin', AppSignin )
+Vue.component( 'app-register', AppRegister )
+Vue.component( 'app-registered', AppRegistered )
+Vue.component( 'app-forgot', AppForgot )
+Vue.component( 'app-confirm', AppConfirm )
+Vue.component( 'app-changed', AppChanged )
+Vue.component( 'app-profile', AppProfile )
 
 
 /* eslint-disable no-new */
-new Vue({
+new Vue( {
   el: '#app',
   router,
   store,
-  components: { App },
-  render: h => h(App)
-})
+  components: {
+    App
+  },
+  render: h => h( App )
+} )

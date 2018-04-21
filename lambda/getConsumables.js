@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 115);
+/******/ 	return __webpack_require__(__webpack_require__.s = 114);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4528,8 +4528,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 114 */,
-/* 115 */
+/* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4550,7 +4549,7 @@ var snipeit = axios.create({
   }
 });
 exports.handler = function (event, context, callback) {
-  snipeit.get('http://47.219.112.177:83/api/v1/hardware').then(function (data) {
+  snipeit.get('http://47.219.112.177:83/api/v1/consumables').then(function (data) {
     var cache = [];
     var x = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify___default()(data.data, function (key, value) {
       if ((typeof value === 'undefined' ? 'undefined' : __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default()(value)) === 'object' && value !== null) {

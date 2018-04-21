@@ -1,51 +1,53 @@
 <template>
-  <v-container>
-    <div>
-      <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" disabled color="primary" dark class="mb-2">New Item</v-btn>
-        <v-card>
-          <v-card-title>
-            <!-- <span class="headline">{{ formTitle }}</span> -->
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-layout wrap>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="editedItem.amt" label="Dessert name" />
-                </v-flex>
+  <div>
+    <v-container>
+      <div>
+        <v-dialog v-model="dialog" max-width="500px">
+          <v-btn slot="activator" disabled color="primary" dark class="mb-2">New Item</v-btn>
+          <v-card>
+            <v-card-title>
+              <!-- <span class="headline">{{ formTitle }}</span> -->
+            </v-card-title>
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.amt" label="Dessert name" />
+                  </v-flex>
 
-              </v-layout>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
-        <template slot="items" slot-scope="props">
-          <td>{{ props.item.name }}</td>
-          <td class="text-xs-right">{{ props.item.category.name }}</td>
-          <td class="text-xs-right">{{ props.item.qty }}</td>
-          <td class="text-xs-right">{{ props.item.remaining }}</td>
-          <td class="text-xs-right">{{ props.item.min_amt }}</td>
-          <td class="text-xs-right">{{ props.item.location.name }}</td>
-          <td class="justify-center layout px-0">
-            <v-btn v-if="!props.item.assigned_to" disabled color="primary" small outline @click="checkOut(props.item)">
-              Take
-            </v-btn>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer/>
+              <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.name }}</td>
+            <td class="text-xs-right">{{ props.item.category.name }}</td>
+            <td class="text-xs-right">{{ props.item.qty }}</td>
+            <td class="text-xs-right">{{ props.item.remaining }}</td>
+            <td class="text-xs-right">{{ props.item.min_amt }}</td>
+            <td class="text-xs-right">{{ props.item.location.name }}</td>
+            <td class="justify-center layout px-0">
+              <v-btn v-if="!props.item.assigned_to" disabled color="primary" small outline @click="checkOut(props.item)">
+                Take
+              </v-btn>
 
-          </td>
-        </template>
-        <template slot="no-data" />
-      </v-data-table>
-      <v-alert :value="true" type="warning">
-        I had to remove the ability to edit these so the "take" button is disabled
-      </v-alert>
-    </div>
-  </v-container>
+            </td>
+          </template>
+          <div slot="no-data" />
+        </v-data-table>
+        <v-alert :value="true" type="warning">
+          I had to remove the ability to edit these so the "take" button is disabled
+        </v-alert>
+      </div>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -107,7 +109,11 @@ export default {
         // name: 'location',
         value: 'location'
       },
-      { text: 'Actions', value: 'name', sortable: false }
+      {
+        text: 'Actions',
+        value: 'name',
+        sortable: false
+      }
     ],
     items: []
   }),
@@ -135,9 +141,6 @@ export default {
       pagination: this.serverPagination,
       filter: this.filter
     })
-  },
-  created() {
-    // this.initialize()
   },
   methods: {
     initialize() {},
@@ -206,9 +209,9 @@ export default {
     request({ pagination, filter }) {
       console.log('updating', pagination, filter)
       this.loading = true
-
       this.$http
-        .get('http://47.219.112.177:1880/api/snipeit/consumables')
+        //eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/getConsumables')
         .then(({ data }) => {
           console.log(data.rows)
           // this.serverPagination = pagination
