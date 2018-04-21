@@ -1,155 +1,190 @@
 <template>
-<v-container fill-height justify-center align-center >
-  <!-- <v-layout row > -->
+  <v-container
+    fill-height
+    justify-center
+    align-center >
+    <!-- <v-layout row > -->
     <template v-if="!humanityEmployee">
-    <v-flex xs12 sm3>
-      <!-- <h1> &nbsp</h1> -->
-      <v-card class="mt-0 pt-0">
+      <v-flex
+        xs12
+        sm3>
+        <!-- <h1> &nbsp</h1> -->
+        <v-card class="mt-0 pt-0">
           <v-card-title class="blue darken-1">
             <h4 style="color:white">Andrews</h4>
           </v-card-title>
           <v-card-text>
-              <form @submit.prevent="login">
-                <v-layout row>
-                  <v-flex xs4>
-                    <v-subheader>Humanity ID</v-subheader>
-                  </v-flex>
-                  <v-flex xs8>
-                    <v-text-field class="input-group--focused" name="humanityID" v-model="humanityID" label="Humanity ID" value="1444044"></v-text-field>
-                  </v-flex>
-                </v-layout>
+            <form @submit.prevent="login">
+              <v-layout row>
+                <v-flex xs4>
+                  <v-subheader>Humanity ID</v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                  <v-text-field
+                    v-model="humanityID"
+                    class="input-group--focused"
+                    name="humanityID"
+                    label="Humanity ID"
+                    value="1444044"/>
+                </v-flex>
+              </v-layout>
 
-                <v-btn @click.native="verifyHumanity">Submit</v-btn>
-                <v-snackbar v-if="error" :timeout="timeout" :top="true" :multi-line="mode === 'multi-line'" :vertical="mode === 'vertical'" v-model="error">
-                  {{ text }}
-                  <v-btn class="pink--text" flat @click.native="error = false">Close</v-btn>
-                </v-snackbar>
-              </form>
-        </v-card-text>
-      </v-card>
-    </v-flex>
-     <v-flex v-if="loggedIn" xs12 sm3>
-      <!-- <h1> &nbsp</h1> -->
-      <v-card class="mt-0 pt-0">
+              <v-btn @click.native="verifyHumanity">Submit</v-btn>
+              <v-snackbar
+                v-if="error"
+                :timeout="timeout"
+                :top="true"
+                :multi-line="mode === 'multi-line'"
+                :vertical="mode === 'vertical'"
+                v-model="error">
+                {{ text }}
+                <v-btn
+                  class="pink--text"
+                  flat
+                  @click.native="error = false">Close</v-btn>
+              </v-snackbar>
+            </form>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex
+        v-if="loggedIn"
+        xs12
+        sm3>
+        <!-- <h1> &nbsp</h1> -->
+        <v-card class="mt-0 pt-0">
           <v-card-title class="blue darken-1">
             <h4 style="color:white">Vue-CRM</h4>
           </v-card-title>
           <v-card-text>
-             You are already logged in
-        </v-card-text>
-      </v-card>
-    </v-flex>
-  </template>
-  <template v-else>
-    <v-layout row wrap justify-center>
-     <v-layout justify-center>
-    <v-flex xs12 sm10 md8 lg6>
-      <v-card ref="form">
-        <v-card-text>
-          <v-text-field
-            label="Full Name"
-            placeholder="John Doe"
-            v-model="humanityEmployee.name"
-            required
-            ref="name"
-            :rules="[() => !!humanityEmployee.name || 'This field is required']"
-            :error-messages="errorMessages"
-          ></v-text-field>
-             <v-text-field
-            label="Cell Phone"
-            required
-            type="tel"
-            :rules="[() => !!humanityEmployee.cell_phone || 'This field is required']"
-            v-model="humanityEmployee.cell_phone"
-            ref="cell_phone"
-          ></v-text-field>
-          <v-text-field
-            label="Address Line"
-            placeholder="Snowy Rock Pl"
-            :rules="[
-              () => !!humanityEmployee.address || 'This field is required',
-              () => !!humanityEmployee.address && humanityEmployee.address.length <= 25 || 'Address must be less than 25 characters'
-            ]"
-            v-model="humanityEmployee.address"
-            ref="address"
-            counter="25"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="City"
-            placeholder="Tyler"
-            :rules="[() => !!humanityEmployee.city || 'This field is required']"
-            v-model="humanityEmployee.city"
-            ref="city"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="State/Province/Region"
-            v-model="humanityEmployee.state"
-            :rules="[() => !!humanityEmployee.state || 'This field is required']"
-            required
-            ref="state"
-            placeholder="TX"
-          ></v-text-field>
-          <v-text-field
-            label="ZIP / Postal Code"
-            required
-            :rules="[() => !!humanityEmployee.zip || 'This field is required']"
-            v-model="humanityEmployee.zip"
-            ref="zip"
-            placeholder="75701"
-          ></v-text-field>
+            You are already logged in
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </template>
+    <template v-else>
+      <v-layout
+        row
+        wrap
+        justify-center>
+        <v-layout justify-center>
+          <v-flex
+            xs12
+            sm10
+            md8
+            lg6>
+            <v-card ref="form">
+              <v-card-text>
+                <v-text-field
+                  ref="name"
+                  v-model="humanityEmployee.name"
+                  :rules="[() => !!humanityEmployee.name || 'This field is required']"
+                  :error-messages="errorMessages"
+                  label="Full Name"
+                  placeholder="John Doe"
+                  required
+                />
+                <v-text-field
+                  ref="cell_phone"
+                  :rules="[() => !!humanityEmployee.cell_phone || 'This field is required']"
+                  v-model="humanityEmployee.cell_phone"
+                  label="Cell Phone"
+                  required
+                  type="tel"
+                />
+                <v-text-field
+                  ref="address"
+                  :rules="[
+                    () => !!humanityEmployee.address || 'This field is required',
+                    () => !!humanityEmployee.address && humanityEmployee.address.length <= 25 || 'Address must be less than 25 characters'
+                  ]"
+                  v-model="humanityEmployee.address"
+                  label="Address Line"
+                  placeholder="Snowy Rock Pl"
+                  counter="25"
+                  required
+                />
+                <v-text-field
+                  ref="city"
+                  :rules="[() => !!humanityEmployee.city || 'This field is required']"
+                  v-model="humanityEmployee.city"
+                  label="City"
+                  placeholder="Tyler"
+                  required
+                />
+                <v-text-field
+                  ref="state"
+                  v-model="humanityEmployee.state"
+                  :rules="[() => !!humanityEmployee.state || 'This field is required']"
+                  label="State/Province/Region"
+                  required
+                  placeholder="TX"
+                />
+                <v-text-field
+                  ref="zip"
+                  :rules="[() => !!humanityEmployee.zip || 'This field is required']"
+                  v-model="humanityEmployee.zip"
+                  label="ZIP / Postal Code"
+                  required
+                  placeholder="75701"
+                />
 
-              <img
-      :src="src"
-      :style="pickerStyle.img"
-      v-on:error="imageError"
-    /><br>
+                <img
+                  :src="src"
+                  :style="pickerStyle.img"
+                  @error="imageError"
+                ><br>
 
-              <input
-      title="Picture"
-      type="file" accept="image/*"
-      :style="pickerStyle.input"
-      v-on:change="pick"
-    >
-    </div>
-        </v-card-text>
-         <v-alert :value="true" type="info">Username: {{newLogin}} Password: Andrews1</v-alert>
+                <input
+                  :style="pickerStyle.input"
+                  title="Picture"
+                  type="file"
+                  accept="image/*"
+                  @change="pick"
+                >
+              </v-card-text>
+              <v-alert
+                :value="true"
+                type="info">Username: {{ newLogin }} Password: Andrews1</v-alert>
 
-        <v-divider class="mt-5"></v-divider>
-        <v-card-actions>
+              <v-divider class="mt-5"/>
+              <v-card-actions>
 
-          <v-btn flat>Cancel</v-btn>
-          <v-spacer></v-spacer>
-          <v-slide-x-reverse-transition>
-            <v-tooltip
-              left
-              v-if="formHasErrors"
-            >
-              <v-btn
-                icon
-                @click="resetForm"
-                slot="activator"
-                class="my-0"
-              >
-                <v-icon>refresh</v-icon>
-              </v-btn>
-              <span>Refresh form</span>
-            </v-tooltip>
-          </v-slide-x-reverse-transition>
-          <v-btn color="primary" flat :disabled="disabled" @click="submit">Submit</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
-    </v-layout>
-</template>
+                <v-btn flat>Cancel</v-btn>
+                <v-spacer/>
+                <v-slide-x-reverse-transition>
+                  <v-tooltip
+                    v-if="formHasErrors"
+                    left
+                  >
+                    <v-btn
+                      slot="activator"
+                      icon
+                      class="my-0"
+                      @click="resetForm"
+                    >
+                      <v-icon>refresh</v-icon>
+                    </v-btn>
+                    <span>Refresh form</span>
+                  </v-tooltip>
+                </v-slide-x-reverse-transition>
+                <v-btn
+                  :disabled="disabled"
+                  color="primary"
+                  flat
+                  @click="submit">Submit</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-layout>
+    </template>
   </v-container>
 </template>
 <script>
 import auth from '../utils/auth'
-import humanity from '../utils/humanity-api'
-const Parse = require('parse')
+// import humanity from '../utils/humanity-api'
+// const Parse = require('parse')
 import { Auth, Storage } from 'aws-amplify'
 import AmplifyTheme from '../amplify/AmplifyTheme'
 // const userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
@@ -182,7 +217,7 @@ const pickerStyle = {
 }
 
 export default {
-  data() {
+  data () {
     return {
       username: 'ash',
       photoUpdated: false,
@@ -210,7 +245,7 @@ export default {
     }
   },
   computed: {
-    disabled: function() {
+    disabled: function () {
       if (!this.humanityEmployee.cell_phone) {
         return true
       }
@@ -230,29 +265,30 @@ export default {
       }
     },
 
-    newLogin: function() {
+    newLogin: function () {
       if (this.humanityEmployee) {
         return (this.humanityEmployee.firstname.charAt(0) + '.' + this.humanityEmployee.lastname).toLowerCase()
       }
     },
-    form() {
+    form () {
       return this.humanityEmployee
     },
-    pickerStyle() {
+    pickerStyle () {
       return Object.assign({}, this.style.picker, pickerStyle)
     },
-    userId: function() {
+    userId: function () {
+      //eslint-disable-next-line
       return state.amplifyUser.userId
     }
   },
   watch: {
-    name() {
+    name () {
       this.errorMessages = []
     }
   },
 
   methods: {
-    getPhoto: function() {
+    getPhoto: function () {
       /* eslint-disable */
       Storage.get('avatars/' + this.newLogin).then(url => {
         this.src = url
@@ -261,28 +297,30 @@ export default {
       })
     },
     /* eslint-enable */
-    pick: function(e) {
+    pick: function (e) {
       const file = e.target.files[0]
+      //eslint-disable-next-line
       const { name, size, type } = file
       // console.log(file)
       // console.log('upload photo to ' + this.newLogin)
       Storage.put('avatars/' + this.newLogin, file, { contentType: type })
         .then(data => {
-          // console.log(data)
+          console.log(data)
           this.getPhoto()
           this.photoUpdated = true
         })
         .catch(err => console.error(err))
     },
-    imageError: function(e) {
+    imageError: function (e) {
+      console.error(e)
       this.src = this.defSrc
     },
-    verifyHumanity: function() {
+    verifyHumanity: function () {
       this.humanity.getData('employees/' + this.humanityID).then(res => {
         this.humanityEmployee = res.data.data
       })
     },
-    resetForm() {
+    resetForm () {
       this.errorMessages = []
       this.formHasErrors = false
 
@@ -290,7 +328,7 @@ export default {
         this.$refs[f].reset()
       })
     },
-    submit() {
+    submit () {
       this.formHasErrors = false
       var vm = this
       var username = this.newLogin
@@ -318,6 +356,7 @@ export default {
         }
       })
         .then(data => {
+          console.log(data)
           var user = new vm.parse.User()
           user.set('username', username)
           user.set('password', 'Andrews1')
@@ -325,11 +364,11 @@ export default {
           user.set('phone', '+1' + phone_number)
           user.set('avatarURL', 'avatars/' + this.newLogin)
           user.signUp(null, {
-            success: function(user) {
+            success: function (user) {
               console.log(user)
               vm.$router.push('/')
             },
-            error: function(user, error) {
+            error: function (user, error) {
               // Show the error message somewhere and let the user try again.
               alert('Error: ' + error.code + ' ' + error.message)
             }

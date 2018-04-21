@@ -1,0 +1,6 @@
+{
+  "appId": "com.ashdevtools.app",
+  "appName": "andrewsadminapp",
+  "bundledWebRuntime": false,
+  "webDir": "dist"
+}

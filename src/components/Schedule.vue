@@ -1,6 +1,6 @@
 <template>
   <v-container>
-xx
+    xx
     <!-- <section>
       <v-layout column align-center justify-center>
         <v-alert outline type="success" class="mt-4 mb-4" :value="true">
@@ -16,13 +16,13 @@ xx
 </template>
 
 <script>
-import router from '../routes'
+import router from "../routes"
 
 export default {
   methods: {
     navSignIn: function () {
-      console.log('navigating to sign in')
-      router.push('/signin')
+      console.log("navigating to sign in")
+      router.push("/signin")
     }
   }
 }

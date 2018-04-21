@@ -1,33 +1,55 @@
 <template>
-<div>
-  <v-card-text class="pl-4 pr-4">
-    <div class="caption mb-1">
-      <v-icon small class="mr-1">email</v-icon>
-      Email Address
-    </div>
-    <div class="body-2">{{ emailUp === '  ' ? '...' : emailUp }}</div>
-  </v-card-text>
-</div>
+  <div>
+    <v-card-text class="pl-4 pr-4">
+      <div class="caption mb-1">
+        <v-icon
+          small
+          class="mr-1">email</v-icon>
+        Email Address
+      </div>
+      <div class="body-2">{{ emailUp === '  ' ? '...' : emailUp }}</div>
+    </v-card-text>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    email: String
+    email: { type: String, required: true }
   },
-  data: function () {
+  data: function() {
     return {
       emailUpdate: '',
       showEditView: false,
       enableSave: false
     }
   },
+  computed: {
+    emailUp: function() {
+      return this.emailUpdate
+    },
+    emailProp: function() {
+      return this.email
+    }
+  },
+  watch: {
+    emailUp: function() {
+      if (this.emailUpdate !== this.email) {
+        this.enableSave = true
+      } else {
+        this.enableSave = false
+      }
+    },
+    emailProp: function() {
+      this.emailUpdate = JSON.parse(JSON.stringify(this.email))
+    }
+  },
   methods: {
-    cancelEdit: function () {
+    cancelEdit: function() {
       console.log('Name: cancelling...')
       this.emailUpdate = JSON.parse(JSON.stringify(this.email))
     },
-    closeEdit: function () {
+    closeEdit: function() {
       this.cancelEdit()
       this.showEditView = false
     }
@@ -37,38 +59,18 @@ export default {
     //  this.$emit('updateEmail', this.nameUpdate)
     //  this.enableSave = false
     // }
-  },
-  computed: {
-    emailUp: function () {
-      return this.emailUpdate
-    },
-    emailProp: function () {
-      return this.email
-    }
-  },
-  watch: {
-    emailUp: function () {
-      if (this.emailUpdate !== this.email) {
-        this.enableSave = true
-      } else {
-        this.enableSave = false
-      }
-    },
-    emailProp: function () {
-      this.emailUpdate = JSON.parse(JSON.stringify(this.email))
-    }
   }
 }
 </script>
 <style scoped>
 .tool {
-    position: relative;
-    padding: 0px;
-    margin: 0px;
+  position: relative;
+  padding: 0px;
+  margin: 0px;
 }
 .topright {
-    position: absolute;
-    top: 0px;
-    right: 0px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 </style>

@@ -1,4 +1,6 @@
 import store from '../store'
+/* eslint-disable no-undef */
+/* eslint-disable no-process-env */
 
 export default {
   authenticate: function (provider) {
@@ -7,8 +9,7 @@ export default {
     var type = 'token'
     var scope = 'openid profile'
 
-    var callback =
-      window.location.protocol + '//' + window.location.host + '/callback'
+    var callback = window.location.protocol + '//' + window.location.host + '/callback'
 
     // Save the 'verification' value, so it can be verified later to prevent CSRF attacks
     var verification = generateVerification()
@@ -54,8 +55,7 @@ export default {
 // request, which is then validated in the response.
 function generateVerification () {
   var verification = ''
-  var possible =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   for (var i = 0; i < 32; i++) {
     verification += possible.charAt(Math.floor(Math.random() * possible.length))
   }

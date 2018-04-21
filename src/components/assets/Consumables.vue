@@ -1,55 +1,84 @@
 <template>
- <div>
-    <v-dialog v-model="dialog" max-width="500px">
-      <v-btn disabled color="primary" dark slot="activator" class="mb-2" >New Item</v-btn>
-      <v-card>
-        <v-card-title>
-          <!-- <span class="headline">{{ formTitle }}</span> -->
-        </v-card-title>
-        <v-card-text>
-        <v-container grid-list-md>
-            <v-layout wrap>
-             <v-flex xs12 sm6 md4>
-              <v-text-field label="Dessert name" v-model="editedItem.amt"></v-text-field>
-              </v-flex>
+  <v-container>
+    <div>
+      <v-dialog 
+        v-model="dialog" 
+        max-width="500px">
+        <v-btn 
+          slot="activator" 
+          disabled 
+          color="primary" 
+          dark 
+          class="mb-2" >New Item</v-btn>
+        <v-card>
+          <v-card-title>
+            <!-- <span class="headline">{{ formTitle }}</span> -->
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex 
+                  xs12 
+                  sm6 
+                  md4>
+                  <v-text-field 
+                    v-model="editedItem.amt" 
+                    label="Dessert name"/>
+                </v-flex>
 
-            </v-layout>
-          </v-container>
-         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-data-table
-      :headers="headers"
-      :items="items"
-      hide-actions
-      class="elevation-1"
-    >
-     <template slot="items" slot-scope="props">
-       <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.category.name }}</td>
-        <td class="text-xs-right">{{ props.item.qty }}</td>
-        <td class="text-xs-right">{{ props.item.remaining }}</td>
-        <td class="text-xs-right">{{ props.item.min_amt }}</td>
-        <td class="text-xs-right">{{ props.item.location.name }}</td>
-        <td class="justify-center layout px-0">
-                <v-btn disabled v-if="!props.item.assigned_to" color="primary" small outline @click="checkOut(props.item)">
-             Take
-          </v-btn>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn 
+              color="blue darken-1" 
+              flat 
+              @click.native="close">Cancel</v-btn>
+            <v-btn 
+              color="blue darken-1" 
+              flat 
+              @click.native="save">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-data-table
+        :headers="headers"
+        :items="items"
+        hide-actions
+        class="elevation-1"
+      >
+        <template 
+          slot="items" 
+          slot-scope="props">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.category.name }}</td>
+          <td class="text-xs-right">{{ props.item.qty }}</td>
+          <td class="text-xs-right">{{ props.item.remaining }}</td>
+          <td class="text-xs-right">{{ props.item.min_amt }}</td>
+          <td class="text-xs-right">{{ props.item.location.name }}</td>
+          <td class="justify-center layout px-0">
+            <v-btn 
+              v-if="!props.item.assigned_to" 
+              disabled 
+              color="primary" 
+              small 
+              outline 
+              @click="checkOut(props.item)">
+              Take
+            </v-btn>
 
-        </td>
-      </template>
-      <template slot="no-data">
-      </template>
-    </v-data-table>
-     <v-alert type="warning" :value="true">
-      I had to remove the ability to edit these so the "take" button is disabled
-    </v-alert>
-  </div>
+          </td>
+        </template>
+        <template slot="no-data"/>
+      </v-data-table>
+      <v-alert 
+        :value="true" 
+        type="warning">
+        I had to remove the ability to edit these so the "take" button is disabled
+      </v-alert>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -116,53 +145,64 @@ export default {
     items: []
   }),
   computed: {
-    user() {
-      return this.$store.getters.user;
+    user () {
+      return this.$store.getters.user
     },
-    error() {
-      return this.$store.getters.error;
+    error () {
+      return this.$store.getters.error
     }
   },
   watch: {
-    user(value) {
-      console.log(value);
+    user (value) {
+      console.log(value)
       if (value === null || value === undefined) {
         // this.$router.push('/profile')
-        console.log("lost user");
+        console.log("lost user")
       }
     }
   },
+
+  mounted () {
+    // once mounted, we need to trigger the initial server data fetch
+    this.request({
+      pagination: this.serverPagination,
+      filter: this.filter
+    })
+  },
+  created () {
+    // this.initialize()
+  },
   methods: {
-    initialize() {},
-    editItem(item) {
-      this.editedIndex = this.items.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+    initialize () {},
+    editItem (item) {
+      this.editedIndex = this.items.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
     },
 
-    deleteItem(item) {
-      const index = this.items.indexOf(item);
+    deleteItem (item) {
+      const index = this.items.indexOf(item)
       confirm("Are you sure you want to delete this item?") &&
-        this.items.splice(index, 1);
+        this.items.splice(index, 1)
     },
 
-    close() {
-      this.dialog = false;
+    close () {
+      this.dialog = false
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      }, 300)
     },
 
-    save() {
+    save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
+        Object.assign(this.items[this.editedIndex], this.editedItem)
       } else {
-        this.items.push(this.editedItem);
+        this.items.push(this.editedItem)
       }
-      this.close();
+      this.close()
     },
-    checkOut(assetId) {
+    checkOut (assetId) {
       // if (!actions.checkout || assigned_to) {
       //   console.log('not gonna hapn capn')
       //   return
@@ -181,7 +221,6 @@ export default {
       //   .catch(e => {
       //     console.log(e)
       //   })
-      var vm = this;
       this.$api
 
         .post("/snipeit/consumable/take", {
@@ -189,45 +228,35 @@ export default {
           assigned_user: this.user.custom["30551"].value
         })
         .then(response => {
-          console.log(response);
-          this.selected = null;
-          this.$router.go(this.$router.currentRoute);
+          console.log(response)
+          this.selected = null
+          this.$router.go(this.$router.currentRoute)
           // this.request(20, 0)
         })
         .catch(e => {
-          console.log(e);
-        });
+          console.log(e)
+        })
     },
-    request({ pagination, filter }) {
-      console.log("updating");
-      this.loading = true;
+    request ({ pagination, filter }) {
+      console.log("updating", pagination, filter)
+      this.loading = true
 
       this.$http
         .get("http://47.219.112.177:1880/api/snipeit/consumables")
         .then(({ data }) => {
-          console.log(data.rows);
+          console.log(data.rows)
           // this.serverPagination = pagination
           // this.serverPagination.rowsNumber = data.rowsNumber
 
-          this.items = data.rows;
+          this.items = data.rows
 
-          this.loading = false;
+          this.loading = false
         })
         .catch(error => {
-          this.loading = false;
-        });
+          console.error(error)
+          this.loading = false
+        })
     }
   },
-
-  mounted() {
-    // once mounted, we need to trigger the initial server data fetch
-    this.request({
-      pagination: this.serverPagination,
-      filter: this.filter
-    });
-  },
-  created() {
-    // this.initialize()
-  }
-};
+}
 </script>

@@ -1,124 +1,160 @@
-<!-- eslint-disable -->
 <template>
-<div>
+  <div>
     <div>
-    <v-tabs class="pa-3"
-      v-model="active"
-      color="accent"
-      dark
-      slider-color="primary"
-    >
-      <v-tab href="#tab-1" class="mr-4">
-      Manual
-      <v-icon>build</v-icon>
+      <v-tabs 
+        v-model="active"
+        class="pa-3"
+        color="accent"
+        dark
+        slider-color="primary"
+      >
+        <v-tab 
+          href="#tab-1" 
+          class="mr-4">
+          Manual
+          <v-icon>build</v-icon>
 
-    </v-tab>
-    <v-tab href="#tab-2">
-      Scan
-      <v-icon>line_style</v-icon>
-    </v-tab>
+        </v-tab>
+        <v-tab href="#tab-2">
+          Scan
+          <v-icon>line_style</v-icon>
+        </v-tab>
         <v-tab-item id="tab-1">
-        <v-data-table
-      :headers="headers"
-      :items="items"
-      hide-actions
-      class="elevation-1"
-    >
-     <template slot="items" slot-scope="props">
-        <td>{{ props.item.id }}
-        <td>{{ props.item.asset_tag }}</td>
-        <td class="text-xs-right">{{ props.item.category }}</td>
-        <td class="text-xs-right">{{ props.item.model }}</td>
-        <td class="text-xs-right">{{ props.item.status_label }}</td>
-        <td class="text-xs-right">{{ props.item.assigned_to }}</td>
-        <td class="text-xs-right">{{ props.item.location }}</td>
-        <td class="justify-center layout px-0">
-          <v-btn  v-if="!props.item.assigned_to" color="primary" small outline @click="checkOut(props.item, props.assigned_to)">
+          <v-data-table
+            :headers="headers"
+            :items="items"
+            hide-actions
+            class="elevation-1"
+          >
+            <template 
+              slot="items" 
+              slot-scope="props">
+              <td>{{ props.item.id }}
+              </td><td>{{ props.item.asset_tag }}</td>
+              <td class="text-xs-right">{{ props.item.category }}</td>
+              <td class="text-xs-right">{{ props.item.model }}</td>
+              <td class="text-xs-right">{{ props.item.status_label }}</td>
+              <td class="text-xs-right">{{ props.item.assigned_to }}</td>
+              <td class="text-xs-right">{{ props.item.location }}</td>
+              <td class="justify-center layout px-0">
+                <v-btn 
+                  v-if="!props.item.assigned_to" 
+                  color="primary" 
+                  small 
+                  outline 
+                  @click="checkOut(props.item, props.assigned_to)">
             <!-- <v-icon color="success">edit</v-icon>
              --> CheckOut
-          </v-btn>
-            <v-btn  v-if="props.item.assigned_to" color="warning" small outline @click="checkIn(props.item, props.item.assigned_to)">
-            <!-- <v-icon color="warning">edit</v-icon> -->
-            CheckIn
-          </v-btn>
-        </td>
-      </template>
-      <template slot="no-data">
- <v-progress-circular v-show="loading" indeterminate :size="100" color="primary"></v-progress-circular>
-      </template>
-    </v-data-table>
+                </v-btn>
+                <v-btn 
+                  v-if="props.item.assigned_to" 
+                  color="warning" 
+                  small 
+                  outline 
+                  @click="checkIn(props.item, props.item.assigned_to)">
+                  <!-- <v-icon color="warning">edit</v-icon> -->
+                  CheckIn
+                </v-btn>
+              </td>
+            </template>
+            <template slot="no-data">
+              <v-progress-circular 
+                v-show="loading" 
+                :size="100" 
+                indeterminate 
+                color="primary"/>
+            </template>
+          </v-data-table>
 
 
 
 
-    </v-tab-item>
+        </v-tab-item>
         <v-tab-item id="tab-2">
- <v-progress-circular v-show="loading" indeterminate :size="100" color="primary"></v-progress-circular>
-              <v-layout row v-show="!loading">
+          <v-progress-circular 
+            v-show="loading" 
+            :size="100" 
+            indeterminate 
+            color="primary"/>
+          <v-layout 
+            v-show="!loading" 
+            row>
 
-           <v-flex xs6 1>
-        <v-card >
+            <v-flex 
+              xs6 
+              1>
+              <v-card >
 
-      <qrcode-reader @init="onInit" @decode="onDecode">
-      <b>{{overlay}}</b>
-      </qrcode-reader>
-        </v-card>
-      </v-flex>
-  <v-flex xs6 2>
+                <qrcode-reader 
+                  @init="onInit" 
+                  @decode="onDecode">
+                  <b>{{ overlay }}</b>
+                </qrcode-reader>
+              </v-card>
+            </v-flex>
+            <v-flex 
+              xs6 
+              2>
 
-  <v-data-table
-      v-model="selected"
-      :items="qrItems"
-        :headers="headers"
-      hide-headers
-      hide-actions
-      class="elevation-1"
-       item-key="id"
-    >
-     <template slot="items" slot-scope="props"  >
-             <tr v-if="props.item.search" :active="props.selected" @click="props.selected = !props.selected">
+              <v-data-table
+                v-model="selected"
+                :items="qrItems"
+                :headers="headers"
+                hide-headers
+                hide-actions
+                class="elevation-1"
+                item-key="id"
+              >
+                <template 
+                  slot="items" 
+                  slot-scope="props" >
+                  <tr 
+                    v-if="props.item.search" 
+                    :active="props.selected" 
+                    @click="props.selected = !props.selected">
 
-       <td>
-             <v-checkbox
-            primary
-          hide-details
-          v-model="props.selected"
-          ></v-checkbox>
-       </td>
-        <td>{{ props.item.asset_tag }}</td>
+                    <td>
+                      <v-checkbox
+                        v-model="props.selected"
+                        primary
+                        hide-details
+                      />
+                    </td>
+                    <td>{{ props.item.asset_tag }}</td>
 
-        <td class="text-xs-right">{{ props.item.model }}</td>
+                    <td class="text-xs-right">{{ props.item.model }}</td>
 
-        <td class="text-xs-right">{{ props.item.location }}</td>
-             </tr>
-      </template>
-      <template slot="no-data">
-Use QR scanner to select items
-     </template>
-    </v-data-table>
-      <v-btn @click="submit" color="primary">Submit</v-btn>
-  </v-flex>
+                    <td class="text-xs-right">{{ props.item.location }}</td>
+                  </tr>
+                </template>
+                <template slot="no-data">
+                  Use QR scanner to select items
+                </template>
+              </v-data-table>
+              <v-btn 
+                color="primary" 
+                @click="submit">Submit</v-btn>
+            </v-flex>
 
-              </v-layout>
-               <v-alert
-      type="warning"
-      :value="alert"
-      transition="scale-transition"
-    >
-      {{alert}}
-    </v-alert>
-          </v-tab-item>
-    </v-tabs>
+          </v-layout>
+          <v-alert
+            :value="alert"
+            type="warning"
+            transition="scale-transition"
+          >
+            {{ alert }}
+          </v-alert>
+        </v-tab-item>
+      </v-tabs>
+
+    </div>
 
   </div>
-
-</div>
 </template>
 <script>
-/* eslint-disable */
 import QrcodeReader from './QRReader'
 import Vue from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 Vue.component('qrcode-reader', QrcodeReader)
 export default {
@@ -191,15 +227,15 @@ export default {
     items: []
   }),
   computed: {
-    user() {
+    user () {
       return this.$store.getters.user
     },
-    error() {
+    error () {
       return this.$store.getters.error
     }
   },
   watch: {
-    user(value) {
+    user (value) {
       console.log(value)
       if (value === null || value === undefined) {
         // this.$router.push('/profile')
@@ -207,12 +243,19 @@ export default {
       }
     }
   },
+  mounted () {
+    // once mounted, we need to trigger the initial server data fetch
+    this.request({
+      pagination: this.serverPagination,
+      filter: this.filter
+    })
+  },
   methods: {
-    checkedOutList() {
+    checkedOutList () {
       console.log('hi')
       return []
     },
-    async submit() {
+    async submit () {
       console.log(this.selected)
       var contents = {}
       for (let item of this.selected) {
@@ -220,24 +263,24 @@ export default {
         console.log(contents)
       }
     },
-    remove() {
+    remove () {
       console.log(this.selected)
     },
-    next() {
+    next () {
       const active = parseInt(this.active)
       this.active = (active < 2 ? active + 1 : 0).toString()
     },
-    selectThirdTab() {
+    selectThirdTab () {
       this.selectedTab = 'tab-3'
     },
-    onDecode(content) {
+    onDecode (content) {
       this.updateCheckOutList(content)
     },
 
-    onLocate(points) {
-      // ...
+    onLocate (points) {
+      console.log(points)
     },
-    updateCheckOutList(url) {
+    updateCheckOutList (url) {
       this.alert = ''
       if (this.loading) {
         return
@@ -270,7 +313,7 @@ export default {
         }
       }
     },
-    async onInit(promise) {
+    async onInit (promise) {
       // show loading indicator
 
       this.loading = true
@@ -297,7 +340,7 @@ export default {
         this.loading = false
       }
     },
-    checkIn(assetId, assigned_to) {
+    checkIn (assetId, assigned_to) {
       this.items = []
       this.qrItems = []
       this.idList = []
@@ -305,11 +348,12 @@ export default {
         console.log('not gonna hapn capnxxx')
         return
       }
-    //   this.$api
-        // .post('snipeit/hardware/checkin', { assigned_asset: assetId })
-                      this.$http.post('http://47.219.112.177:1880/api/snipeit/hardware/checkin', 
-{ assigned_asset: assetId })
+      //   this.$api
+      // .post('snipeit/hardware/checkin', { assigned_asset: assetId })
+      this.$http
+        .post('http://47.219.112.177:1880/api/snipeit/hardware/checkin', { assigned_asset: assetId })
         .then(response => {
+          console.log(response)
           this.selected = null
           this.request({
             pagination: this.serverPagination,
@@ -320,7 +364,7 @@ export default {
           console.log(e)
         })
     },
-    async checkOut(assetId, assigned_to) {
+    async checkOut (assetId, assigned_to) {
       this.idList = []
       this.qrItems = []
       this.loading = true
@@ -336,16 +380,18 @@ export default {
           assId = assetId.id
         }
         // this.$api
-              this.$http.post('http://47.219.112.177:1880/api/snipeit/hardware/checkout', {
+        this.$http
+          .post('http://47.219.112.177:1880/api/snipeit/hardware/checkout', {
             assigned_user: this.user.custom['30551'].value,
             assigned_asset: assId
           })
-        //   .then(data => {
-        //   .post('snipeit/hardware/checkout', {
-        //     assigned_user: this.user.custom['30551'].value,
-        //     assigned_asset: assId
-        //   })
+          //   .then(data => {
+          //   .post('snipeit/hardware/checkout', {
+          //     assigned_user: this.user.custom['30551'].value,
+          //     assigned_asset: assId
+          //   })
           .then(response => {
+          console.log(response)            
             this.$router.go(this.$router.currentRoute)
             // this.selected = null
             // this.request({
@@ -364,7 +410,7 @@ export default {
         this.loading = false
       }
     },
-    request({ pagination, filter, list }) {
+    request ({ pagination, filter, list }) {
       this.loading = true
       if (list == 'qr') {
         this.qrItems = []
@@ -378,11 +424,15 @@ export default {
       }
       // this.$api
       //   .get('snipeit/hardware')
-    //   axios
-    //     .get('/snipeit/hardware')
-    console.log(process.env.LAMBDA_API)
-//  this.$http.get('http://localhost:9000/hello').then(result => {console.log(result)})
-      this.$http.get(process.env.LAMBDA_API +'/getHardware').then(response => {
+      //   axios
+      //     .get('/snipeit/hardware')
+      //eslint-disable-next-line
+      console.log(process.env.LAMBDA_API)
+      //  this.$http.get('http://localhost:9000/hello').then(result => {console.log(result)})
+      this.$http
+      //eslint-disable-next-line      
+        .get(process.env.LAMBDA_API + '/getHardware')
+        .then(response => {
           this.serverPagination = pagination
           this.serverPagination.rowsNumber = response.data.total
           for (var item of response.data.rows) {
@@ -402,13 +452,13 @@ export default {
             item.checky = 'xxx'
             console.log('pushing to ... ')
             if (!filter) {
-                console.log('items')
+              console.log('items')
               this.items.push(item)
             } else {
               for (let id of filter) {
                 if (id == item.id) {
-                console.log('qritems')
-                    
+                  console.log('qritems')
+
                   item.search = 'found'
                   this.qrItems.push(item)
                 }
@@ -422,18 +472,11 @@ export default {
           // there's an error... do SOMETHING
 
           // we tell QTable to exit the "loading" state
-          console.log('sugar tits ',error)
+          console.log('sugar tits ', error)
           this.loading = false
         })
     }
   },
-  mounted() {
-    // once mounted, we need to trigger the initial server data fetch
-    this.request({
-      pagination: this.serverPagination,
-      filter: this.filter
-    })
-  }
 }
 </script>
 <style scoped>

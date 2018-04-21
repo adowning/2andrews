@@ -1,12 +1,12 @@
 <template>
   <div>
-  <h2>Logging out..</h2>
+    <h2>Logging out..</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'error',
+  name: 'Error',
   computed: {
    
   },

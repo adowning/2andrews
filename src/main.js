@@ -5,7 +5,7 @@ import App from './App'
 // import router from './routes'
 import router from './router'
 import Vuetify from 'vuetify'
-import AppLayout from './components/layout/Layout.vue'
+// import AppLayout from './components/layout/Layout.vue'
 import AppHome from './components/Home.vue'
 import AppSignin from './components/auth/Signin.vue'
 import AppRegister from './components/auth/Register.vue'
@@ -48,7 +48,11 @@ Vue.use(Vuetify, {
 
 Vue.config.productionTip = false
 
-Vue.component('app-layout', AppLayout)
+// Vue.component('app-layout', AppLayout)
+Vue.component('app-layout', function (resolve) {
+//eslint-disable-next-line
+  require(['./components/layout/Layout.vue'],resolve)
+  })
 Vue.component('app-home', AppHome)
 Vue.component('app-signin', AppSignin)
 Vue.component('app-register', AppRegister)

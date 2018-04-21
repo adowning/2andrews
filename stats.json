@@ -1,0 +1,25 @@
+Total precache size is about 980 kB for 6 resources.
+Hash: [1m3164f8e97e18a4842452[39m[22m
+Version: webpack [1m3.11.0[39m[22m
+Time: [1m16018[39m[22mms
+                                              [1mAsset[39m[22m       [1mSize[39m[22m  [1mChunks[39m[22m  [1m[39m[22m           [1m[39m[22m       [1mChunk Names[39m[22m
+     [1m[32mstatic/js/manifest.2ae2e69a05c33dfc65f8.js.map[39m[22m    9.24 kB       [1m2[39m[22m  [1m[32m[emitted][39m[22m         manifest
+                 [1m[32mstatic/img/aws_cognito.58cdd8c.png[39m[22m      25 kB        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+              [1m[32mstatic/js/app.e165717fbcc017601a80.js[39m[22m     102 kB       [1m1[39m[22m  [1m[32m[emitted][39m[22m         app
+         [1m[32mstatic/js/manifest.2ae2e69a05c33dfc65f8.js[39m[22m  857 bytes       [1m2[39m[22m  [1m[32m[emitted][39m[22m         manifest
+[1m[33mstatic/css/app.65102cff581031d28e6c9a9eda4703ed.css[39m[22m     [1m[33m252 kB[39m[22m       [1m1[39m[22m  [1m[32m[emitted][39m[22m  [1m[33m[big][39m[22m  app
+       [1m[32mstatic/js/vendor.482588438ca1e5497335.js.map[39m[22m    4.11 MB       [1m0[39m[22m  [1m[32m[emitted][39m[22m         vendor
+          [1m[32mstatic/js/app.e165717fbcc017601a80.js.map[39m[22m     606 kB       [1m1[39m[22m  [1m[32m[emitted][39m[22m         app
+           [1m[33mstatic/js/vendor.482588438ca1e5497335.js[39m[22m     [1m[33m621 kB[39m[22m       [1m0[39m[22m  [1m[32m[emitted][39m[22m  [1m[33m[big][39m[22m  vendor
+                                         [1m[32mindex.html[39m[22m  814 bytes        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+                          [1m[32m_redirect/aws_cognito.png[39m[22m      25 kB        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+                                 [1m[32m_redirect/logo.png[39m[22m    7.13 kB        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+                              [1m[32m_redirect/favicon.ico[39m[22m  762 bytes        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+                      [1m[32m_redirect/aws_cognito_vue.png[39m[22m    38.9 kB        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+                                         [1m[32m_redirects[39m[22m   15 bytes        [1m[39m[22m  [1m[32m[emitted][39m[22m         
+
+[36m  Build complete.[39m
+[36m[39m
+[33m  Tip: built files are meant to be served over an HTTP server.[39m
+[33m  Opening index.html over file:// won't work.[39m
+[33m[39m
