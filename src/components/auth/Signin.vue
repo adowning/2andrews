@@ -1,5 +1,5 @@
 <template>
-  <!-- <v-container grid-list-md class="mt-3">
+ <v-container grid-list-md class="mt-3">
     <v-layout row wrap justify-center>
       <v-flex xl8 lg12 md12 sm12 xs12>
         <v-card class="pa-4 ml-4 mr-4">
@@ -27,7 +27,6 @@
                     <v-text-field
                       label="E-mail"
                       v-model="email"
-                      :rules="emailRules"
                       required>
                     </v-text-field>
                     <v-text-field
@@ -65,14 +64,14 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </v-container> -->
+  </v-container>
 </template>
 
 <script>
 import router from "../../router";
 import * as config from "./config";
-import auth from '../../services/auth'
-
+import auth from "../../services/auth";
+import storex from '../../store'
 
 var poolData = config.poolData;
 var AmazonCognitoIdentity = require("amazon-cognito-identity-js");
@@ -85,7 +84,7 @@ export default {
       errmsg: "",
       username: "",
       valid: false,
-      email: "ash@andrewscarpetcleaning.com",
+      email: "",
       emailRules: [
         v => !!v || "E-mail is required",
         // eslint-disable-next-line
@@ -93,7 +92,7 @@ export default {
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
       ],
-      password: "Sugarlips42!",
+      password: "",
       passRules: [
         v => !!v || "Password is required",
         v => v.length >= 8 || "Password must be at least 8 characters"
@@ -104,8 +103,8 @@ export default {
     };
   },
   methods: {
-     authenticate (provider) {
-      return auth.authenticate(provider)
+    authenticate(provider) {
+      return auth.authenticate(provider);
     },
     onSubmit() {
       this.loader = "loading";
@@ -139,25 +138,36 @@ export default {
       );
       this.$store.state.cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: result => {
-          if (!this.callback) {
-            this.callback = true;
-            console.log("sign in success");
-            this.$store.state.authenticated = true;
-            this.$store.state.username = this.email;
-            this.username = this.email;
-            this[l] = false;
-            this.loader = null;
-            console.log(this.$store.state.username);
-            router.push("/profile");
-          }
+             
+           console.log(result.accessToken)
+          console.log(result.idToken)
+          // console.log(result.verification)
+          // console.log(result.expiresIn)
+              storex.dispatch('authenticate', {
+      accessToken: result.accessToken,
+      idToken: result.idToken,
+      //  verification: result.verification,
+      //  expiresIn: result.expiresIn
+    })
+          // if (!this.callback) {
+          //   this.callback = true;
+          //   console.log("sign in success");
+          //   this.$store.state.auth.authenticated = true;
+          //   this.$store.state.username = this.email;
+          //   this.username = this.email;
+          //   this[l] = false;
+          //   this.loader = null;
+          //   console.log(this.$store.state.username);
+          //   router.push("/callback");
+          // }
         },
         onFailure: err => {
-          if (!this.callback) {
-            console.log("sign in failure");
-            this.errcode = JSON.stringify(err.code);
-            this[l] = false;
-            this.loader = null;
-          }
+          // if (!this.callback) {
+            // console.log("sign in failure");
+            // this.errcode = JSON.stringify(err.code);
+            // this[l] = false;
+            // this.loader = null;
+          // }
         }
       });
     },
@@ -190,8 +200,8 @@ export default {
     }
   },
   created() {
-          // return auth.authenticate(provider)
-          this.authenticate()
+    // return auth.authenticate(provider)
+    // this.authenticate();
   }
 };
 </script>

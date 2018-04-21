@@ -126,12 +126,14 @@ router.beforeEach((to, from, next) => {
   if (to.meta && to.meta.auth !== undefined) {
     if (to.meta.auth) {
       if (store.getters.isAuthenticated) {
+      // if (store.getters.authenticated) {
         next()
       } else {
         router.push({ name: 'login' })
       }
     } else {
       if (store.getters.isAuthenticated) {
+      // if (store.getters.authenticated) {
         router.push({ name: 'home' })
       } else {
         next()

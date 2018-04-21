@@ -44,20 +44,21 @@ export default {
       router.push({ name: 'login' })
     },
     authenticate: function (context, payload) {
-      if (payload.verification === null || payload.verification !== context.getters.verification) {
-        router.push({ name: 'error', params: { message: 'The verification state in the authentication response did not match our original request' } })
-        return
-      }
+      // if (payload.verification === null || payload.verification !== context.getters.verification) {
+      //   router.push({ name: 'error', params: { message: 'The verification state in the authentication response did not match our original request' } })
+      //   return
+      // }
+console.log(payload.idToken )
+      // if (payload.idToken === null || (jwt(payload.idToken).token_use || null) !== 'id') {
+      //   router.push({ name: 'error', params: { message: 'The authentication response did not include a valid ID token' } })
+      //   return
+      // }
 
-      if (payload.idToken === null || (jwt(payload.idToken).token_use || null) !== 'id') {
-        router.push({ name: 'error', params: { message: 'The authentication response did not include a valid ID token' } })
-        return
-      }
-
-      context.commit('setProfile', jwt(payload.idToken))
+      context.commit('setProfile', jwt(payload.idToken.jwtToken))
       context.commit('setAccessToken', payload.accessToken)
       context.commit('setIdToken', payload.idToken)
       context.commit('setAuthenticated', true)
+      console.log('hai2u')
       router.push({ name: 'home' })
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <v-app>
- <div v-if="isAuthenticated">
+ <template v-if="isAuthenticated">
    
       <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet"> -->
         <v-navigation-drawer
@@ -238,7 +238,7 @@
             >
                 <v-btn icon slot="activator">
                     <v-avatar class="white" size="32">
-                        <v-icon color="primary">clock</v-icon>
+                        <v-icon color="primary">person</v-icon>
                     </v-avatar>
                 </v-btn>
                 <v-list class="pa-0">
@@ -273,7 +273,7 @@
             </v-menu>
         </v-toolbar>
 </v-footer  >
-</div>
+</template>
 
 
   <v-content>
