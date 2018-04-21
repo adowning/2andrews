@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import router from '../routes'
+// import router from '../routes'
 
 export default {
   methods: {
-    navSignIn: function() {
-      console.log('navigating to sign in')
-      router.push('/signin')
-    }
+    // navSignIn: function() {
+    //   console.log('navigating to sign in')
+    //   router.push('/signin')
+    // }
   }
 }
 </script>

@@ -1,16 +1,9 @@
 <template>
   <v-container>
     <section>
-      <v-layout
-        column
-        align-center
-        justify-center>
-        <transition
-          appear
-          name="fadeout">
-          <img
-            class="aws-logo mt-5 mb-4"
-            src="../../static/logo.png">
+      <v-layout column align-center justify-center>
+        <transition appear name="fadeout">
+          <img class="aws-logo mt-5 mb-4" src="../../static/logo.png">
         </transition>
         <!-- <h4 class="headline mb-0" grey--text >Andrews Admin Application</h4> -->
         <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
@@ -20,7 +13,7 @@
 </template>
 
 <script>
-import router from '../router'
+// import router from '../router'
 export default {
   mounted() {
     // var enabled = true
@@ -31,15 +24,15 @@ export default {
     //      console.log("The camera has been started")
   },
   methods: {
-    navRegister: function() {
-      console.log('navigatig to sign up')
-      router.push('/register')
-    },
-    navSignOut: function() {
-      console.log('signing out')
-      this.$store.commit('signOut')
-      router.push('/home')
-    }
+    // navRegister: function() {
+    //   console.log('navigatig to sign up')
+    //   router.push('/register')
+    // },
+    // navSignOut: function() {
+    //   console.log('signing out')
+    //   this.$store.commit('signOut')
+    //   router.push('/home')
+    // }
   }
 }
 </script>

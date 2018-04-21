@@ -8,7 +8,7 @@
     "devbak": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "dev": "node build/dev-server.js",
     "lambda": "netlify-lambda serve lambda-src",
-    "start": "npm run lambda && npm run dev",
+    "start": "npm run lambda & npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
@@ -112,5 +112,5 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+  "browserslist": [ "> 1%", "last 2 versions", "not ie <= 8" ]
 }

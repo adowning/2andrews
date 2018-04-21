@@ -1,93 +1,46 @@
 <template>
-  <v-container
-    grid-list-md
-    class="mt-3">
-    <v-layout
-      row
-      wrap
-      justify-center>
-      <v-flex
-        xl8
-        lg12
-        md12
-        sm12
-        xs12>
+  <v-container grid-list-md class="mt-3">
+    <v-layout row wrap justify-center>
+      <v-flex xl8 lg12 md12 sm12 xs12>
         <v-card class="pa-4 ml-4 mr-4">
-          <v-layout
-            row
-            justify-center>
-            <v-flex
-              xl4
-              lg4
-              md4
-              sm4
-              class="hidden-xs-only">
-              <v-card class="elevation-0 pa-2 mr-2">
-                <v-card-media >
-                  <img
-                    class="aws-logo"
-                    src="../../../static/aws_cognito.png">
-                </v-card-media>
-              </v-card>
-            </v-flex>
-            <v-flex
-              xl6
-              lg6
-              md6
-              sm6>
-              <transition
-                appear
-                name="fadeout">
+          <v-layout row justify-center>
+            <v-layout column align-center>
+              <transition appear name="fadeout">
+                <img class="aws-logo" style="width:140px;height:140px" src="../../../static/logo.png">
+              </transition>
+              <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
+              <!-- <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">using Amazon Cognito and Vue.js with Material Design</h3> -->
+            </v-layout>
+            <v-flex xl6 lg6 md6 sm6>
+              <transition appear name="fadeout">
                 <v-card class="elevation-0 pa-2 ml-1 mr-1">
-                  <v-alert
-                    v-model="showerr"
-                    outline
-                    type="error"
-                    dismissible
-                    class="ml-3 mr-3">
+                  <v-alert v-model="showerr" outline type="error" dismissible class="ml-3 mr-3">
                     {{ errmsg }}
                   </v-alert>
                   <v-card-title primary-title>
                     <div>
-                      <h4 class="headline mb-0">Register AWS Cognito</h4>
+                      <!-- <h4 class="headline mb-0">Andrews Admin Application</h4> -->
                     </div>
                   </v-card-title>
                   <v-card-text>
-
                     <v-form v-model="valid">
-
-                      <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        required/>
-
-                      <v-text-field
-                        v-model="password"
-                        :rules="passRules"
-                        :append-icon="hidepw ? 'visibility' : 'visibility_off'"
-                        :append-icon-cb="() => (hidepw = !hidepw)"
-                        :type="hidepw ? 'password' : 'text'"
-                        label="Password"
-                        required/>
-
+                      <v-text-field v-model="firstname" label="First Name" required/>
+                      <v-text-field v-model="lastname" label="Last Name" required/>
+                      <v-text-field v-model="password" :rules="passRules" :append-icon="hidepw ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidepw = !hidepw)" :type="hidepw ? 'password' : 'text'" label="Password" hint="At least 6 characters" required/>
                     </v-form>
-
-                    <v-btn
-                      :loading="loading"
-                      :disabled="!valid"
-                      block
-                      class="mt-3 mb-3"
-                      dark
-                      color="primary"
-                      @click.native="onSubmit()">
-                      Sign Up
+                    <v-btn :loading="loading" :disabled="!valid" block class="mt-3 mb-3" dark color="primary" @click.native="onSubmit()">
+                      Register
                       <span slot="loader">Connecting...</span>
                     </v-btn>
-                    <div >
-                      By signing up, you agree to the <router-link :to="''">Terms of Service</router-link> and <router-link :to="''">Privacy Policy</router-link>, including Cookie Use.
+                    <div>
+                      <!-- <router-link :to="'/forgot'">Forgot password?</router-link><br> -->
+                      <router-link :to="'/login'">Go to login</router-link>
                     </div>
                   </v-card-text>
+                  <!-- <button
+                    class="btn btn-outline-dark"
+                    @click="authenticate()">Cognito Hosted UI</button> -->
+
                 </v-card>
               </transition>
             </v-flex>
@@ -112,39 +65,40 @@ var dataEmail = {
 }
 
 export default {
-  data: function () {
+  data: function() {
     return {
       callback: false,
       showerr: false,
       errcode: '',
       errmsg: '',
-      username: '',
+      firstname: '',
+      lastname: '',
       valid: false,
-      email: '',
-      emailRules: [
-        // eslint-disable-next-line
-        v => !!v || 'E-mail is required',
-        // eslint-disable-next-line
-        v =>
-          // eslint-disable-next-line
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-      ],
       password: '',
       passRules: [
         v => !!v || 'Password is required',
-        v => v.length >= 8 || 'Password must be 8-20 characters',
-        v => /^(?=.*[0-9])/.test(v) || 'Password must contain at least 1 number',
-        v => /^(?=.*[a-z])/.test(v) || 'Password must contain at least 1 lower case letter',
-        v => /^(?=.*[A-Z])/.test(v) || 'Password must contain at least 1 upper case letter',
-        v => /^(?=.*[!@#$%^&*"])/.test(v) || 'Password must contain at least 1 special character (!@#$%^&*")'
+        v => v.length >= 6 || 'Password must be 6-20 characters'
+        // v => /^(?=.*[0-9])/.test(v) || 'Password must contain at least 1 number',
+        // v => /^(?=.*[a-z])/.test(v) || 'Password must contain at least 1 lower case letter',
+        // v => /^(?=.*[A-Z])/.test(v) || 'Password must contain at least 1 upper case letter',
+        // v => /^(?=.*[!@#$%^&*"])/.test(v) || 'Password must contain at least 1 special character (!@#$%^&*")'
       ],
       hidepw: true,
       loader: false,
       loading: false
     }
   },
+
+  computed: {
+    username() {
+      return (this.firstname.charAt(0) + '.' + this.lastname).toLowerCase()
+    },
+    email() {
+      return (this.firstname.charAt(0) + '.' + this.lastname).toLowerCase() + '@groupandrews.com'
+    }
+  },
   watch: {
-    errcode () {
+    errcode() {
       console.log('watched error code: ' + this.errcode)
       if (this.errcode !== '') {
         if (this.errcode === '"UsernameExistsException"') {
@@ -157,7 +111,7 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       this.loader = 'loading'
       const l = this.loader
       this[l] = !this[l]
@@ -167,12 +121,11 @@ export default {
       attributeList.push(attributeEmail)
       console.log('attribute list: ' + attributeList)
       userPool = new AmazonCognitoIdentity.CognitoUserPool(config.poolData)
-      console.log('sign up with: ' + this.email + ' ' + this.password)
+      console.log('sign up with: ' + this.username + ' ' + this.password)
       this.callback = false
       this.errcode = ''
-      this.username = ''
 
-      userPool.signUp(this.email, this.password, attributeList, null, (err, result) => {
+      userPool.signUp(this.username, this.password, attributeList, null, (err, result) => {
         if (!this.callback) {
           this.callback = true
           console.log('register callback')
@@ -192,10 +145,10 @@ export default {
         }
       })
     },
-    navRreset: function () {
+    navRreset: function() {
       router.push('/reset')
     },
-    getMessage: function () {
+    getMessage: function() {
       return this.message
     }
   }

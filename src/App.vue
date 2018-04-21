@@ -9,11 +9,7 @@
 
 <script>
 export default {
-  name: 'App',
-  created () {
-    // this.$http.get('/.netlify/functions/hello').then(result => {console.log(result)})
-    // this.$http.get('http://localhost:9000/hello').then(result => {console.log(result)})
-  }
+  name: 'App'
 }
 </script>
 
