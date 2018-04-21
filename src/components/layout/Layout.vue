@@ -25,7 +25,7 @@
                 <!-- <v-icon large color="orange">invert_colors</v-icon> -->
                 <img
                   src="../../../static/logo.png"
-                  style="width:30pxheight:30px">
+                  style="width:30px; height:30px">
 
               </v-list-tile-action>
               <v-list-tile-content v-if="!miniVariant">
@@ -430,34 +430,34 @@ export default {
     menuItems: ['', 'NodeJS', 'Laravel']
   }),
   computed: {
-    isAuthenticated: function () {
+    isAuthenticated: function() {
       return this.$store.getters.isAuthenticated
     }
   },
   methods: {
-    gotoClock () {
+    gotoClock() {
       this.$router.push('/timeClock')
     },
-    onBlur () {
+    onBlur() {
       this.searching = false
       this.search = ''
     },
-    signOut () {
+    signOut() {
       this.$router.push('/logout')
     },
-    gotoProfile () {
+    gotoProfile() {
       this.$router.push('/profile')
     },
-    searchBegin () {
+    searchBegin() {
       this.searching = true
       setTimeout(() => document.querySelector('#search').focus(), 50)
     },
-    searchEnd () {
+    searchEnd() {
       this.searching = false
       this.search = ''
       document.querySelector('#search').blur()
     },
-    beforeUpdate () {
+    beforeUpdate() {
       console.log('store.username: ' + this.$store.state.username)
       var str = this.$store.state.username
       var index = str.indexOf('@')

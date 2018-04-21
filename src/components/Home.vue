@@ -12,15 +12,9 @@
             class="aws-logo mt-5 mb-4"
             src="../../static/logo.png">
         </transition>
-        <h1 class="mb-2 display-2 text-xs-center black--text hidden-xs-only">ANDREWS APP</h1>
-        <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">using Amazon Cognito and Vue.js with Material Design</h3>
-        <!-- <v-alert v-if="$store.state.authenticated" outline type="success" class="mt-4 mb-4" :value="true">
-          <div class="title mt-2 mb-2">You have signed in.</div>
-        </v-alert> -->
-        <!-- <v-btn v-if="$store.state.authenticated" @click="navSignOut()" color="amber accent-3" dark large>Sign Out</v-btn> -->
+        <!-- <h4 class="headline mb-0" grey--text >Andrews Admin Application</h4> -->
+        <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
       </v-layout>
-      <!-- <div id="camdemo" style="width: 320px height: 240px text-align: center margin: 0 auto"></div> -->
-
     </section>
   </v-container>
 </template>

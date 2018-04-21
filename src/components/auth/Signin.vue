@@ -16,20 +16,20 @@
           <v-layout
             row
             justify-center>
-            <v-flex
-              xl4
-              lg4
-              md4
-              sm4
-              class="hidden-xs-only">
-              <v-card class="elevation-0 pa-2 mr-2">
-                <v-card-media >
-                  <img
-                    class="aws-logo"
-                    src="../../../static/aws_cognito.png">
-                </v-card-media>
-              </v-card>
-            </v-flex>
+            <v-layout
+              column
+              align-center>
+              <transition
+                appear
+                name="fadeout">
+                <img
+                  class="aws-logo"
+                  style="width:140px;height:140px"
+                  src="../../../static/logo.png">
+              </transition>
+              <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
+              <!-- <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">using Amazon Cognito and Vue.js with Material Design</h3> -->
+            </v-layout>
             <v-flex
               xl6
               lg6
@@ -49,7 +49,7 @@
                   </v-alert>
                   <v-card-title primary-title>
                     <div>
-                      <h4 class="headline mb-0">Sign In to Andrews</h4>
+                      <!-- <h4 class="headline mb-0">Andrews Admin Application</h4> -->
                     </div>
                   </v-card-title>
                   <v-card-text>
@@ -83,9 +83,9 @@
                       <router-link :to="'/forgot'">Forgot password?</router-link>
                     </div>
                   </v-card-text>
-                  <button
+                  <!-- <button
                     class="btn btn-outline-dark"
-                    @click="authenticate()">Cognito Hosted UI</button>
+                    @click="authenticate()">Cognito Hosted UI</button> -->
 
                 </v-card>
               </transition>
@@ -96,7 +96,6 @@
     </v-layout>
   </v-container>
 </template>
-
 <script>
 import router from '../../router'
 import * as config from './config'
@@ -113,9 +112,9 @@ export default {
       showerr: false,
       errcode: '',
       errmsg: '',
-      username: '',
+      username: 'ash',
       valid: false,
-      email: '',
+      email: 'ash',
       emailRules: [
         // eslint-disable-next-line
         v => !!v || 'E-mail is required',
@@ -124,7 +123,7 @@ export default {
           // eslint-disable-next-line
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
-      password: '',
+      password: 'asdfasdf',
       passRules: [v => !!v || 'Password is required', v => v.length >= 8 || 'Password must be at least 8 characters'],
       hidepw: true,
       loader: false,
