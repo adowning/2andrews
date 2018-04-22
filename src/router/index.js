@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/auth/Signin'
 import Register from '@/components/auth/Register'
+import Confirm from '@/components/auth/Confirm'
 import Callback from '@/components/auth/Callback'
 import ErrorMsg from '@/components/auth/ErrorMsg'
 import TimeClock from '@/components/people/TimeClock'
@@ -41,6 +42,15 @@ const router = new Router( {
       component: Register,
       meta: {
         title: 'Register',
+        auth: false
+      }
+    },
+    {
+      path: '/confirm',
+      name: 'confirm',
+      component: Confirm,
+      meta: {
+        title: 'Confirm',
         auth: false
       }
     },

@@ -283,18 +283,28 @@ export default {
       }
       //   this.$api
       // .post('snipeit/hardware/checkin', { assigned_asset: assetId })
+      // this.$http
+      //   .post('http://47.219.112.177:1880/api/snipeit/hardware/checkin', { assigned_asset: assetId })
+      //   .then(response => {
+      //     console.log(response)
+      //     this.selected = null
+      //     this.request({
+      //       pagination: this.serverPagination,
+      //       filter: this.filter
+      //     }).then(console.log('ready'))
+      //   })
+      //   .catch(e => {
+      //     console.log(e)
+      //   })
       this.$http
-        .post('http://47.219.112.177:1880/api/snipeit/hardware/checkin', { assigned_asset: assetId })
+        //eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/checkinHardware', { params: { assigned_asset: assetId } })
         .then(response => {
           console.log(response)
-          this.selected = null
-          this.request({
-            pagination: this.serverPagination,
-            filter: this.filter
-          }).then(console.log('ready'))
+          this.$router.go(this.$router.currentRoute)
         })
-        .catch(e => {
-          console.log(e)
+        .catch(error => {
+          console.error(error)
         })
     },
     async checkOut(assetId, assigned_to) {

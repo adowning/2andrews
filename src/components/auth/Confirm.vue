@@ -1,4 +1,48 @@
 <template>
+  <v-container grid-list-md class="mt-3">
+    <v-layout row wrap justify-center>
+      <v-flex xl8 lg12 md12 sm12 xs12>
+        <v-card class="pa-4 ml-4 mr-4">
+          <v-layout row justify-center>
+            <v-flex xl4 lg4 md4 sm4 class="hidden-xs-only">
+              <v-card class="elevation-0 pa-2 mr-2">
+                <v-card-media>
+                  <img class="aws-logo" src="../../../static/aws_cognito.png">
+                </v-card-media>
+              </v-card>
+            </v-flex>
+            <v-flex xl6 lg6 md6 sm6>
+              <transition appear name="fadeout">
+                <v-card class="elevation-0 pa-2 ml-1 mr-1">
+                  <v-alert v-model="showerr" outline type="error" dismissible class="ml-3 mr-3">
+                    {{ errmsg }}
+                  </v-alert>
+                  <v-card-title primary-title>
+                    <div>
+                      <h4 class="headline mb-0">Wait for confirmation</h4>
+                    </div>
+                  </v-card-title>
+                  <v-card-text>
+                    <div>
+                      A confirmation code was sent to your managers email address.
+                      <p>Once authorized go to the login screen and enter your username and password
+                      </p>
+                    </div>
+                    <v-btn :to="'/login'" block class="mt-3 mb-3" dark color="primary">
+                      Go to login screen
+                    </v-btn>
+
+                  </v-card-text>
+                </v-card>
+              </transition>
+            </v-flex>
+          </v-layout>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+<!--<template>
   <v-container
     grid-list-md
     class="mt-3">
@@ -83,7 +127,7 @@
       </v-flex>
     </v-layout>
   </v-container>
-</template>
+</template>-->
 
 <script>
 import router from '../../router'
@@ -109,12 +153,12 @@ export default {
     loading: false
   }),
   watch: {
-    confirmed () {
+    confirmed() {
       if (this.confirmed === true) {
         router.push('/registered')
       }
     },
-    errcode () {
+    errcode() {
       console.log('watched error code: ' + this.errcode)
       if (this.errcode !== '') {
         if (this.errcode === '"CodeMismatchException"') {
@@ -133,7 +177,7 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    onSubmit() {
       this.loader = 'loading'
       const l = this.loader
       this[l] = !this[l]
