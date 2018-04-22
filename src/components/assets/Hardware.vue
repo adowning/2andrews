@@ -4,7 +4,6 @@
       <v-tab href="#tab-1" class="mr-4">
         Manual
         <v-icon>build</v-icon>
-
       </v-tab>
       <v-tab href="#tab-2">
         Scan
@@ -248,8 +247,6 @@ export default {
       }
     },
     async onInit(promise) {
-      // show loading indicator
-
       this.loading = true
       try {
         await promise
@@ -322,27 +319,17 @@ export default {
         } else {
           assId = assetId.id
         }
-        // this.$api
+        console.log(assId)
+        console.log(this.$store.getters.profile['custom:snipeit'])
+      
         this.$http
-          .post('http://47.219.112.177:1880/api/snipeit/hardware/checkout', {
-            assigned_user: this.user.custom['30551'].value,
-            assigned_asset: assId
+        //eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/checkoutHardware', { params: { assigned_asset: assId, assigned_user: this.$store.getters.profile['custom:snipeit'] }
           })
-          //   .then(data => {
-          //   .post('snipeit/hardware/checkout', {
-          //     assigned_user: this.user.custom['30551'].value,
-          //     assigned_asset: assId
-          //   })
           .then(response => {
             console.log(response)
-            this.$router.go(this.$router.currentRoute)
-            // this.selected = null
-            // this.request({
-            //   pagination: this.serverPagination,
-            //   filter: null,
-            //   list: 'both'
-            // })
-            // this.request(20, 0)
+                      this.$router.go(this.$router.currentRoute)
+
           })
           .catch(e => {
             console.log(e)
