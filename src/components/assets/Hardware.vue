@@ -321,15 +321,15 @@ export default {
         }
         console.log(assId)
         console.log(this.$store.getters.profile['custom:snipeit'])
-      
+
         this.$http
-        //eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/checkoutHardware', { params: { assigned_asset: assId, assigned_user: this.$store.getters.profile['custom:snipeit'] }
+          //eslint-disable-next-line
+          .get(process.env.LAMBDA_API + '/checkoutHardware', {
+            params: { assigned_asset: assId, assigned_user: this.$store.getters.profile['custom:snipeit'] }
           })
           .then(response => {
             console.log(response)
-                      this.$router.go(this.$router.currentRoute)
-
+            this.$router.go(this.$router.currentRoute)
           })
           .catch(e => {
             console.log(e)

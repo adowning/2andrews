@@ -8,6 +8,7 @@
     "devbak": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "dev": "node build/dev-server.js",
     "lambda": "netlify-lambda serve lambda-src",
+    "lambda:build": "netlify-lambda build lambda-src",
     "start": "npm run lambda & npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
