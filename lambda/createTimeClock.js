@@ -36084,14 +36084,15 @@ function handler(event, context, callback) {
   console.log(inOut);
   var options = {
     method: method,
-    // url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
-    url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + "?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    // url: "https://www.humanity.com/api/v2/employees/" + i+ "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    url: "https://www.humanity.com/api/v2/timeclock/savenote" + id + "?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify___default()({
-      'id': id
+      "id": id,
+      "notes": "asdfasdf"
     })
   };
   __WEBPACK_IMPORTED_MODULE_2_request___default()(options, function (error, response, body) {

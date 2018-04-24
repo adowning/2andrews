@@ -36063,23 +36063,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* eslint-disable */
 
 function handler(event, context, callback) {
-  // var id = JSON.parse( event.queryStringParameters.id )
-  // var inOut = JSON.parse( event.queryStringParameters.inOut )
-  var id = event.queryStringParameters.id;
+  var id = event.queryStringParameters.id.toString();
   var options = {
     method: 'POST',
     // url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
-    url: "https://www.humanity.com/api/v2/timeclock/savenote?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    url: "https://www.humanity.com/api/v2/timeclocks/savenote?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: {
-      'id': event.queryStringParameters.id,
-      notes: 'whazzzzup '
-    }
+    body: __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify___default()({
+      'id': id,
+      'notes': 'buahahha'
+    })
   };
   __WEBPACK_IMPORTED_MODULE_2_request___default()(options, function (error, response, body) {
+    console.log(body);
     var cache = [];
     var id = 'none';
     if (response.body) {
@@ -36106,7 +36105,6 @@ function handler(event, context, callback) {
       });
     }
     cache = null; // Enable garbage collection
-    // console.log( x )
     callback(null, {
       statusCode: 200,
       headers: {

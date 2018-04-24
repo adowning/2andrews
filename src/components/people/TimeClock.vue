@@ -211,7 +211,7 @@ export default {
         .then(response => {
           // console.log(response.data)
           var data = JSON.parse(response.data)
-          this.timeSheetID = data.data.id
+          this.timeSheetID = data.data
           // console.log(data.data.id)
           // console.log(data['id'])
           // console.log(data.id)
