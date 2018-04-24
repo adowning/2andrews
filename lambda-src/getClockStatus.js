@@ -29,16 +29,15 @@ instance.interceptors.response.use(
   }
 )
 export function handler( event, context, callback ) {
-  // var start_date = JSON.parse( event.queryStringParameters.start_date )
-  // var end_date = JSON.parse( event.queryStringParameters.end_date )
-  // var employee = JSON.parse( event.queryStringParameters.employee )
-
-  instance.get( 'timeclocks?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77', {
-    params: event.queryStringParameters
+  var id = JSON.parse( event.queryStringParameters.id )
+  instance.get( "timeclocks/status/" + id + "/0?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77", {
+    params: {
+      details: 0
+    }
   } ).then( response => {
     var cache = []
-    console.log( response.data.data )
-    var x = JSON.stringify( response.data.data, function ( key, value ) {
+    console.log( response.data )
+    var x = JSON.stringify( response.data, function ( key, value ) {
       if ( typeof value === 'object' && value !== null ) {
         if ( cache.indexOf( value ) !== -1 ) {
           // Circular reference found, discard key
@@ -49,6 +48,7 @@ export function handler( event, context, callback ) {
       return value
     } )
     cache = null // Enable garbage collection
+    console.log( x )
     callback( null, {
       statusCode: 200,
       headers: {

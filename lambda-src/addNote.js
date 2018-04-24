@@ -1,32 +1,21 @@
 /* eslint-disable */
 import request from "request"
-const token = '?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77'
-
 export function handler( event, context, callback ) {
-  console.log( event.queryStringParameters )
   // var id = JSON.parse( event.queryStringParameters.id )
   // var inOut = JSON.parse( event.queryStringParameters.inOut )
-  var id = event.queryStringParameters.id.toString()
-  var inOut = event.queryStringParameters.inOut.toString()
-  var method = ''
-  if ( inOut == 'clockin' ) {
-    method = 'POST'
-  }
-  if ( inOut == 'clockout' ) {
-    method = 'PUT'
-  }
-  console.log( inOut )
+  var id = event.queryStringParameters.id
   var options = {
-    method: method,
+    method: 'POST',
     // url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
-    url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + "?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    url: "https://www.humanity.com/api/v2/timeclock/savenote?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify( {
-      'id': id,
-    } )
+    body: {
+      'id': event.queryStringParameters.id,
+      notes: 'whazzzzup '
+    }
   }
   request( options, function ( error, response, body ) {
     var cache = [];
@@ -41,9 +30,9 @@ export function handler( event, context, callback ) {
     // var id = response.body.payload.id
     if ( error )
       throw new Error( error )
-    console.log( id )
-    if ( id != 'none' ) {
-      var x = JSON.stringify( id, function ( key, value ) {
+    console.log( event.queryStringParameters.id )
+    if ( event.queryStringParameters.id != 'none' ) {
+      var x = JSON.stringify( event.queryStringParameters.id, function ( key, value ) {
         if ( typeof value === 'object' && value !== null ) {
           if ( cache.indexOf( value ) !== -1 ) {
             // Circular reference found, discard key

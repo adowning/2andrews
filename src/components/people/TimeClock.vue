@@ -11,35 +11,38 @@
 
             <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader>
           </v-toolbar>
-          <v-list>
-            <v-layout row v-if="!clockStatus">
-              <v-flex xs10 offset-xs1>
-                <v-btn block color="info" dark @click.native="clockIn">Clock In</v-btn>
-              </v-flex>
-            </v-layout>
-            <div v-if="clockStatus">
-              <v-layout mt-2 row wrap>
-                <v-flex xs12 sm4 ml-3>
-                  Clocked in.
-                </v-flex>
-                <v-flex xs12 sm6> {{start_time}}
-                </v-flex>
-              </v-layout>
-              <v-layout row>
-                <v-flex xs8 ml-3>
-                  <v-text-field v-model="notes" label="Notes" />
-                </v-flex>
-                <v-flex xs1>
-                  <v-btn color="info" @click.native="editNotes">Edit Notes</v-btn>
-                </v-flex>
-              </v-layout>
-              <v-layout row>
-                <v-flex xs10 ml-3>
-                  <v-btn block color="error" dark @click.native="clockOut">Clock Out</v-btn>
-                </v-flex>
-              </v-layout>
-            </div>
-          </v-list>
+          <template v-if="loading">
+            <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
+            <v-progress-linear :indeterminate="true"></v-progress-linear>
+
+          </template>
+          <template v-if="!loading">
+
+            <v-list>
+              <template v-if="clockStatus == 'out'">
+                <v-layout row my-4>
+                  <v-flex xs6 offset-xs3>
+                    <v-btn block color="info" dark @click.native="updateClockStatus()">Clock In</v-btn>
+                  </v-flex>
+                </v-layout>
+              </template>
+              <template v-if="clockStatus == 'in'">
+                <v-layout row mt-4>
+                  <v-flex xs8 offset-xs1>
+                    <v-text-field name="input-1" label="Note" id="testing"></v-text-field>
+                  </v-flex>
+                  <v-flex xs1>
+                    <v-btn flat color="info" dark @click.native="addNote()">Add Note</v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout row mb-4>
+                  <v-flex xs6 offset-xs3>
+                    <v-btn block color="error" dark @click.native="updateClockStatus()">Clock Out</v-btn>
+                  </v-flex>
+                </v-layout>
+              </template>
+            </v-list>
+          </template>
         </v-card>
       </v-flex>
       <v-flex xs7>
@@ -49,15 +52,20 @@
             <v-spacer>
             </v-spacer>
             <v-menu offset-y>
-              <v-btn outline slot="activator">This Week</v-btn>
+              <v-btn outline white slot="activator">This Week</v-btn>
               <v-list>
-                <v-list-tile v-for="item in weeks" :key="item.title" @click="item.amount">
-                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                <v-list-tile v-for="week in weeks" :key="week.title" @click="changeWeek(week.amount)">
+                  <v-list-tile-title>{{ week.title }}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
           </v-toolbar>
-          <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
+          <template v-if="loading">
+            <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
+            <v-progress-linear :indeterminate="true"></v-progress-linear>
+
+          </template>
+          <v-data-table v-if="!loading" :headers="headers" :items="items" hide-actions class="elevation-1">
             <template slot="items" slot-scope="props">
               <td>{{ props.item.length.total_hours }}</td>
               <td class="text-xs-right">{{ props.item.in_time.time }}</td>
@@ -76,12 +84,20 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      clockStatus: false,
+      loading: false,
+      timeSheetID: null,
+      current_length: {},
+      clockStatus: null,
       timeFigured: false,
       notes: '',
       st: {},
       et: {},
-      weeks: [{ title: 'Last Week', amount: 1 }, { title: 'Week Before Last', amount: 2 }],
+      weeks: [
+        { title: 'This Week', amount: 0 },
+        { title: 'Last Week', amount: 1 },
+        { title: 'Two Weeks Ago', amount: 2 }
+      ],
+      week: null,
       date: moment().format('LLL'),
       serverPagination: {
         page: 1
@@ -117,56 +133,97 @@ export default {
       var diff = moment(this.et) - moment(this.st)
       return moment.utc(moment.duration(diff).asMilliseconds()).format('H:mm')
     },
-    startEndDates: function(n) {
+    startEndDates: function() {
       return {
         start_date: moment()
-          .subtract(n, 'w')
+          .subtract(this.week, 'w')
           .startOf('week')
           .format('YYYY-MM-DD'), // set to the first day of this week, 12:00 am
         end_date: moment()
-          .subtract(n, 'w')
+          .subtract(this.week, 'w')
           .endOf('week')
           .format('YYYY-MM-DD') // set to the first day of this week, 12:00 am
       }
     }
   },
   created() {
+    // this.getClockStatus()
     this.request(0)
   },
   methods: {
-    clockIn() {
-      this.start_time = moment().format('hh:mm:ss')
-      this.start_date = moment().format('YYYY-MM-DD')
-      this.st = new moment()
-      this.clockStatus = true
-    },
-    clockOut() {
-      this.end_time = moment().format('hh:mm:ss')
-      this.end_date = moment().format('YYYY-MM-DD')
-      this.et = new moment()
-      this.clockedIn = false
-      this.timeFigured = true
+    addNote() {
       this.$http
         //eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/createTimeClock', {
+        .get(process.env.LAMBDA_API + '/addNote', {
           params: {
-            start_date: this.start_date,
-            end_date: this.end_date,
-            start_time: this.start_time,
-            // end_time: this.end_time,
-            end_time: '11:56:36',
-            employee: this.$store.getters.profile['custom:humanity']
+            id: this.timeSheetID
           }
         })
         .then(response => {
           console.log(response)
-          this.snipeitID = response.data
+          //this.clockStatus = response.data.data
+          //this.loading = false
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    getClockStatus() {
+      this.$http
+        //eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/getClockStatus', {
+          params: {
+            id: this.$store.getters.profile['custom:humanity']
+          }
+        })
+        .then(response => {
+          console.log(response)
+          this.clockStatus = response.data.data
+          this.loading = false
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    changeWeek(amount) {
+      console.log(amount)
+      this.week = amount
+      this.items = []
+      this.request()
+    },
+
+    updateClockStatus() {
+      this.timeFigured = true
+      var command = ''
+      if (this.clockStatus == 'in') {
+        command = 'clockout'
+      } else {
+        command = 'clockin'
+      }
+      this.$http
+        //eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/createTimeClock', {
+          params: {
+            id: this.$store.getters.profile['custom:humanity'],
+            inOut: command
+          }
+        })
+        .then(response => {
+          // console.log(response.data)
+          var data = JSON.parse(response.data)
+          this.timeSheetID = data.data.id
+          // console.log(data.data.id)
+          // console.log(data['id'])
+          // console.log(data.id)
+          // this.clockStatus = response.data
+          this.request()
         })
         .catch(error => {
           console.error(error)
         })
     },
     request() {
+      this.items = []
       this.loading = true
       this.$http
         //eslint-disable-next-line
@@ -178,13 +235,16 @@ export default {
           }
         })
         .then(response => {
-          console.log(response)
+          // console.log(response)
           this.serverPagination = false
           // this.serverPagination.rowsNumber = response.data.total
           for (var item of response.data) {
-            this.items.push(item)
+            if (item.out_day != 0) {
+              this.items.push(item)
+            }
           }
-          this.loading = false
+          this.current_length = response.data.current_length
+          this.getClockStatus()
         })
         .catch(error => {
           console.log('sugar tits ', error)

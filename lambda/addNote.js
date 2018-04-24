@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 336);
+/******/ 	return __webpack_require__(__webpack_require__.s = 333);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -36046,10 +36046,7 @@ module.exports = require("events");
 /* 330 */,
 /* 331 */,
 /* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */
+/* 333 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36065,42 +36062,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* eslint-disable */
 
-
 function handler(event, context, callback) {
-  var x = callback;
-  x.asdf = 'adsf';
+  // var id = JSON.parse( event.queryStringParameters.id )
+  // var inOut = JSON.parse( event.queryStringParameters.inOut )
+  var id = event.queryStringParameters.id;
   var options = {
     method: 'POST',
-    url: 'http://47.219.112.177:83/api/v1/users',
+    // url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    url: "https://www.humanity.com/api/v2/timeclock/savenote?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
     headers: {
-      'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg2YzM2MTgxMzhmMTgxZWFiNjYxODA0ZWVlM2JjYjJjYmMzM2FjMWVlNjM2YjY5NDZkNzVlMzhmZmM4NTFjYzBkYjg1MGI4OGUyZThiYjU2In0.eyJhdWQiOiI4IiwianRpIjoiODZjMzYxODEzOGYxODFlYWI2NjE4MDRlZWUzYmNiMmNiYzMzYWMxZWU2MzZiNjk0NmQ3NWUzOGZmYzg1MWNjMGRiODUwYjg4ZTJlOGJiNTYiLCJpYXQiOjE1MjM0NjQ0NDMsIm5iZiI6MTUyMzQ2NDQ0MywiZXhwIjoxNTU1MDAwNDQzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.vOFDvt-779QzbItigmgjZdNaTYmKkuiduL01HJbgR3_oQ-_EKtDVt8KS2FZ-8QAcBgVwuXOZm-ZgssB92cEVvwspQsjiH8T1RTVB9ZpFK5HQU_hhErpBuaWD_FkupjzYz_PnJqDzU8j6I79vAPbkCF_NNPyI0DsjwXMSTx_a8d0yItfxroxHWdHaD9_MFPbO9l_TmYmu42aaQG9wMVNZUqvpk6iFiiS_mOQBh3sdwR-CCxnfz0lIMydfFEjfnNlmkexA0ThorMJKAr4YB28nVWQnoTf-Fx8mNdH42OLlzWGj0ZWCJAIHVpDiECGZw0xL6dCngJgCXvPHWpI7H2Lj6HL1vkJr4DLsd-oZlAk2h3u0g5W839ENoSaFJdt9t6Imk4MEAf8P2W0n5plhBjcpUJJXni93tSA5RO2_XQXRprWmUKMEvFajey2aNIVUq1rcW7PaFciwRDT5wkxFb294zhR_ElAF52Yzjq1ZH78_2hMsDyWq7sFrZ-Th-pPmXKsaUmNch8AZOSbeoqQyCGNduPjLZaV1qqeZhWGJD4bw9YLBdRliiqCSkV9UHYqauO0b8ZYFjZ5dC1s1E3TnsFya93LQG_rLMeeaZ9tQ6AfnHx4liL5fdB_LQNw8zLN_iGn0WdQZtWOMP2EJfB0lECBOnI5AnHRnWrGWJzCe3s6IxZo',
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: {
-      first_name: event.queryStringParameters.first_name,
-      username: event.queryStringParameters.username,
-      password: 'Andrews1',
-      activated: 'true'
-    },
-    json: true
+      'id': event.queryStringParameters.id,
+      notes: 'whazzzzup '
+    }
   };
   __WEBPACK_IMPORTED_MODULE_2_request___default()(options, function (error, response, body) {
     var cache = [];
-    console.log(response.body.payload);
     var id = 'none';
-    if (response.body.payload) {
+    if (response.body) {
       try {
-        id = response.body.payload.id;
+        id = response.body;
       } catch (error) {
         console.log(error);
       }
     }
     // var id = response.body.payload.id
     if (error) throw new Error(error);
-    if (id != 'none') {
-      var x = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify___default()(id, function (key, value) {
-        if ((typeof value === 'undefined' ? 'undefined' : __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default()(value)) === 'object' && value !== null) {
+    console.log(event.queryStringParameters.id);
+    if (event.queryStringParameters.id != 'none') {
+      var x = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify___default()(event.queryStringParameters.id, function (key, value) {
+        if ((typeof value === "undefined" ? "undefined" : __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default()(value)) === 'object' && value !== null) {
           if (cache.indexOf(value) !== -1) {
             // Circular reference found, discard key
             return;
@@ -36112,6 +36106,7 @@ function handler(event, context, callback) {
       });
     }
     cache = null; // Enable garbage collection
+    // console.log( x )
     callback(null, {
       statusCode: 200,
       headers: {
