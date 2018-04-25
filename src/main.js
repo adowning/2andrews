@@ -15,9 +15,10 @@ import AppConfirm from './components/auth/Confirm.vue'
 import AppChanged from './components/auth/Changed.vue'
 import AppProfile from './components/Profile/'
 import store from './store/'
-// import VueResource from 'vue-resource'
-// Vue.use(VueResource)
-// import awsExports from '../awsmobilejs/#current-backend-info/aws_exports'
+import Amplify from 'aws-amplify'
+import awsmobile from './aws-exports'
+Amplify.configure( awsmobile )
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 

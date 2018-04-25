@@ -1,6 +1,6 @@
 /* eslint-disable */
 import request from "request"
-const token = '?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77'
+const token = '?access_token=cb1a82f76610a8baddcfecea6198914b5552b506'
 
 export function handler( event, context, callback ) {
   console.log( event.queryStringParameters )
@@ -18,15 +18,14 @@ export function handler( event, context, callback ) {
   console.log( inOut )
   var options = {
     method: method,
-    // url: "https://www.humanity.com/api/v2/employees/" + i+ "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
-    url: "https://www.humanity.com/api/v2/timeclock/savenote" + id + "?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    url: "https://www.humanity.com/api/v2/employees/" + id + "/?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    // url: "https://www.humanity.com/api/v2/timeclock/savenote" + id + "?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( {
-      "id": id,
-      "notes": "asdfasdf"
+      "id": id
     } )
   }
   request( options, function ( error, response, body ) {
@@ -57,7 +56,7 @@ export function handler( event, context, callback ) {
       } )
     }
     cache = null // Enable garbage collection
-    // console.log( x )
+    console.log( x )
     callback( null, {
       statusCode: 200,
       headers: {

@@ -52,10 +52,10 @@
             <v-spacer>
             </v-spacer>
             <v-menu offset-y>
-              <v-btn outline white slot="activator">This Week</v-btn>
+              <v-btn outline white slot="activator">{{week.title}}</v-btn>
               <v-list>
-                <v-list-tile v-for="week in weeks" :key="week.title" @click="changeWeek(week.amount)">
-                  <v-list-tile-title>{{ week.title }}</v-list-tile-title>
+                <v-list-tile v-for="w in weeks" :key="w.id" @click="changeWeek(w.amount)">
+                  <v-list-tile-title>{{ w.title }}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -97,7 +97,8 @@ export default {
         { title: 'Last Week', amount: 1 },
         { title: 'Two Weeks Ago', amount: 2 }
       ],
-      week: null,
+
+      week: { title: 'This Week', amount: 0 },
       date: moment().format('LLL'),
       serverPagination: {
         page: 1
@@ -177,7 +178,7 @@ export default {
           }
         })
         .then(response => {
-          console.log(response)
+          console.log(response.data.data)
           this.clockStatus = response.data.data
           this.loading = false
         })
@@ -185,9 +186,10 @@ export default {
           console.error(error)
         })
     },
-    changeWeek(amount) {
-      console.log(amount)
-      this.week = amount
+    changeWeek(w) {
+      console.log(w.amount)
+      ;(this.week = {}), (this.week.title = w.title)
+      this.week.amount = w.amount
       this.items = []
       this.request()
     },
@@ -211,8 +213,10 @@ export default {
         .then(response => {
           // console.log(response.data)
           var data = JSON.parse(response.data)
+          console.log(data)
+          // var data2 = JSON.parse(response.data)
           this.timeSheetID = data.data
-          // console.log(data.data.id)
+          console.log(this.timeSheetID)
           // console.log(data['id'])
           // console.log(data.id)
           // this.clockStatus = response.data

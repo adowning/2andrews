@@ -7,6 +7,7 @@
   "scripts": {
     "devbak": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "dev": "node build/dev-server.js",
+    "serve": "node build/dev-server.js",
     "lambda": "netlify-lambda serve lambda-src",
     "lambda:build": "netlify-lambda build lambda-src",
     "start": "npm run lambda & npm run dev",
@@ -20,7 +21,7 @@
     "@capacitor/cli": "^1.0.0-alpha.34",
     "@capacitor/core": "^1.0.0-alpha.34",
     "amazon-cognito-identity-js": "^2.0.0",
-    "aws-amplify": "^0.2.14",
+    "aws-amplify": "^0.3.0",
     "aws-sdk": "^2.197.0",
     "axios": "^0.18.0",
     "country-list": "^1.1.0",
