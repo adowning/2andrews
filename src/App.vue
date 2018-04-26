@@ -1,7 +1,13 @@
 <template>
+  <!-- <div v-if="hydrated" id="app"> -->
   <div id="app">
     <v-app>
-      <app-layout/>
+      <div
+        v-if="hydrated"
+        :key="$route.fullPath"
+      >
+        <router-view/>
+      </div>
 
     </v-app>
   </div>
@@ -9,7 +15,22 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  // data: () => ({ hydrated: false })
+  // async mounted() {
+  //   await this.$apollo.provider.defaultClient.hydrated()
+  //   this.hydrated = true
+  // }
+    data() {
+    return {
+      hydrated: false,
+    }
+  },
+  mounted() {
+    this.$apollo.provider.defaultClient
+      .hydrated()
+      .then(() => (this.hydrated = true))
+  },
 }
 </script>
 

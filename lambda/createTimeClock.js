@@ -60,53 +60,90 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 337);
+/******/ 	return __webpack_require__(__webpack_require__.s = 334);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 131:
+/***/ 201:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/home/ash/Documents/andrews-admin-app/node_modules/axios/index.js'");
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/home/ash/Documents/andrews-admin-app/node_modules/request/index.js'");
 
 /***/ }),
 
-/***/ 337:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["handler"] = handler;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_request__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_request___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_request__);
 
 
 /* eslint-disable */
-var axios = __webpack_require__(131);
-var snipeit = axios.create({
-  baseURL: 'http://47.219.112.177:83/api/',
-  timeout: 7000,
-  headers: {
-    'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijg2YzM2MTgxMzhmMTgxZWFiNjYxODA0ZWVlM2JjYjJjYmMzM2FjMWVlNjM2YjY5NDZkNzVlMzhmZmM4NTFjYzBkYjg1MGI4OGUyZThiYjU2In0.eyJhdWQiOiI4IiwianRpIjoiODZjMzYxODEzOGYxODFlYWI2NjE4MDRlZWUzYmNiMmNiYzMzYWMxZWU2MzZiNjk0NmQ3NWUzOGZmYzg1MWNjMGRiODUwYjg4ZTJlOGJiNTYiLCJpYXQiOjE1MjM0NjQ0NDMsIm5iZiI6MTUyMzQ2NDQ0MywiZXhwIjoxNTU1MDAwNDQzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.vOFDvt-779QzbItigmgjZdNaTYmKkuiduL01HJbgR3_oQ-_EKtDVt8KS2FZ-8QAcBgVwuXOZm-ZgssB92cEVvwspQsjiH8T1RTVB9ZpFK5HQU_hhErpBuaWD_FkupjzYz_PnJqDzU8j6I79vAPbkCF_NNPyI0DsjwXMSTx_a8d0yItfxroxHWdHaD9_MFPbO9l_TmYmu42aaQG9wMVNZUqvpk6iFiiS_mOQBh3sdwR-CCxnfz0lIMydfFEjfnNlmkexA0ThorMJKAr4YB28nVWQnoTf-Fx8mNdH42OLlzWGj0ZWCJAIHVpDiECGZw0xL6dCngJgCXvPHWpI7H2Lj6HL1vkJr4DLsd-oZlAk2h3u0g5W839ENoSaFJdt9t6Imk4MEAf8P2W0n5plhBjcpUJJXni93tSA5RO2_XQXRprWmUKMEvFajey2aNIVUq1rcW7PaFciwRDT5wkxFb294zhR_ElAF52Yzjq1ZH78_2hMsDyWq7sFrZ-Th-pPmXKsaUmNch8AZOSbeoqQyCGNduPjLZaV1qqeZhWGJD4bw9YLBdRliiqCSkV9UHYqauO0b8ZYFjZ5dC1s1E3TnsFya93LQG_rLMeeaZ9tQ6AfnHx4liL5fdB_LQNw8zLN_iGn0WdQZtWOMP2EJfB0lECBOnI5AnHRnWrGWJzCe3s6IxZo'
+
+var token = '?access_token=edc0b9be800a28b7b5f1135f8038e55fa891bcfe';
+
+function handler(event, context, callback) {
+  console.log(event.queryStringParameters);
+  // var id = JSON.parse( event.queryStringParameters.id )
+  // var inOut = JSON.parse( event.queryStringParameters.inOut )
+  var id = event.queryStringParameters.id.toString();
+  var inOut = event.queryStringParameters.inOut.toString();
+  var method = '';
+  if (inOut == 'clockin') {
+    method = 'POST';
   }
-});
-exports.handler = function (event, context, callback) {
-  snipeit.get('http://47.219.112.177:83/api/v1/hardware').then(function (data) {
+  if (inOut == 'clockout') {
+    method = 'PUT';
+  }
+  console.log(inOut);
+  var options = {
+    method: method,
+    url: "https://www.humanity.com/api/v2/employees/" + id + "/" + inOut + token,
+    // url: "https://www.humanity.com/api/v2/timeclock/savenote" + id + "?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: Object(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify__["default"])({
+      "id": id
+    })
+  };
+  Object(__WEBPACK_IMPORTED_MODULE_2_request__["default"])(options, function (error, response, body) {
     var cache = [];
-    var x = Object(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify__["default"])(data.data, function (key, value) {
-      if ((typeof value === 'undefined' ? 'undefined' : Object(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__["default"])(value)) === 'object' && value !== null) {
-        if (cache.indexOf(value) !== -1) {
-          // Circular reference found, discard key
-          return;
-        }
-        // Store value in our collection
-        cache.push(value);
+    var id = 'none';
+    if (response.body) {
+      try {
+        id = response.body;
+      } catch (error) {
+        console.log(error);
       }
-      return value;
-    });
+    }
+    // var id = response.body.payload.id
+    if (error) throw new Error(error);
+    console.log(id);
+    if (id != 'none') {
+      var x = Object(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_json_stringify__["default"])(id, function (key, value) {
+        if ((typeof value === 'undefined' ? 'undefined' : Object(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__["default"])(value)) === 'object' && value !== null) {
+          if (cache.indexOf(value) !== -1) {
+            // Circular reference found, discard key
+            return;
+          }
+          // Store value in our collection
+          cache.push(value);
+        }
+        return value;
+      });
+    }
     cache = null; // Enable garbage collection
+    console.log(x);
     callback(null, {
       statusCode: 200,
       headers: {
@@ -115,7 +152,7 @@ exports.handler = function (event, context, callback) {
       body: x
     });
   });
-};
+}
 
 /***/ }),
 
