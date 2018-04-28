@@ -52,7 +52,7 @@ export default {
     }
   },
   computed: {
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     // active(x) {
     //   console.log(this.active)
     //   console.log(x)
@@ -224,8 +224,8 @@ export default {
      * waits for it to load. The promise returned here is the payload for the
      * `init` event. Any error here leads to this promises rejection.
      */
-    //eslint-ignore-next-line
-    //eslint-disable-next-line
+    // eslint-ignore-next-line
+    // eslint-disable-next-line
     async startCamera() {
       // check if browser is support first
       if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {

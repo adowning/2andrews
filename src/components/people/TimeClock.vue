@@ -19,14 +19,14 @@
           <template v-if="!loading">
 
             <v-list>
-              <template v-if="clockStatus == 'out'">
+              <template v-if="clockStatus ==='out'">
                 <v-layout row my-4>
                   <v-flex xs6 offset-xs3>
                     <v-btn block color="info" dark @click.native="updateClockStatus()">Clock In</v-btn>
                   </v-flex>
                 </v-layout>
               </template>
-              <template v-if="clockStatus == 'in'">
+              <template v-if="clockStatus === 'in'">
                 <v-layout row mt-4>
                   <v-flex xs8 offset-xs1>
                     <v-text-field name="input-1" label="Note" id="testing"></v-text-field>
@@ -80,7 +80,7 @@
 </template>
 <script>
 import moment from 'moment'
-//asdf
+// asdf
 export default {
   data() {
     return {
@@ -151,26 +151,9 @@ export default {
     this.request(0)
   },
   methods: {
-    addNote() {
-      this.$http
-        //eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/addNote', {
-          params: {
-            id: this.timeSheetID
-          }
-        })
-        .then(response => {
-          console.log(response)
-          //this.clockStatus = response.data.data
-          //this.loading = false
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
     getClockStatus() {
       this.$http
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getClockStatus', {
           params: {
             id: this.$store.getters.profile['custom:humanity']
@@ -185,23 +168,16 @@ export default {
           console.error(error)
         })
     },
-    changeWeek(amount) {
-      console.log(amount)
-      this.week = amount
-      this.items = []
-      this.request()
-    },
-
     updateClockStatus() {
       this.timeFigured = true
       var command = ''
-      if (this.clockStatus == 'in') {
+      if (this.clockStatus === 'in') {
         command = 'clockout'
       } else {
         command = 'clockin'
       }
       this.$http
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/createTimeClock', {
           params: {
             id: this.$store.getters.profile['custom:humanity'],
@@ -226,7 +202,7 @@ export default {
       this.items = []
       this.loading = true
       this.$http
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getTimeClocks', {
           params: {
             start_date: this.startEndDates.start_date,
@@ -250,7 +226,31 @@ export default {
           console.log('sugar tits ', error)
           this.loading = false
         })
-    }
+    },
+    changeWeek(amount) {
+      console.log(amount)
+      this.week = amount
+      this.items = []
+      this.request()
+    },
+        addNote() {
+      this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/addNote', {
+          params: {
+            id: this.timeSheetID
+          }
+        })
+        .then(response => {
+          console.log(response)
+          // this.clockStatus = response.data.data
+          // this.loading = false
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+
   }
 }
 </script>

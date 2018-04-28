@@ -30,7 +30,7 @@ instance.interceptors.response.use(
 )
 export function handler( event, context, callback ) {
   var id = JSON.parse( event.queryStringParameters.id )
-  instance.get( "timeclocks/status/" + id + "/0?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77", {
+  instance.get( "timeclocks/status/" + id + "0?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77", {
     params: {
       details: 0
     }

@@ -277,7 +277,7 @@ export default {
       return Object.assign({}, this.style.picker, pickerStyle)
     },
     userId: function () {
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       return state.amplifyUser.userId
     }
   },
@@ -299,7 +299,7 @@ export default {
     /* eslint-enable */
     pick: function (e) {
       const file = e.target.files[0]
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       const { name, size, type } = file
       // console.log(file)
       // console.log('upload photo to ' + this.newLogin)

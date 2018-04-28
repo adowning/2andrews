@@ -8,17 +8,19 @@ import Confirm from '@/components/auth/Confirm'
 import Callback from '@/components/auth/Callback'
 import ErrorMsg from '@/components/auth/ErrorMsg'
 import TimeClock from '@/components/people/TimeClock'
+
 import Hardware from '@/components/assets/Hardware'
+import Maintenance from '@/components/assets/Maintenance'
+import Logout from '@/components/assets/Maintenance'
 import Consumables from '@/components/assets/Consumables'
 import Profile from '@/components/Profile/'
-import Logout from '@/components/auth/Logout'
 
 
-Vue.use( Router )
+Vue.use(Router)
 
-const router = new Router( {
+const router = new Router({
   mode: 'history',
-  routes: [ {
+  routes: [{
       path: '/',
       name: 'home',
       component: Home,
@@ -94,6 +96,16 @@ const router = new Router( {
       }
     },
     {
+      path: '/maintenance',
+      name: 'maintenance',
+      component: Maintenance,
+      props: true,
+      meta: {
+        title: 'Maintenance',
+        auth: true
+      }
+    },
+    {
       path: '/consumables',
       name: 'consumables',
       component: Consumables,
@@ -132,32 +144,32 @@ const router = new Router( {
     //   }
     // }
   ]
-} )
+})
 
-router.beforeEach( ( to, from, next ) => {
+router.beforeEach((to, from, next) => {
   // Use the page's router title to name the page
-  if ( to.meta && to.meta.title ) {
+  if (to.meta && to.meta.title) {
     document.title = to.meta.title
   }
 
   // Redirect to the login page if not authenticated
   // for pages that have 'auth: true' set
-  if ( to.meta && to.meta.auth !== undefined ) {
-    if ( to.meta.auth ) {
-      if ( store.getters.isAuthenticated ) {
+  if (to.meta && to.meta.auth !== undefined) {
+    if (to.meta.auth) {
+      if (store.getters.isAuthenticated) {
         // if (store.getters.authenticated) {
         next()
       } else {
-        router.push( {
+        router.push({
           name: 'login'
-        } )
+        })
       }
     } else {
-      if ( store.getters.isAuthenticated ) {
+      if (store.getters.isAuthenticated) {
         // if (store.getters.authenticated) {
-        router.push( {
+        router.push({
           name: 'home'
-        } )
+        })
       } else {
         next()
       }
@@ -165,6 +177,6 @@ router.beforeEach( ( to, from, next ) => {
   } else {
     next()
   }
-} )
+})
 
 export default router

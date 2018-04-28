@@ -1,20 +1,50 @@
 <template>
-  <v-container grid-list-md class="mt-3">
-    <v-layout row wrap justify-center>
-      <v-flex xl8 lg12 md12 sm12 xs12>
+  <v-container 
+    grid-list-md 
+    class="mt-3">
+    <v-layout 
+      row 
+      wrap 
+      justify-center>
+      <v-flex 
+        xl8 
+        lg12 
+        md12 
+        sm12 
+        xs12>
         <v-card class="pa-4 ml-4 mr-4">
-          <v-layout row justify-center>
-            <v-layout column align-center>
-              <transition appear name="fadeout">
-                <img class="aws-logo" style="width:140px;height:140px" src="../../../static/logo.png">
+          <v-layout 
+            row 
+            justify-center>
+            <v-layout 
+              column 
+              align-center>
+              <transition 
+                appear 
+                name="fadeout">
+                <img 
+                  class="aws-logo" 
+                  style="width:140px;height:140px" 
+                  src="../../../static/logo.png">
               </transition>
               <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
               <!-- <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">using Amazon Cognito and Vue.js with Material Design</h3> -->
             </v-layout>
-            <v-flex xl6 lg6 md6 sm6>
-              <transition appear name="fadeout">
+            <v-flex 
+              xl6 
+              lg6 
+              md6 
+              sm6>
+              <transition 
+                appear 
+                name="fadeout">
                 <v-card class="elevation-0 pa-2 ml-1 mr-1">
-                  <v-alert v-model="showerr" outline type="error" dismissible class="ml-3 mr-3">
+                  <v-alert 
+                    v-model="showerr" 
+                    outline 
+                    type="error" 
+                    dismissible 
+                    class="ml-3 mr-3">
                     {{ errmsg }}
                   </v-alert>
                   <v-card-title primary-title>
@@ -24,14 +54,50 @@
                   </v-card-title>
                   <v-card-text>
                     <v-form v-model="valid">
-                      <v-text-field v-model="humanityID" :rules="humanityRules" label="Humanity ID" hint="Click on your profile at humanity.com and type in 7 digit code at end" required/>
-                      <v-btn block class="mt-3 mb-3" outline color="secondary" @click.native="verifyHumanity">Check ID</v-btn>
-                      <v-text-field v-show="validHumanityID" v-model="firstname" disabled label="First Name" required/>
-                      <v-text-field v-show="validHumanityID " v-model="lastname" disabled label="Last Name" required/>
-                      <v-text-field v-show="validHumanityID " v-model="password" :rules="passRules" :append-icon="hidepw ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidepw = !hidepw)" :type="hidepw ? 'password' : 'text'" label="New Password" hint="At least 6 characters" required/>
+                      <v-text-field 
+                        v-model="humanityID" 
+                        :rules="humanityRules" 
+                        label="Humanity ID" 
+                        hint="Click on your profile at humanity.com and type in 7 digit code at end" 
+                        required/>
+                      <v-btn 
+                        block 
+                        class="mt-3 mb-3" 
+                        outline 
+                        color="secondary" 
+                        @click.native="verifyHumanity">Check ID</v-btn>
+                      <v-text-field 
+                        v-show="validHumanityID" 
+                        v-model="firstname" 
+                        disabled 
+                        label="First Name" 
+                        required/>
+                      <v-text-field 
+                        v-show="validHumanityID " 
+                        v-model="lastname" 
+                        disabled 
+                        label="Last Name" 
+                        required/>
+                      <v-text-field 
+                        v-show="validHumanityID " 
+                        v-model="password" 
+                        :rules="passRules" 
+                        :append-icon="hidepw ? 'visibility' : 'visibility_off'" 
+                        :append-icon-cb="() => (hidepw = !hidepw)" 
+                        :type="hidepw ? 'password' : 'text'" 
+                        label="New Password" 
+                        hint="At least 6 characters" 
+                        required/>
                     </v-form>
                     <!-- <v-btn :loading="loading" :disabled="!valid" block class="mt-3 mb-3" dark color="primary" @click.native="onSubmit()"> -->
-                    <v-btn :loading="loading" :disabled="!valid" block class="mt-3 mb-3" dark color="primary" @click.native="onSubmit()">
+                    <v-btn 
+                      :loading="loading" 
+                      :disabled="!valid" 
+                      block 
+                      class="mt-3 mb-3" 
+                      dark 
+                      color="primary" 
+                      @click.native="onSubmit()">
                       Register
                       <span slot="loader">Connecting...</span>
                     </v-btn>
@@ -149,7 +215,7 @@ export default {
     // },
     verifyHumanity() {
       this.$http
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getHumanityID', { params: { id: this.humanityID } })
         .then(response => {
           this.humanityID = response.data.id
@@ -157,7 +223,7 @@ export default {
           this.lastname = response.data.lastname
           this.validHumanityID = true
           this.$http
-            //eslint-disable-next-line
+            // eslint-disable-next-line
             .get(process.env.LAMBDA_API + '/createSnipeitUser', {
               params: { first_name: this.firstname, username: this.username }
             })

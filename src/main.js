@@ -2,10 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-// import router from './routes'
 import router from './router'
 import Vuetify from 'vuetify'
-// import AppLayout from './components/layout/Layout.vue'
 import AppHome from './components/Home.vue'
 import AppSignin from './components/auth/Signin.vue'
 import AppRegister from './components/auth/Register.vue'
@@ -15,17 +13,14 @@ import AppConfirm from './components/auth/Confirm.vue'
 import AppChanged from './components/auth/Changed.vue'
 import AppProfile from './components/Profile/'
 import store from './store/'
-// import VueResource from 'vue-resource'
-// Vue.use(VueResource)
-// import awsExports from '../awsmobilejs/#current-backend-info/aws_exports'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import 'vuetify/dist/vuetify.min.css'
+import fullCalendar from 'vue-fullcalendar'
 
-Vue.use( VueAxios, axios )
-// index.js or main.js
-import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+Vue.use(VueAxios, axios) // Ensure you are using css-loader
 
-Vue.use( Vuetify, {
+Vue.use(Vuetify, {
   theme: {
     // primary: '#1976D2',
 
@@ -44,32 +39,32 @@ Vue.use( Vuetify, {
     // success: '#4CAF50',
     // warning: '#FFC107'
   }
-} )
+})
+
+Vue.component('app-layout', function (resolve) {
+  // eslint-disable-next-line
+  require(['./components/layout/Layout.vue'], resolve)
+})
+Vue.component('app-home', AppHome)
+Vue.component('app-signin', AppSignin)
+Vue.component('app-register', AppRegister)
+Vue.component('app-registered', AppRegistered)
+Vue.component('app-forgot', AppForgot)
+Vue.component('app-confirm', AppConfirm)
+Vue.component('app-changed', AppChanged)
+Vue.component('app-profile', AppProfile)
+Vue.component('full-calendar', fullCalendar)
+
 
 Vue.config.productionTip = false
 
-// Vue.component('app-layout', AppLayout)
-Vue.component( 'app-layout', function ( resolve ) {
-  //eslint-disable-next-line
-  require( [ './components/layout/Layout.vue' ], resolve )
-} )
-Vue.component( 'app-home', AppHome )
-Vue.component( 'app-signin', AppSignin )
-Vue.component( 'app-register', AppRegister )
-Vue.component( 'app-registered', AppRegistered )
-Vue.component( 'app-forgot', AppForgot )
-Vue.component( 'app-confirm', AppConfirm )
-Vue.component( 'app-changed', AppChanged )
-Vue.component( 'app-profile', AppProfile )
-
-
 /* eslint-disable no-new */
-new Vue( {
+new Vue({
   el: '#app',
   router,
   store,
   components: {
     App
   },
-  render: h => h( App )
-} )
+  render: h => h(App)
+})

@@ -1,6 +1,20 @@
 import router from '../router'
 import jwt from 'jwt-decode'
 
+let initialState = {
+  "token": null,
+  "user": {}
+}
+
+// const state = Vue.util.extend({}, initialState)
+
+// const mutations = {
+//   RESET_STATE(state, payload) {
+//      for (let f in state) {
+//       Vue.set(state, f, initialState[f])
+//      }
+//   }
+// }
 export default {
   state: {
     profile: null,
@@ -42,7 +56,9 @@ export default {
       context.commit('setProfile', null)
       context.commit('setAccessToken', null)
       context.commit('setAuthenticated', false)
-      router.push({ name: 'login' })
+      router.push({
+        name: 'login'
+      })
     },
     authenticate: function (context, payload) {
       // if (payload.verification === null || payload.verification !== context.getters.verification) {
@@ -60,7 +76,9 @@ export default {
       context.commit('setIdToken', payload.idToken)
       context.commit('setAuthenticated', true)
       console.log('hai2u')
-      router.push({ name: 'home' })
+      router.push({
+        name: 'home'
+      })
     }
   }
 }
