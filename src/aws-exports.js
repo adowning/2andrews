@@ -7,19 +7,27 @@
 // AWS Mobile Hub Project Constants
 const awsmobile = {
     'aws_app_analytics': 'enable',
-    'aws_cognito_identity_pool_id': 'us-east-1:a61097e6-6170-4c04-b2e6-448452c4f914',
+    'aws_cognito_identity_pool_id': 'us-east-1:bef89f68-cbc6-4f96-b7b9-516398941452',
     'aws_cognito_region': 'us-east-1',
     'aws_content_delivery': 'enable',
-    'aws_content_delivery_bucket': 'andrewsadmin-hosting-mobilehub-540552369',
+    'aws_content_delivery_bucket': 'andrewsadminapp-hosting-mobilehub-1405917934',
     'aws_content_delivery_bucket_region': 'us-east-1',
     'aws_content_delivery_cloudfront': 'enable',
-    'aws_content_delivery_cloudfront_domain': 'd1w5cizpg7lu73.cloudfront.net',
-    'aws_mobile_analytics_app_id': '13bf57431980460885f8c13f975bb348',
+    'aws_content_delivery_cloudfront_domain': 'd2oo75np99839y.cloudfront.net',
+    'aws_mandatory_sign_in': 'enable',
+    'aws_mobile_analytics_app_id': '9e97adaa54c54bf8a55c03ac2a483b06',
     'aws_mobile_analytics_app_region': 'us-east-1',
-    'aws_project_id': 'add1e52b-5eb9-46d8-af8f-3453bda9b0ea',
-    'aws_project_name': 'andrews-admin',
+    'aws_project_id': '2ea60518-02da-4e73-8378-0f0600a04d4a',
+    'aws_project_name': 'andrews-admin-app',
     'aws_project_region': 'us-east-1',
-    'aws_resource_name_prefix': 'andrewsadmin-mobilehub-540552369',
+    'aws_resource_name_prefix': 'andrewsadminapp-mobilehub-1405917934',
+    'aws_sign_in_enabled': 'enable',
+    'aws_user_files': 'enable',
+    'aws_user_files_s3_bucket': 'andrewsadminapp-userfiles-mobilehub-1405917934',
+    'aws_user_files_s3_bucket_region': 'us-east-1',
+    'aws_user_pools': 'enable',
+    'aws_user_pools_id': 'us-east-1_LDuyTsU9m',
+    'aws_user_pools_web_client_id': '72pmbieu5hu95fgt21up8ecem1',
 }
 
-export default awsmobile
+export default awsmobile;

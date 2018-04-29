@@ -17,10 +17,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@capacitor/android": "^1.0.0-alpha.36",
     "@capacitor/cli": "^1.0.0-alpha.34",
     "@capacitor/core": "^1.0.0-alpha.34",
     "amazon-cognito-identity-js": "^2.0.3",
-    "aws-amplify": "^0.2.14",
+    "aws-amplify": "^0.2.15",
     "aws-sdk": "^2.197.0",
     "axios": "^0.18.0",
     "country-list": "^1.1.0",

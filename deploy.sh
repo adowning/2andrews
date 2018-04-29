@@ -4,4 +4,5 @@ netlify-lambda build lambda-src
 git add .
 git commit -m h=$(hostname -f)
 git push origin appsync --force
+awsmobile publish --test
 rm .gitupdate.txt
