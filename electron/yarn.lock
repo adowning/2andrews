@@ -2,21 +2,21 @@
 # yarn lockfile v1
 
 
-"@capacitor/core@^1.0.0-alpha.34":
-  version "1.0.0-alpha.34"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-1.0.0-alpha.34.tgz#fbaa2ccb808414d0ed930113e3520d9d8fffdf3e"
+"@capacitor/core@^1.0.0-alpha.36":
+  version "1.0.0-alpha.36"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-1.0.0-alpha.36.tgz#8941ad73f87494292c489bbe9eedc32af6cac86b"
   dependencies:
     tslib "^1.9.0"
 
 "@capacitor/electron@^1.0.0-alpha.28":
-  version "1.0.0-alpha.34"
-  resolved "https://registry.yarnpkg.com/@capacitor/electron/-/electron-1.0.0-alpha.34.tgz#abf26c0e3784cfd882684cdd1820cf5f19f1c3d4"
+  version "1.0.0-alpha.36"
+  resolved "https://registry.yarnpkg.com/@capacitor/electron/-/electron-1.0.0-alpha.36.tgz#f8b7c993e7b23d89919d90d075025085a963e4e8"
   dependencies:
-    "@capacitor/core" "^1.0.0-alpha.34"
+    "@capacitor/core" "^1.0.0-alpha.36"
 
 "@types/node@^8.0.24":
-  version "8.10.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.8.tgz#794cba23cc9f8d9715f6543fa8827433b5f5cd3b"
+  version "8.10.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.10.tgz#fec07bc2ad549d9e6d2f7aa0fb0be3491b83163a"
 
 ajv@^5.1.0:
   version "5.5.2"
@@ -193,9 +193,9 @@ electron-is-dev@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.3.0.tgz#14e6fda5c68e9e4ecbeff9ccf037cbd7c05c5afe"
 
-electron@^1.8.4:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.4.tgz#cca8d0e6889f238f55b414ad224f03e03b226a38"
+electron@^1.8.2:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.6.tgz#6d45e377b321a35b78a794b64e40b2cf8face6ae"
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^3.0.1"
@@ -721,8 +721,8 @@ rimraf@^2.2.8:
     glob "^7.0.5"
 
 safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.5.0"
