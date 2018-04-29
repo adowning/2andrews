@@ -21,19 +21,19 @@ export default {
   props: {
     paused: {
       type: Boolean,
-      default: false
+      default: false,
     },
     videoConstraints: {
       type: [Object, Boolean],
-      default: () => ({}) // empty object
+      default: () => ({}), // empty object
     },
-    active: { type: String, default: 'tab-1' }
+    active: { type: String, default: 'tab-1' },
   },
   data() {
     return {
       activated: {
         type: [Object, Boolean],
-        default: false // empty object
+        default: false, // empty object
       },
       // current video stream instance returned by `getUserMedia`
       stream: null,
@@ -48,7 +48,7 @@ export default {
       // array of most recent detected QR code corner coordinates
       locateResult: NO_LOCATION,
       // canvas 2D rendering context to capture stream frames with
-      canvasContext: null
+      canvasContext: null,
     }
   },
   computed: {
@@ -94,12 +94,12 @@ export default {
           facingMode: { ideal: 'environment' },
           width: { min: 360, ideal: 1280, max: 1920 },
           height: { min: 240, ideal: 720, max: 1080 },
-          ...this.videoConstraints
+          ...this.videoConstraints,
         }
       }
       return {
         audio: false,
-        video: withDefaults
+        video: withDefaults,
       }
     },
     /**
@@ -109,12 +109,12 @@ export default {
      */
     streamBounds() {
       return [0, 0, this.streamWidth, this.streamHeight]
-    }
+    },
   },
   watch: {
     active() {
       this.activated = false
-      if (this.active == 'tab-2') {
+      if (this.active === 'tab-2') {
         console.log(this.active)
         this.activated = true
       }
@@ -197,8 +197,8 @@ export default {
       deep: true,
       handler() {
         this.$emit('init', this.startCamera())
-      }
-    }
+      },
+    },
   },
   /**
    * Instanly requests a stream from the users camera as soon as the component
@@ -323,18 +323,18 @@ export default {
               result.location.topLeftCorner,
               result.location.topRightCorner,
               result.location.bottomRightCorner,
-              result.location.bottomLeftCorner
+              result.location.bottomLeftCorner,
             ]
             this.locateResult = locationArray.map(({ x, y }) => ({
               x: x * widthRatio,
-              y: y * heightRatio
+              y: y * heightRatio,
             }))
           }
           window.setTimeout(this.keepLocating, LOCATE_INTERVAL)
         })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -1,49 +1,49 @@
 <template>
-  <v-container 
-    grid-list-md 
+  <v-container
+    grid-list-md
     class="mt-3">
-    <v-layout 
-      row 
-      wrap 
+    <v-layout
+      row
+      wrap
       justify-center>
-      <v-flex 
-        xl8 
-        lg12 
-        md12 
-        sm12 
+      <v-flex
+        xl8
+        lg12
+        md12
+        sm12
         xs12>
         <v-card class="pa-4 ml-4 mr-4">
-          <v-layout 
-            row 
+          <v-layout
+            row
             justify-center>
-            <v-layout 
-              column 
+            <v-layout
+              column
               align-center>
-              <transition 
-                appear 
+              <transition
+                appear
                 name="fadeout">
-                <img 
-                  class="aws-logo" 
-                  style="width:140px;height:140px" 
+                <img
+                  class="aws-logo"
+                  style="width:140px;height:140px"
                   src="../../../static/logo.png">
               </transition>
               <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
               <!-- <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">using Amazon Cognito and Vue.js with Material Design</h3> -->
             </v-layout>
-            <v-flex 
-              xl6 
-              lg6 
-              md6 
+            <v-flex
+              xl6
+              lg6
+              md6
               sm6>
-              <transition 
-                appear 
+              <transition
+                appear
                 name="fadeout">
                 <v-card class="elevation-0 pa-2 ml-1 mr-1">
-                  <v-alert 
-                    v-model="showerr" 
-                    outline 
-                    type="error" 
-                    dismissible 
+                  <v-alert
+                    v-model="showerr"
+                    outline
+                    type="error"
+                    dismissible
                     class="ml-3 mr-3">
                     {{ errmsg }}
                   </v-alert>
@@ -54,49 +54,49 @@
                   </v-card-title>
                   <v-card-text>
                     <v-form v-model="valid">
-                      <v-text-field 
-                        v-model="humanityID" 
-                        :rules="humanityRules" 
-                        label="Humanity ID" 
-                        hint="Click on your profile at humanity.com and type in 7 digit code at end" 
+                      <v-text-field
+                        v-model="humanityID"
+                        :rules="humanityRules"
+                        label="Humanity ID"
+                        hint="Click on your profile at humanity.com and type in 7 digit code at end"
                         required/>
-                      <v-btn 
-                        block 
-                        class="mt-3 mb-3" 
-                        outline 
-                        color="secondary" 
+                      <v-btn
+                        block
+                        class="mt-3 mb-3"
+                        outline
+                        color="secondary"
                         @click.native="verifyHumanity">Check ID</v-btn>
-                      <v-text-field 
-                        v-show="validHumanityID" 
-                        v-model="firstname" 
-                        disabled 
-                        label="First Name" 
+                      <v-text-field
+                        v-show="validHumanityID"
+                        v-model="firstname"
+                        disabled
+                        label="First Name"
                         required/>
-                      <v-text-field 
-                        v-show="validHumanityID " 
-                        v-model="lastname" 
-                        disabled 
-                        label="Last Name" 
+                      <v-text-field
+                        v-show="validHumanityID "
+                        v-model="lastname"
+                        disabled
+                        label="Last Name"
                         required/>
-                      <v-text-field 
-                        v-show="validHumanityID " 
-                        v-model="password" 
-                        :rules="passRules" 
-                        :append-icon="hidepw ? 'visibility' : 'visibility_off'" 
-                        :append-icon-cb="() => (hidepw = !hidepw)" 
-                        :type="hidepw ? 'password' : 'text'" 
-                        label="New Password" 
-                        hint="At least 6 characters" 
+                      <v-text-field
+                        v-show="validHumanityID "
+                        v-model="password"
+                        :rules="passRules"
+                        :append-icon="hidepw ? 'visibility' : 'visibility_off'"
+                        :append-icon-cb="() => (hidepw = !hidepw)"
+                        :type="hidepw ? 'password' : 'text'"
+                        label="New Password"
+                        hint="At least 6 characters"
                         required/>
                     </v-form>
                     <!-- <v-btn :loading="loading" :disabled="!valid" block class="mt-3 mb-3" dark color="primary" @click.native="onSubmit()"> -->
-                    <v-btn 
-                      :loading="loading" 
-                      :disabled="!valid" 
-                      block 
-                      class="mt-3 mb-3" 
-                      dark 
-                      color="primary" 
+                    <v-btn
+                      :loading="loading"
+                      :disabled="!valid"
+                      block
+                      class="mt-3 mb-3"
+                      dark
+                      color="primary"
                       @click.native="onSubmit()">
                       Register
                       <span slot="loader">Connecting...</span>
@@ -156,7 +156,7 @@ export default {
       password: '',
       humanityRules: [
         v => !!v || 'HumanityID is required',
-        v => v.length == 7 || 'HumanityID must be 7 characters'
+        v => v.length === 7 || 'HumanityID must be 7 characters'
         // v => /^(?=.*[0-9])/.test(v) || 'Password must contain at least 1 number',
         // v => /^(?=.*[a-z])/.test(v) || 'Password must contain at least 1 lower case letter',
         // v => /^(?=.*[A-Z])/.test(v) || 'Password must contain at least 1 upper case letter',

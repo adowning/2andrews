@@ -1,55 +1,55 @@
 import axios from 'axios'
-const token = '?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77'
+const token = localStorage.getItem('humanityToken')
 const BASE_URL = 'https://www.humanity.com/api/v2/'
 
-const instance = axios.create( {
+const instance = axios.create({
   baseURL: BASE_URL,
   timeout: false
-} )
+})
 // Add a request interceptor
 instance.interceptors.request.use(
-  function ( config ) {
+  function (config) {
     //eslint-disable-next-line
     /* global window Store */
-    config.headers.common[ 'Access-Control-Allow-Origin' ] = '*'
+    config.headers.common['Access-Control-Allow-Origin'] = '*'
 
     return config
   },
-  function ( error ) {
+  function (error) {
     // Do something with request error
-    return Promise.reject( error )
+    return Promise.reject(error)
   }
 )
 
 instance.interceptors.response.use(
   response => response,
   error => {
-    console.log( error.config )
-    return Promise.reject( error )
+    console.log(error.config)
+    return Promise.reject(error)
   }
 )
-export function handler( event, context, callback ) {
-  instance.get( 'employees/' + event.queryStringParameters.id + token ).then( response => {
+export function handler(event, context, callback) {
+  instance.get('employees/' + event.queryStringParameters.id + token).then(response => {
     var cache = []
-    var x = JSON.stringify( response.data.data, function ( key, value ) {
+    var x = JSON.stringify(response.data.data, function (key, value) {
 
-      if ( typeof value === 'object' && value !== null ) {
-        if ( cache.indexOf( value ) !== -1 ) {
+      if (typeof value === 'object' && value !== null) {
+        if (cache.indexOf(value) !== -1) {
           // Circular reference found, discard key
           return
         }
         // Store value in our collection
-        cache.push( value )
+        cache.push(value)
       }
       return value
-    } )
+    })
     cache = null // Enable garbage collection
-    callback( null, {
+    callback(null, {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
       body: x,
-    } )
-  } )
+    })
+  })
 }

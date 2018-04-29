@@ -1,10 +1,10 @@
 import router from '../router'
 import jwt from 'jwt-decode'
 
-let initialState = {
-  "token": null,
-  "user": {}
-}
+// let initialState = {
+//   "token": null,
+//   "user": {}
+// }
 
 // const state = Vue.util.extend({}, initialState)
 
@@ -21,7 +21,7 @@ export default {
     accessToken: null,
     verification: null,
     isAuthenticated: false,
-    count: 0
+    count: 0,
   },
 
   getters: {
@@ -29,7 +29,7 @@ export default {
     verification: state => state.verification,
     accessToken: state => state.accessToken,
     idToken: state => state.idToken,
-    isAuthenticated: state => state.isAuthenticated
+    isAuthenticated: state => state.isAuthenticated,
   },
 
   mutations: {
@@ -47,17 +47,18 @@ export default {
     },
     setAuthenticated: (state, isAuthenticated) => {
       state.isAuthenticated = isAuthenticated
-    }
+    },
   },
 
   actions: {
     signout: function (context, payload) {
-      console.log(payload)
+      console.log('store signout')
       context.commit('setProfile', null)
       context.commit('setAccessToken', null)
+      context.commit('setIdToken', null)
       context.commit('setAuthenticated', false)
       router.push({
-        name: 'login'
+        name: 'login',
       })
     },
     authenticate: function (context, payload) {
@@ -75,10 +76,9 @@ export default {
       context.commit('setAccessToken', payload.accessToken)
       context.commit('setIdToken', payload.idToken)
       context.commit('setAuthenticated', true)
-      console.log('hai2u')
       router.push({
-        name: 'home'
+        name: 'home',
       })
-    }
-  }
+    },
+  },
 }

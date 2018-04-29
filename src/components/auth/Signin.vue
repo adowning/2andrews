@@ -1,49 +1,49 @@
 <template>
-  <v-container 
-    grid-list-md 
+  <v-container
+    grid-list-md
     class="mt-3">
-    <v-layout 
-      row 
-      wrap 
+    <v-layout
+      row
+      wrap
       justify-center>
-      <v-flex 
-        xl8 
-        lg12 
-        md12 
-        sm12 
+      <v-flex
+        xl8
+        lg12
+        md12
+        sm12
         xs12>
         <v-card class="pa-4 ml-4 mr-4">
-          <v-layout 
-            row 
+          <v-layout
+            row
             justify-center>
-            <v-layout 
-              column 
+            <v-layout
+              column
               align-center>
-              <transition 
-                appear 
+              <transition
+                appear
                 name="fadeout">
-                <img 
-                  class="aws-logo" 
-                  style="width:140px;height:140px" 
+                <img
+                  class="aws-logo"
+                  style="width:140px;height:140px"
                   src="../../../static/logo.png">
               </transition>
               <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">Andrews Administration</h3>
               <!-- <h3 class="mb-3 text-xs-center grey--text hidden-xs-only">using Amazon Cognito and Vue.js with Material Design</h3> -->
             </v-layout>
-            <v-flex 
-              xl6 
-              lg6 
-              md6 
+            <v-flex
+              xl6
+              lg6
+              md6
               sm6>
-              <transition 
-                appear 
+              <transition
+                appear
                 name="fadeout">
                 <v-card class="elevation-0 pa-2 ml-1 mr-1">
-                  <v-alert 
-                    v-model="showerr" 
-                    outline 
-                    type="error" 
-                    dismissible 
+                  <v-alert
+                    v-model="showerr"
+                    outline
+                    type="error"
+                    dismissible
                     class="ml-3 mr-3">
                     {{ errmsg }}
                   </v-alert>
@@ -54,27 +54,27 @@
                   </v-card-title>
                   <v-card-text>
                     <v-form v-model="valid">
-                      <v-text-field 
-                        v-model="email" 
-                        label="Username" 
+                      <v-text-field
+                        v-model="email"
+                        label="Username"
                         required/>
-                      <v-text-field 
-                        v-model="password" 
-                        :rules="passRules" 
-                        :append-icon="hidepw ? 'visibility' : 'visibility_off'" 
-                        :append-icon-cb="() => (hidepw = !hidepw)" 
-                        :type="hidepw ? 'password' : 'text'" 
-                        label="Password" 
-                        hint="At least 8 characters" 
+                      <v-text-field
+                        v-model="password"
+                        :rules="passRules"
+                        :append-icon="hidepw ? 'visibility' : 'visibility_off'"
+                        :append-icon-cb="() => (hidepw = !hidepw)"
+                        :type="hidepw ? 'password' : 'text'"
+                        label="Password"
+                        hint="At least 8 characters"
                         required/>
                     </v-form>
-                    <v-btn 
-                      :loading="loading" 
-                      :disabled="!valid" 
-                      block 
-                      class="mt-3 mb-3" 
-                      dark 
-                      color="primary" 
+                    <v-btn
+                      :loading="loading"
+                      :disabled="!valid"
+                      block
+                      class="mt-3 mb-3"
+                      dark
+                      color="primary"
                       @click.native="onSubmit()">
                       Sign In
                       <span slot="loader">Connecting...</span>
@@ -113,22 +113,26 @@ export default {
       showerr: false,
       errcode: '',
       errmsg: '',
-      username: 'ash',
+      username: 'a.downing',
       valid: false,
-      email: 'ash',
+      email: 'a.downing',
       emailRules: [
         // eslint-disable-next-line
         v => !!v || 'E-mail is required',
         // eslint-disable-next-line
         v =>
           // eslint-disable-next-line
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          'E-mail must be valid',
       ],
       password: 'asdfasdf',
-      passRules: [v => !!v || 'Password is required', v => v.length >= 8 || 'Password must be at least 8 characters'],
+      passRules: [
+        v => !!v || 'Password is required',
+        v => v.length >= 8 || 'Password must be at least 8 characters',
+      ],
       hidepw: true,
       loader: false,
-      loading: false
+      loading: false,
     }
   },
   watch: {
@@ -150,7 +154,7 @@ export default {
       } else {
         this.showerr = false
       }
-    }
+    },
   },
   created() {
     // return auth.authenticate(provider)
@@ -168,17 +172,28 @@ export default {
       console.log('sign in with: ' + this.email + ' ' + this.password)
       var authenticationData = {
         Username: this.email,
-        Password: this.password
+        Password: this.password,
       }
-      console.log('auth data: ' + authenticationData.Username + ' ' + authenticationData.Password)
-      var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData)
+      console.log(
+        'auth data: ' +
+          authenticationData.Username +
+          ' ' +
+          authenticationData.Password
+      )
+      var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
+        authenticationData
+      )
 
-      this.$store.state.userPool = new AmazonCognitoIdentity.CognitoUserPool(config.poolData)
+      this.$store.state.userPool = new AmazonCognitoIdentity.CognitoUserPool(
+        config.poolData
+      )
       var userData = {
         Username: this.email,
-        Pool: this.$store.state.userPool
+        Pool: this.$store.state.userPool,
       }
-      this.$store.state.cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData)
+      this.$store.state.cognitoUser = new AmazonCognitoIdentity.CognitoUser(
+        userData
+      )
       this.$store.state.cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: result => {
           console.log(result.accessToken)
@@ -187,7 +202,7 @@ export default {
           // console.log(result.expiresIn)
           storex.dispatch('authenticate', {
             accessToken: result.accessToken,
-            idToken: result.idToken
+            idToken: result.idToken,
             //  verification: result.verification,
             //  expiresIn: result.expiresIn
           })
@@ -211,7 +226,7 @@ export default {
           // this[l] = false
           // this.loader = null
           // }
-        }
+        },
       })
     },
     navRreset: function() {
@@ -219,8 +234,8 @@ export default {
     },
     getMessage: function() {
       return this.message
-    }
-  }
+    },
+  },
 }
 </script>
 

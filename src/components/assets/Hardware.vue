@@ -279,9 +279,9 @@ export default {
         return
       }
       var id = url.split('hardware/')[1]
-      var item = this.items.find(x => x.id == id)
+      var item = this.items.find(x => x.id === id)
       console.log(item)
-      if (item && item != 'undefined') {
+      if (item && item !== 'undefined') {
         if (item.assigned_to) {
           console.log('problem ')
           this.alert = 'Asset already checked out'
@@ -289,7 +289,7 @@ export default {
           item = null
           return
         }
-        if (this.idList.indexOf(id) != -1) {
+        if (this.idList.indexOf(id) !== -1) {
           this.alert = 'Item already added'
           id = null
           item = null
@@ -330,11 +330,11 @@ export default {
         this.loading = false
       }
     },
-    checkIn(assetId, assigned_to) {
+    checkIn(assetId, assignedTo) {
       this.items = []
       this.qrItems = []
       this.idList = []
-      if (!assigned_to) {
+      if (!assignedTo) {
         console.log('not gonna hapn capnxxx')
         return
       }
@@ -366,13 +366,13 @@ export default {
           console.error(error)
         })
     },
-    async checkOut(assetId, assigned_to) {
+    async checkOut(assetId, assignedTo) {
       this.idList = []
       this.qrItems = []
       this.loading = true
       let assId = ''
       try {
-        if (assigned_to) {
+        if (assignedTo) {
           console.log('not gonna hapn capn')
           return
         }
@@ -407,13 +407,13 @@ export default {
     },
     request({ pagination, filter, list }) {
       this.loading = true
-      if (list == 'qr') {
+      if (list === 'qr') {
         this.qrItems = []
       }
-      if (list == 'main') {
+      if (list === 'main') {
         this.items = []
       }
-      if (list == 'both') {
+      if (list === 'both') {
         this.items = []
         this.qrItems = []
       }
@@ -443,7 +443,7 @@ export default {
               this.items.push(item)
             } else {
               for (let id of filter) {
-                if (id == item.id) {
+                if (id === item.id) {
                   console.log('qritems')
 
                   item.search = 'found'

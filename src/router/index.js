@@ -3,6 +3,7 @@ import store from '../store'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/auth/Signin'
+import Logout from '@/components/auth/Logout'
 import Register from '@/components/auth/Register'
 import Confirm from '@/components/auth/Confirm'
 import Callback from '@/components/auth/Callback'
@@ -11,7 +12,6 @@ import TimeClock from '@/components/people/TimeClock'
 
 import Hardware from '@/components/assets/Hardware'
 import Maintenance from '@/components/assets/Maintenance'
-import Logout from '@/components/assets/Maintenance'
 import Consumables from '@/components/assets/Consumables'
 import Profile from '@/components/Profile/'
 
@@ -127,9 +127,11 @@ const router = new Router({
     },
     {
       path: '/logout',
+      name: 'logout',
       component: Logout,
       props: true,
       meta: {
+        title: 'Logout',
         auth: true
       }
     },
@@ -148,6 +150,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // Use the page's router title to name the page
+  console.log('to: ' + to.name + '| needs_auth: ' + to.meta.auth + '| is_auth: ' + store.getters.isAuthenticated)
   if (to.meta && to.meta.title) {
     document.title = to.meta.title
   }

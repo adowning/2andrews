@@ -80,7 +80,7 @@
 </template>
 <script>
 import moment from 'moment'
-// asdf
+
 export default {
   data() {
     return {
@@ -95,36 +95,36 @@ export default {
       weeks: [
         { title: 'This Week', amount: 0 },
         { title: 'Last Week', amount: 1 },
-        { title: 'Two Weeks Ago', amount: 2 }
+        { title: 'Two Weeks Ago', amount: 2 },
       ],
       week: null,
       date: moment().format('LLL'),
       serverPagination: {
-        page: 1
+        page: 1,
       },
       headers: [
         {
           text: 'Length',
           value: 'length',
-          align: 'left'
+          align: 'left',
         },
         {
           text: 'Clock in',
           value: 'in_time',
-          align: 'in_time'
+          align: 'in_time',
         },
         {
           text: 'Clock out',
           align: 'left',
-          value: 'out_time'
+          value: 'out_time',
         },
         {
           text: 'Date',
           align: 'left',
-          value: 'model'
-        }
+          value: 'model',
+        },
       ],
-      items: []
+      items: [],
     }
   },
 
@@ -142,9 +142,9 @@ export default {
         end_date: moment()
           .subtract(this.week, 'w')
           .endOf('week')
-          .format('YYYY-MM-DD') // set to the first day of this week, 12:00 am
+          .format('YYYY-MM-DD'), // set to the first day of this week, 12:00 am
       }
-    }
+    },
   },
   created() {
     // this.getClockStatus()
@@ -156,8 +156,9 @@ export default {
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getClockStatus', {
           params: {
-            id: this.$store.getters.profile['custom:humanity']
-          }
+            id: this.$store.getters.profile['custom:humanity'],
+            token: this.$ht,
+          },
         })
         .then(response => {
           console.log(response)
@@ -181,8 +182,9 @@ export default {
         .get(process.env.LAMBDA_API + '/createTimeClock', {
           params: {
             id: this.$store.getters.profile['custom:humanity'],
-            inOut: command
-          }
+            inOut: command,
+            token: this.$ht,
+          },
         })
         .then(response => {
           // console.log(response.data)
@@ -207,15 +209,16 @@ export default {
           params: {
             start_date: this.startEndDates.start_date,
             end_date: this.startEndDates.end_date,
-            employee: this.$store.getters.profile['custom:humanity']
-          }
+            employee: this.$store.getters.profile['custom:humanity'],
+            token: this.$ht,
+          },
         })
         .then(response => {
           // console.log(response)
           this.serverPagination = false
           // this.serverPagination.rowsNumber = response.data.total
           for (var item of response.data) {
-            if (item.out_day != 0) {
+            if (item.out_day !== 0) {
               this.items.push(item)
             }
           }
@@ -233,13 +236,14 @@ export default {
       this.items = []
       this.request()
     },
-        addNote() {
+    addNote() {
       this.$http
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/addNote', {
           params: {
-            id: this.timeSheetID
-          }
+            id: this.timeSheetID,
+            token: this.$ht,
+          },
         })
         .then(response => {
           console.log(response)
@@ -250,7 +254,6 @@ export default {
           console.error(error)
         })
     },
-
-  }
+  },
 }
 </script>

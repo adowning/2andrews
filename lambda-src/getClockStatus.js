@@ -1,62 +1,63 @@
 import axios from 'axios'
-// const token = '?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77'
+// const token = window.localStorage.getItem('humanityToken')
 const BASE_URL = 'https://www.humanity.com/api/v2/'
 
-const instance = axios.create( {
+const instance = axios.create({
   baseURL: BASE_URL,
   timeout: false
-} )
+})
 // Add a request interceptor
 instance.interceptors.request.use(
-  function ( config ) {
+  function (config) {
     //eslint-disable-next-line
     /* global window Store */
-    config.headers.common[ 'Access-Control-Allow-Origin' ] = '*'
+    config.headers.common['Access-Control-Allow-Origin'] = '*'
 
     return config
   },
-  function ( error ) {
+  function (error) {
     // Do something with request error
-    return Promise.reject( error )
+    return Promise.reject(error)
   }
 )
 
 instance.interceptors.response.use(
   response => response,
   error => {
-    console.log( error.config )
-    return Promise.reject( error )
+    console.log(error.config)
+    return Promise.reject(error)
   }
 )
-export function handler( event, context, callback ) {
-  var id = JSON.parse( event.queryStringParameters.id )
-  instance.get( "timeclocks/status/" + id + "0?access_token=1698483cbae72d5d186ea540154c1c9aeaf26c77", {
+export function handler(event, context, callback) {
+  var id = JSON.parse(event.queryStringParameters.id)
+  var token = JSON.parse(event.queryStringParameters.token)
+  instance.get("timeclocks/status/" + id + "0?access_token=" + token, {
     params: {
       details: 0
     }
-  } ).then( response => {
+  }).then(response => {
     var cache = []
-    console.log( response.data )
-    var x = JSON.stringify( response.data, function ( key, value ) {
-      if ( typeof value === 'object' && value !== null ) {
-        if ( cache.indexOf( value ) !== -1 ) {
+    console.log(response.data)
+    var x = JSON.stringify(response.data, function (key, value) {
+      if (typeof value === 'object' && value !== null) {
+        if (cache.indexOf(value) !== -1) {
           // Circular reference found, discard key
           return
         }
-        cache.push( value )
+        cache.push(value)
       }
       return value
-    } )
+    })
     cache = null // Enable garbage collection
-    console.log( x )
-    callback( null, {
+    console.log(x)
+    callback(null, {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
       body: x,
-    } )
-  } )
+    })
+  })
 }
 
 // /* eslint-disable */

@@ -6,6 +6,7 @@
       <v-navigation-drawer
         :mini-variant="miniVariant"
         v-model="drawer"
+        mobile-break-point="964"
         width="250"
         class="blue-grey darken-4"
         dark
@@ -349,7 +350,7 @@
 </template>
 
 <script>
-//  import router from '../../router'
+// import router from '../../router'
 //  let state = 'this.$store.state'
 
 export default {
@@ -450,14 +451,16 @@ export default {
       this.search = ''
     },
     signOut() {
-      let state = this.$store.state
-      let newState = {}
+      // let state = this.$store.state
+      // let newState = {}
 
-      Object.keys(state).forEach(key => {
-        newState[key] = null // or = initialState[key]
-      })
+      // Object.keys(state).forEach(key => {
+      //   newState[key] = null // or = initialState[key]
+      // })
 
-      this.$store.replaceState(newState)
+      // this.$store.replaceState(newState)
+      // this.$router.push('/logout')
+      // router.push('/logout')
       this.$router.push('/logout')
     },
     gotoProfile() {

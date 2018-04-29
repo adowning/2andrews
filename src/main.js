@@ -17,9 +17,19 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'vuetify/dist/vuetify.min.css'
 import fullCalendar from 'vue-fullcalendar'
+Vue.prototype.$ht = {}
+
+axios
+  // eslint-disable-next-line
+  .get(process.env.LAMBDA_API + '/initHumanity')
+  .then(response => {
+    Vue.prototype.$ht = response.data.access_token
+  })
+  .catch(error => {
+    console.log(error)
+  })
 
 Vue.use(VueAxios, axios) // Ensure you are using css-loader
-
 Vue.use(Vuetify, {
   theme: {
     // primary: '#1976D2',

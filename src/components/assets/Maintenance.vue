@@ -1,94 +1,107 @@
 
 <template>
-<div>
-  <v-layout row :v-if="inspection" >
-    <!-- <v-flex xs12 sm6 offset-sm3> -->
-    <v-flex xs12 sm8 offset-sm2>
+  <div>
+    <v-layout
+      :v-if="inspection"
+      row >
+      <!-- <v-flex xs12 sm6 offset-sm3> -->
+      <v-flex
+        xs12
+        sm8
+        offset-sm2>
 
-       <v-tabs
-      color="primary"
-      dark
-      slider-color="accent"
-    >
-      <v-tab
-        ripple
-      >
-       Packages
-      </v-tab>
-            <v-tab
-        ripple
-      >
-       Reports
-      </v-tab>
-      <v-tab-item
-        :key="packages"
-      >
+        <v-tabs
+          color="primary"
+          dark
+          slider-color="accent"
+        >
+          <v-tab
+            ripple
+          >
+            Packages
+          </v-tab>
+          <v-tab
+            ripple
+          >
+            Reports
+          </v-tab>
+          <v-tab-item
+            :key="packages"
+          >
 
- <v-data-table
-    :items="items"
-    class="elevation-1"
-    hide-actions
-    hide-headers
-  >
-    <template slot="items" slot-scope="props">
-            <v-card >
-                <v-layout row>
-                   <v-flex xs2>
-                    <v-card-media
-                      :src="props.item.primaryImageURL"
-                      height="125px"
-                      contain
-                    ></v-card-media>
-                  </v-flex>
-                  <v-flex xs7>
-                    <div>
-                      <div class="headline">{{props.item.name}}</div>
-                    </div>
-                            <v-list>
-          <v-list-tile  v-for="item in props.item.assetList" :key="item.asset_tag" @click="">
+            <v-data-table
+              :items="items"
+              class="elevation-1"
+              hide-actions
+              hide-headers
+            >
+              <template
+                slot="items"
+                slot-scope="props">
+                <v-card >
+                  <v-layout row>
+                    <v-flex xs2>
+                      <v-card-media
+                        :src="props.item.primaryImageURL"
+                        height="125px"
+                        contain
+                      />
+                    </v-flex>
+                    <v-flex xs7>
+                      <div>
+                        <div class="headline">{{ props.item.name }}</div>
+                      </div>
+                      <v-list>
+                        <v-list-tile
+                          v-for="item in props.item.assetList"
+                          :key="item.asset_tag"
+                          @click="suger">
 
-            <v-list-tile-content>
-              <v-list-tile-title v-text="item.model"></v-list-tile-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
-            <v-list-tile-title v-text="item.category"></v-list-tile-title>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>
-                  </v-flex>
- <v-flex xs2>
+                          <v-list-tile-content>
+                            <v-list-tile-title v-text="item.model"/>
+                          </v-list-tile-content>
+                          <v-list-tile-action>
+                            <v-list-tile-title v-text="item.category"/>
+                          </v-list-tile-action>
+                        </v-list-tile>
+                      </v-list>
+                    </v-flex>
+                    <v-flex xs2>
 
-   <v-btn
-      color="info"
-      @click.native="newInspection()"
-      outline
-    >
-     New Inspection
-    </v-btn>
- </v-flex>
-                </v-layout>
+                      <v-btn
+                        color="info"
+                        outline
+                        @click.native="newInspection()"
+                      >
+                        New Inspection
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
 
-            </v-card>
-                      <v-divider :key="props.item.index"></v-divider>
+                </v-card>
+                <v-divider :key="props.item.index"/>
 
-    </template>
-  </v-data-table>
- <v-btn fab dark color="info">
-      <v-icon dark>add</v-icon>
-    </v-btn>
+              </template>
+            </v-data-table>
+            <v-btn
+              fab
+              dark
+              color="info">
+              <v-icon dark>add</v-icon>
+            </v-btn>
 
-      </v-tab-item>
-            <v-tab-item>
-asdf
+          </v-tab-item>
+          <v-tab-item>
+            asdf
 
 
-      </v-tab-item>
-    </v-tabs>
+          </v-tab-item>
+        </v-tabs>
 
-    </v-flex>
-  </v-layout>
-<div :v-if="!inspection">inspectyion report</div>
-</div>
+      </v-flex>
+    </v-layout>
+    <div :v-if="!inspection">inspectyion report</div>
+  </div>
 </template>
 
 <script>
@@ -133,6 +146,7 @@ export default {
 
   asyncComputed: {
     total() {
+      var AwsDocClient = {}
       var params = {
         TableName: 'PACKAGE_TABLE',
         IndexName: 'status-updated_at-index',
@@ -185,6 +199,8 @@ export default {
         console.log('Starting from', this.$route.query)
         params.ExclusiveStartKey = this.$route.query
       }
+      var AwsDocClient = {}
+
       return AwsDocClient.query(params)
         .promise()
         .then(data => {

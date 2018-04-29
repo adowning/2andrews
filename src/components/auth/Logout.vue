@@ -5,16 +5,19 @@
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
-  name: 'Error',
-  computed: {},
-  mounted() {
+  data: function() {
+    return {}
+  },
+  created() {
+    console.log(this.$store.state.cognitoUser)
+    this.$store.state.cognitoUser.signOut()
+    this.$store.dispatch('signout', {})
     window.sessionStorage.clear()
     window.localStorage.clear()
-    // this.$store.state.authenticated = false
-    // this.$store.state.username = null
-    // this.username = null
-    this.$router.push('/login')
-  }
+    router.push('/login')
+  },
 }
 </script>
