@@ -13,93 +13,101 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /items: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/humanityHandler-20180429040315.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:10.100+0000'
+            modified: '2018-04-29T09:04:37.499+0000'
             name: humanityHandler
-            runtime: nodejs6.10
+            runtime: nodejs8.10
             timeout: '3'
-            version: Vix3FYcRM4i8k03MGnJy_LhWmf48nmyM
+            version: KwyEf9X.HrnprEZE8w2Veps5VyQa.Rr2
           '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/humanityHandler-20180429040315.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:10.100+0000'
+            modified: '2018-04-29T09:04:37.499+0000'
             name: humanityHandler
-            runtime: nodejs6.10
+            runtime: nodejs8.10
             timeout: '3'
-            version: hrxqWjYRjnpw71uRynF_ExkbhLAmABPz
+            version: k5IuZav_wuZdrcZVcexDy.lWBK3lDf4U
           /path-7c8: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/snipeitHandler-20180429040315.zip
             description: 'Handler for calls to resource path : /path-7c8/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:10.297+0000'
+            modified: '2018-04-29T09:04:38.171+0000'
             name: snipeitHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: YQIQVxJ7.6Mi3Ns2LDzE4GOnnHFXq22M
+            version: N0kcHGGRjtq.kCPaB4FYxbROd2DQ6QEX
           '/path-7c8/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/snipeitHandler-20180429040315.zip
             description: 'Handler for calls to resource path : /path-7c8/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:10.297+0000'
+            modified: '2018-04-29T09:04:38.171+0000'
             name: snipeitHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: Ixeng1b7v0UVARQr.rAH7YJDEwdtaTlB
+            version: 5Jb7RK9Wyy2DejcBDwwq_sUOCc_mwuAf
           /path-7ca: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/timeClockHandlerer-20180429040315.zip
             description: 'Handler for calls to resource path : /path-7ca/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:10.130+0000'
+            modified: '2018-04-29T09:04:37.544+0000'
             name: timeClockHandlerer
             runtime: nodejs6.10
             timeout: '3'
-            version: BYl3veRo6wV9_VpWNbsff5gZUsnHbjEy
+            version: m0r0sT2iHb83HnuZayxi5PhaCZBeDVL5
           '/path-7ca/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/timeClockHandlerer-20180429040315.zip
             description: 'Handler for calls to resource path : /path-7ca/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:10.130+0000'
+            modified: '2018-04-29T09:04:37.544+0000'
             name: timeClockHandlerer
             runtime: nodejs6.10
             timeout: '3'
-            version: O0dzgPfPTEpELnGWNnFfciHzynqNtFlj
+            version: 6z5DdTuXsavYIXtLeyJfc2R82CkWMT8Y
           /path-7cc: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/maintenanceHandler-20180429040315.zip
             description: 'Handler for calls to resource path : /path-7cc/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:09.976+0000'
+            modified: '2018-04-29T09:04:40.182+0000'
             name: maintenanceHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: _C5z4yk.t5VsdqYYoo.ALKWlvaq7GV.c
+            version: kE_L877gCXMGzmIdXj8FrNvzSx5irr_B
           '/path-7cc/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/maintenanceHandler-20180429040315.zip
             description: 'Handler for calls to resource path : /path-7cc/{proxy+}'
             environment: {}
             handler: index.handler
-            hashcode: wxE8gyxomJQHWri//xoTzIOMWARrECKS+YNro1Ygyp0=
+            hashcode: 3nGU6W4QuN+N1QHSXlaP75/cFrb7/PBFp0h31U6m4Gs=
             memorySize: '128'
-            modified: '2018-04-29T07:44:09.976+0000'
+            modified: '2018-04-29T09:04:40.182+0000'
             name: maintenanceHandler
             runtime: nodejs6.10
             timeout: '3'
-            version: pC5TgriQBqVgpTsqge1c1mFLXo3gzibs
+            version: pH0EjEkWJSe7B.gOanFhVhsFnHjwTu.V
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
