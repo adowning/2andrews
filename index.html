@@ -8,22 +8,24 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
   <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css"
   />
+
+  <script>
+    // Check that service workers are registered
+    if ('serviceWorker' in navigator) {
+      // Use the window load event to keep the page load performant
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/sw.js');
+      });
+    }
+
+  </script>
   <title>Andrews Admin App</title>
 </head>
 
 <body>
   <div id="app"></div>
   <!-- built files will be auto injected -->
-  <script>
-    // Check that service workers are registered
-    if ('serviceWorker' in navigator) {
-      // Use the window load event to keep the page load performant
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js');
-      });
-    }
 
-  </script>
 </body>
 
 </html>
