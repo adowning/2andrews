@@ -1,18 +1,30 @@
 <template>
   <div>
-    <v-tabs v-model="active" class="pa-3" color="accent" dark slider-color="primary">
-      <v-tab href="#tab-1" class="mr-4">
+    <v-tabs
+      v-model="active"
+      class="pa-3"
+      color="accent"
+      dark
+      slider-color="primary">
+      <v-tab
+        href="#tab-1"
+        class="mr-4">
         Manual
         <v-icon>build</v-icon>
-
       </v-tab>
       <v-tab href="#tab-2">
         Scan
         <v-icon>line_style</v-icon>
       </v-tab>
       <v-tab-item id="tab-1">
-        <v-data-table :headers="headers" :items="items" hide-actions class="elevation-1">
-          <template slot="items" slot-scope="props">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          hide-actions
+          class="elevation-1">
+          <template
+            slot="items"
+            slot-scope="props">
             <td>{{ props.item.id }}
             </td>
             <td>{{ props.item.asset_tag }}</td>
@@ -22,42 +34,84 @@
             <td class="text-xs-right">{{ props.item.assigned_to }}</td>
             <td class="text-xs-right">{{ props.item.location }}</td>
             <td class="justify-center layout px-0">
-              <v-btn v-if="!props.item.assigned_to" color="primary" small outline @click="checkOut(props.item, props.assigned_to)">
+              <v-btn
+                v-if="!props.item.assigned_to"
+                color="primary"
+                small
+                outline
+                @click="checkOut(props.item, props.assigned_to)">
                 <!-- <v-icon color="success">edit</v-icon>
              -->CheckOut
               </v-btn>
-              <v-btn v-if="props.item.assigned_to" color="warning" small outline @click="checkIn(props.item, props.item.assigned_to)">
+              <v-btn
+                v-if="props.item.assigned_to"
+                color="warning"
+                small
+                outline
+                @click="checkIn(props.item, props.item.assigned_to)">
                 <!-- <v-icon color="warning">edit</v-icon> -->
                 CheckIn
               </v-btn>
             </td>
           </template>
           <template slot="no-data">
-            <v-progress-circular v-show="loading" :size="100" indeterminate color="primary" />
+            <v-progress-circular
+              v-show="loading"
+              :size="100"
+              indeterminate
+              color="primary" />
           </template>
         </v-data-table>
 
       </v-tab-item>
       <v-tab-item id="tab-2">
-        <v-progress-circular v-show="loading" :size="100" indeterminate color="primary" />
-        <v-layout v-show="!loading" row>
+        <v-progress-circular
+          v-show="loading"
+          :size="100"
+          indeterminate
+          color="primary" />
+        <v-layout
+          v-show="!loading"
+          row>
 
-          <v-flex xs6 1>
+          <v-flex
+            xs6
+            1>
             <v-card>
 
-              <qrcode-reader :active="active" @init="onInit" @decode="onDecode">
+              <qrcode-reader
+                :active="active"
+                @init="onInit"
+                @decode="onDecode">
                 <b>{{ overlay }}</b>
               </qrcode-reader>
             </v-card>
           </v-flex>
-          <v-flex xs6 2>
+          <v-flex
+            xs6
+            2>
 
-            <v-data-table v-model="selected" :items="qrItems" :headers="headers" hide-headers hide-actions class="elevation-1" item-key="id">
-              <template slot="items" slot-scope="props">
-                <tr v-if="props.item.search" :active="props.selected" @click="props.selected = !props.selected">
+            <v-data-table
+              v-model="selected"
+              :items="qrItems"
+              :headers="headers"
+              hide-headers
+              hide-actions
+              class="elevation-1"
+              item-key="id">
+              <template
+                slot="items"
+                slot-scope="props">
+                <tr
+                  v-if="props.item.search"
+                  :active="props.selected"
+                  @click="props.selected = !props.selected">
 
                   <td>
-                    <v-checkbox v-model="props.selected" primary hide-details />
+                    <v-checkbox
+                      v-model="props.selected"
+                      primary
+                      hide-details />
                   </td>
                   <td>{{ props.item.asset_tag }}</td>
 
@@ -70,11 +124,16 @@
                 Use QR scanner to select items
               </template>
             </v-data-table>
-            <v-btn color="primary" @click="submit">Submit</v-btn>
+            <v-btn
+              color="primary"
+              @click="submit">Submit</v-btn>
           </v-flex>
 
         </v-layout>
-        <v-alert :value="alert" type="warning" transition="scale-transition">
+        <v-alert
+          :value="alert"
+          type="warning"
+          transition="scale-transition">
           {{ alert }}
         </v-alert>
       </v-tab-item>
@@ -104,57 +163,57 @@ export default {
     checkOutList: [],
     qrItems: [],
     serverPagination: {
-      page: 1
+      page: 1,
     },
     headers: [
       {
         text: 'id',
         value: 'id',
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Asset',
         value: 'asset_tag',
-        align: 'left'
+        align: 'left',
       },
       {
         text: 'Category',
         align: 'left',
-        value: 'category'
+        value: 'category',
       },
       {
         text: 'Model',
         align: 'left',
-        value: 'model'
+        value: 'model',
       },
       {
         text: 'Status',
         align: 'left',
-        value: 'status_label'
+        value: 'status_label',
       },
       {
         text: 'Assigned To',
         align: 'left',
-        value: 'assigned_to'
+        value: 'assigned_to',
       },
       {
         text: 'Location',
         align: 'left',
-        value: 'location'
+        value: 'location',
       },
       {
         text: 'Actions',
         sortable: false,
-        value: 'name'
+        value: 'name',
       },
       {
         text: 'asdf',
         visible: false,
         sortable: false,
-        value: 'checky'
-      }
+        value: 'checky',
+      },
     ],
-    items: []
+    items: [],
   }),
   computed: {
     user() {
@@ -162,7 +221,7 @@ export default {
     },
     error() {
       return this.$store.getters.error
-    }
+    },
   },
   watch: {
     user(value) {
@@ -175,13 +234,13 @@ export default {
     selectedTab(value) {
       console.log(value)
       console.log(this.selectedTab)
-    }
+    },
   },
   mounted() {
     // once mounted, we need to trigger the initial server data fetch
     this.request({
       pagination: this.serverPagination,
-      filter: this.filter
+      filter: this.filter,
     })
   },
   methods: {
@@ -220,9 +279,9 @@ export default {
         return
       }
       var id = url.split('hardware/')[1]
-      var item = this.items.find(x => x.id == id)
+      var item = this.items.find(x => x.id === id)
       console.log(item)
-      if (item && item != 'undefined') {
+      if (item && item !== 'undefined') {
         if (item.assigned_to) {
           console.log('problem ')
           this.alert = 'Asset already checked out'
@@ -230,7 +289,7 @@ export default {
           item = null
           return
         }
-        if (this.idList.indexOf(id) != -1) {
+        if (this.idList.indexOf(id) !== -1) {
           this.alert = 'Item already added'
           id = null
           item = null
@@ -242,14 +301,12 @@ export default {
           this.request({
             pagination: this.serverPagination,
             filter: this.idList,
-            list: 'qr'
+            list: 'qr',
           })
         }
       }
     },
     async onInit(promise) {
-      // show loading indicator
-
       this.loading = true
       try {
         await promise
@@ -273,37 +330,49 @@ export default {
         this.loading = false
       }
     },
-    checkIn(assetId, assigned_to) {
+    checkIn(assetId, assignedTo) {
       this.items = []
       this.qrItems = []
       this.idList = []
-      if (!assigned_to) {
+      if (!assignedTo) {
         console.log('not gonna hapn capnxxx')
         return
       }
       //   this.$api
       // .post('snipeit/hardware/checkin', { assigned_asset: assetId })
+      // this.$http
+      //   .post('http://47.219.112.177:1880/api/snipeit/hardware/checkin', { assigned_asset: assetId })
+      //   .then(response => {
+      //     console.log(response)
+      //     this.selected = null
+      //     this.request({
+      //       pagination: this.serverPagination,
+      //       filter: this.filter
+      //     }).then(console.log('ready'))
+      //   })
+      //   .catch(e => {
+      //     console.log(e)
+      //   })
       this.$http
-        .post('http://47.219.112.177:1880/api/snipeit/hardware/checkin', { assigned_asset: assetId })
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/checkinHardware', {
+          params: { assigned_asset: assetId },
+        })
         .then(response => {
           console.log(response)
-          this.selected = null
-          this.request({
-            pagination: this.serverPagination,
-            filter: this.filter
-          }).then(console.log('ready'))
+          this.$router.go(this.$router.currentRoute)
         })
-        .catch(e => {
-          console.log(e)
+        .catch(error => {
+          console.error(error)
         })
     },
-    async checkOut(assetId, assigned_to) {
+    async checkOut(assetId, assignedTo) {
       this.idList = []
       this.qrItems = []
       this.loading = true
       let assId = ''
       try {
-        if (assigned_to) {
+        if (assignedTo) {
           console.log('not gonna hapn capn')
           return
         }
@@ -312,27 +381,20 @@ export default {
         } else {
           assId = assetId.id
         }
-        // this.$api
+        console.log(assId)
+        console.log(this.$store.getters.profile['custom:snipeit'])
+
         this.$http
-          .post('http://47.219.112.177:1880/api/snipeit/hardware/checkout', {
-            assigned_user: this.user.custom['30551'].value,
-            assigned_asset: assId
+          // eslint-disable-next-line
+          .get(process.env.LAMBDA_API + '/checkoutHardware', {
+            params: {
+              assigned_asset: assId,
+              assigned_user: this.$store.getters.profile['custom:snipeit'],
+            },
           })
-          //   .then(data => {
-          //   .post('snipeit/hardware/checkout', {
-          //     assigned_user: this.user.custom['30551'].value,
-          //     assigned_asset: assId
-          //   })
           .then(response => {
             console.log(response)
             this.$router.go(this.$router.currentRoute)
-            // this.selected = null
-            // this.request({
-            //   pagination: this.serverPagination,
-            //   filter: null,
-            //   list: 'both'
-            // })
-            // this.request(20, 0)
           })
           .catch(e => {
             console.log(e)
@@ -345,25 +407,19 @@ export default {
     },
     request({ pagination, filter, list }) {
       this.loading = true
-      if (list == 'qr') {
+      if (list === 'qr') {
         this.qrItems = []
       }
-      if (list == 'main') {
+      if (list === 'main') {
         this.items = []
       }
-      if (list == 'both') {
+      if (list === 'both') {
         this.items = []
         this.qrItems = []
       }
-      // this.$api
-      //   .get('snipeit/hardware')
-      //   axios
-      //     .get('/snipeit/hardware')
-      //eslint-disable-next-line
       console.log(process.env.LAMBDA_API)
-      //  this.$http.get('http://localhost:9000/hello').then(result => {console.log(result)})
       this.$http
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getHardware')
         .then(response => {
           this.serverPagination = pagination
@@ -387,7 +443,7 @@ export default {
               this.items.push(item)
             } else {
               for (let id of filter) {
-                if (id == item.id) {
+                if (id === item.id) {
                   console.log('qritems')
 
                   item.search = 'found'
@@ -406,8 +462,8 @@ export default {
           console.log('sugar tits ', error)
           this.loading = false
         })
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>

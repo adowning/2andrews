@@ -1,20 +1,25 @@
-<template>
+<!--<template>
   <div>
     <h2>Logging out..</h2>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Error',
-  computed: {},
-  mounted() {
-    window.sessionStorage.clear()
-    window.localStorage.clear()
-    this.$store.state.authenticated = false
-    this.$store.state.username = null
-    this.username = null
-    this.$router.push('/login')
-  }
-}
+// import router from '../../router'
+
+// export default {
+//   data: function() {
+//     return {}
+//   },
+//   created() {
+//     console.log(this.$store.state.cognitoUser)
+//     this.$store.state.cognitoUser.signOut()
+//     this.$store.dispatch('signout', {})
+//     window.sessionStorage.clear()
+//     window.localStorage.clear()
+//     router.push('/login')
+//   },
+// }
+//
 </script>
+-->

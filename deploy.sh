@@ -1,6 +1,8 @@
-touch updater.txt
-cat 'asdf' >> updater.txt
+echo $DATE=`date '+%Y-%m-%d %H:%M:%S'` > .gitupdate.txt
+yarn lint
 netlify-lambda build lambda-src
 git add .
-git commit -m 'asdfadsfsadfdsf'
-git push origin master
+git commit -m h=$(hostname -f)
+git push origin appsync --force
+awsmobile publish --test
+rm .gitupdate.txt

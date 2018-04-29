@@ -4,21 +4,23 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/auth/Signin'
 import Register from '@/components/auth/Register'
+import Confirm from '@/components/auth/Confirm'
 import Callback from '@/components/auth/Callback'
 import ErrorMsg from '@/components/auth/ErrorMsg'
 import TimeClock from '@/components/people/TimeClock'
+
 import Hardware from '@/components/assets/Hardware'
+import Maintenance from '@/components/assets/Maintenance'
 import Consumables from '@/components/assets/Consumables'
 import Profile from '@/components/Profile/'
-import Logout from '@/components/auth/Logout'
 
 
-Vue.use( Router )
+Vue.use(Router)
 
-const router = new Router( {
+const router = new Router({
   mode: 'history',
-  routes: [ {
-      path: '/',
+  routes: [{
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {
@@ -27,7 +29,7 @@ const router = new Router( {
       },
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: Login,
       meta: {
@@ -41,6 +43,15 @@ const router = new Router( {
       component: Register,
       meta: {
         title: 'Register',
+        auth: false
+      }
+    },
+    {
+      path: '/confirm',
+      name: 'confirm',
+      component: Confirm,
+      meta: {
+        title: 'Confirm',
         auth: false
       }
     },
@@ -84,6 +95,16 @@ const router = new Router( {
       }
     },
     {
+      path: '/maintenance',
+      name: 'maintenance',
+      component: Maintenance,
+      props: true,
+      meta: {
+        title: 'Maintenance',
+        auth: true
+      }
+    },
+    {
       path: '/consumables',
       name: 'consumables',
       component: Consumables,
@@ -103,14 +124,7 @@ const router = new Router( {
         auth: true
       }
     },
-    {
-      path: '/logout',
-      component: Logout,
-      props: true,
-      meta: {
-        auth: true
-      }
-    },
+
     // {
     //   path: '*',
     //   name: 'home',
@@ -122,32 +136,33 @@ const router = new Router( {
     //   }
     // }
   ]
-} )
+})
 
-router.beforeEach( ( to, from, next ) => {
+router.beforeEach((to, from, next) => {
   // Use the page's router title to name the page
-  if ( to.meta && to.meta.title ) {
+  console.log('to: ' + to.name + '| needs_auth: ' + to.meta.auth + '| is_auth: ' + store.getters.isAuthenticated)
+  if (to.meta && to.meta.title) {
     document.title = to.meta.title
   }
 
   // Redirect to the login page if not authenticated
   // for pages that have 'auth: true' set
-  if ( to.meta && to.meta.auth !== undefined ) {
-    if ( to.meta.auth ) {
-      if ( store.getters.isAuthenticated ) {
+  if (to.meta && to.meta.auth !== undefined) {
+    if (to.meta.auth) {
+      if (store.getters.isAuthenticated) {
         // if (store.getters.authenticated) {
         next()
       } else {
-        router.push( {
+        router.push({
           name: 'login'
-        } )
+        })
       }
     } else {
-      if ( store.getters.isAuthenticated ) {
+      if (store.getters.isAuthenticated) {
         // if (store.getters.authenticated) {
-        router.push( {
+        router.push({
           name: 'home'
-        } )
+        })
       } else {
         next()
       }
@@ -155,6 +170,6 @@ router.beforeEach( ( to, from, next ) => {
   } else {
     next()
   }
-} )
+})
 
 export default router

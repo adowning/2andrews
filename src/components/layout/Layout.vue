@@ -6,6 +6,7 @@
       <v-navigation-drawer
         :mini-variant="miniVariant"
         v-model="drawer"
+        mobile-break-point="964"
         width="250"
         class="blue-grey darken-4"
         dark
@@ -240,7 +241,7 @@
               slot="activator"
               class="pl-2">
               <span>{{ menuItems[0] }}</span>
-              <v-icon>local_phone</v-icon>
+              <v-icon>call</v-icon>
             </v-toolbar-title>
             <v-list>
               <v-list-tile
@@ -349,7 +350,9 @@
 </template>
 
 <script>
-// import router from '../../router'
+import router from '../../router'
+//  let state = 'this.$store.state'
+
 export default {
   data: () => ({
     x: 'light',
@@ -365,59 +368,64 @@ export default {
       {
         icon: 'supervisor_account',
         title: 'Employees',
-        link: '/directory'
+        link: '/directory',
       },
       {
         icon: 'supervisor_account',
         title: 'Applicants',
-        link: ''
-      }
+        link: '',
+      },
     ],
     middleItems: [
       {
         icon: 'dashboard',
         title: 'Dashboard',
-        link: ''
+        link: '',
       },
       {
         icon: 'local_shipping',
         title: 'Live View',
-        link: '/liveview'
+        link: '/liveview',
       },
       {
         icon: 'book',
         title: 'Schedule',
-        link: '/schedule'
-      }
+        link: '/schedule',
+      },
     ],
     lastItems: [
       {
         icon: 'android',
         title: 'Hardware',
-        link: '/hardware'
+        link: '/hardware',
       },
       {
         icon: 'invert_colors',
         title: 'Consumables',
-        link: '/consumables'
-      }
+        link: '/consumables',
+      },
+      {
+        icon: 'build',
+        title: 'Maintenance',
+        link: '/maintenance',
+      },
     ],
     utilitiesItems: [
       {
         icon: 'list',
         title: 'Logs',
-        link: ''
+        link: '',
       },
       {
         icon: 'work',
         title: 'Documents',
-        link: '/documents'
+        link: '/documents',
       },
       {
         icon: 'comment',
         title: 'Notifications',
-        link: ''
-      }
+        link: '',
+      },
     ],
     miniVariant: false,
 
@@ -425,14 +433,14 @@ export default {
     tabsItems: [
       { id: 1, title: 'Indicators', link: 'indicators' },
       { id: 2, title: 'Backup', link: 'backup' },
-      { id: 3, title: 'Logs', link: 'logs' }
+      { id: 3, title: 'Logs', link: 'logs' },
     ],
-    menuItems: ['', 'NodeJS', 'Laravel']
+    menuItems: ['', 'NodeJS', 'Laravel'],
   }),
   computed: {
     isAuthenticated: function() {
       return this.$store.getters.isAuthenticated
-    }
+    },
   },
   methods: {
     gotoClock() {
@@ -443,7 +451,10 @@ export default {
       this.search = ''
     },
     signOut() {
-      this.$router.push('/logout')
+      this.$store.dispatch('signout', {})
+      window.sessionStorage.clear()
+      window.localStorage.clear()
+      router.push('/')
     },
     gotoProfile() {
       this.$router.push('/profile')
@@ -466,8 +477,8 @@ export default {
       // if (router. !== "home" && !this.username) {
       //   this.$store.commit("signOut")
       //   router.push("/signin")
-    }
-  }
+    },
+  },
 }
 </script>
 <style>

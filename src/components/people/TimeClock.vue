@@ -1,117 +1,259 @@
+<!-- eslint-disable -->
 <template>
-  <v-container 
-    grid-list-md 
-    class="mt-3">
-    <v-layout 
-      row 
-      wrap>
-      <v-flex 
-        xl12 
-        lg12 
-        md12 
-        sm12 
-        xs12>
-        <v-card class="elevation-0 transparent pa-4 ml-4 mr-4">
-          <v-layout 
-            row 
-            justify-center>
-            <v-flex 
-              xl4 
-              lg4 
-              md4 
-              sm4 
-              class="hidden-xs-only">
-              <v-card class="elevation-0 mr-2 transparent">
-                <div class="headline mb-2">User Profile</div>
-                <div class="body-1">Manage your basic information: your name, email, and phone number, etc. Help others find you and make it easier to get in touch.</div>
-                <!-- <v-btn small @click="getAttributes()">GET</v-btn> -->
-              </v-card>
-            </v-flex>
-            <v-flex 
-              xl8 
-              lg8 
-              md8 
-              sm8>
-              <v-card class="mb-2">
-                <v-toolbar 
-                  dense 
-                  class="elevation-1">
-                  <v-toolbar-title>Personal Details</v-toolbar-title>
-                </v-toolbar>
-                <app-user-name
-                  :name="userModel.name"
-                  @updateName="updateName($event)"/>
-                <v-divider/>
-                <app-user-email
-                  :email="userModel.emailAddress"/>
-                <v-divider/>
-                <app-birth-date
-                  :birthdate="userModel.birthDate"
-                  :caption="'Birth Date'"
-                  @updateBirthDate="updateBirthDate($event)"/>
-                <v-divider/>
-                <app-phone-number
-                  :phone="userModel.phoneNumber"
-                  @updatePhoneNumber="updatePhone($event)"/>
-                <v-divider/>
-                <app-address
-                  :address="userModel.homeAddress"
-                  :caption="'Home Address'"
-                  @updateAddress="updateAddress($event, 'home')"/>
-                <v-divider/>
-                <app-address
-                  :address="userModel.businessAddress"
-                  :caption="'Business Address'"
-                  @updateAddress="updateAddress($event, 'business')"/>
-              </v-card>
-              <v-card class="mb-2 mt-4">
-                <v-toolbar 
-                  dense 
-                  class="elevation-1">
-                  <v-toolbar-title>Custom Attributes</v-toolbar-title>
-                  <v-spacer/>
-                  <v-btn 
-                    icon 
-                    small 
-                    dark 
-                    color="indigo mr-4" 
-                    @click="addCustomForm =! addCustomForm">
-                    <v-icon 
-                      dark 
-                      small>add</v-icon>
-                  </v-btn>
-                </v-toolbar>
-                <template v-for="(item, index) in userModel.custom">
-                  <app-custom
-                    :key="index"
-                    :obj="item"
-                    :new-entry="false"
-                    :caption="'Custom Atribute' + ' ' + index"
-                    @update="updateCustom($event, index)"
-                    @delete="deleteCustom(index)"/>
-                </template>
-              </v-card>
-              <v-dialog 
-                v-model="addCustomForm" 
-                max-width="500px">
-                <v-card>
-                  <v-toolbar 
-                    dense 
-                    class="elevation-0">
-                    <v-toolbar-title>Add Custom Attribute</v-toolbar-title>
-                  </v-toolbar>
-                  <app-custom
-                    :obj="{ prop1: '', prop2: '', prop3: '', prop4: '', prop5: '' }"
-                    :new-entry="true"
-                    :caption="'Custom Attribute'"
-                    @add="addCustom($event)"
-                    @close="addCustomForm =! addCustomForm"/>
-                </v-card>
-              </v-dialog>
-            </v-flex>
-          </v-layout>
+  <v-container grid-list-md>
+
+    <v-layout row wrap>
+      <v-flex xs5>
+        <v-card>
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>{{date}}</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-subheader v-if="timeFigured">Total Time: {{totalTime}}</v-subheader>
+          </v-toolbar>
+          <template v-if="loading">
+            <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
+            <v-progress-linear :indeterminate="true"></v-progress-linear>
+
+          </template>
+          <template v-if="!loading">
+
+            <v-list>
+              <template v-if="clockStatus ==='out'">
+                <v-layout row my-4>
+                  <v-flex xs6 offset-xs3>
+                    <v-btn block color="info" dark @click.native="updateClockStatus()">Clock In</v-btn>
+                  </v-flex>
+                </v-layout>
+              </template>
+              <template v-if="clockStatus === 'in'">
+                <v-layout row mt-4>
+                  <v-flex xs8 offset-xs1>
+                    <v-text-field name="input-1" label="Note" id="testing"></v-text-field>
+                  </v-flex>
+                  <v-flex xs1>
+                    <v-btn flat color="info" dark @click.native="addNote()">Add Note</v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout row mb-4>
+                  <v-flex xs6 offset-xs3>
+                    <v-btn block color="error" dark @click.native="updateClockStatus()">Clock Out</v-btn>
+                  </v-flex>
+                </v-layout>
+              </template>
+            </v-list>
+          </template>
+        </v-card>
+      </v-flex>
+      <v-flex xs7>
+        <v-card>
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>Timesheets</v-toolbar-title>
+            <v-spacer>
+            </v-spacer>
+            <v-menu offset-y>
+              <v-btn outline white slot="activator">This Week</v-btn>
+              <v-list>
+                <v-list-tile v-for="week in weeks" :key="week.title" @click="changeWeek(week.amount)">
+                  <v-list-tile-title>{{ week.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </v-toolbar>
+          <template v-if="loading">
+            <!-- <v-progress-circular indeterminate :size="70" :width="7" color="primary"></v-progress-circular> -->
+            <v-progress-linear :indeterminate="true"></v-progress-linear>
+
+          </template>
+          <v-data-table v-if="!loading" :headers="headers" :items="items" hide-actions class="elevation-1">
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.length.total_hours }}</td>
+              <td class="text-xs-right">{{ props.item.in_time.time }}</td>
+              <td class="text-xs-right">{{ props.item.out_time.time }}</td>
+              <td class="text-xs-right">{{ props.item.in_time.day }}</td>
+            </template>
+          </v-data-table>
         </v-card>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
+<script>
+import moment from 'moment'
+
+export default {
+  data() {
+    return {
+      loading: false,
+      timeSheetID: null,
+      current_length: {},
+      clockStatus: null,
+      timeFigured: false,
+      notes: '',
+      st: {},
+      et: {},
+      weeks: [
+        { title: 'This Week', amount: 0 },
+        { title: 'Last Week', amount: 1 },
+        { title: 'Two Weeks Ago', amount: 2 },
+      ],
+      week: null,
+      date: moment().format('LLL'),
+      serverPagination: {
+        page: 1,
+      },
+      headers: [
+        {
+          text: 'Length',
+          value: 'length',
+          align: 'left',
+        },
+        {
+          text: 'Clock in',
+          value: 'in_time',
+          align: 'in_time',
+        },
+        {
+          text: 'Clock out',
+          align: 'left',
+          value: 'out_time',
+        },
+        {
+          text: 'Date',
+          align: 'left',
+          value: 'model',
+        },
+      ],
+      items: [],
+    }
+  },
+
+  computed: {
+    totalTime: function() {
+      var diff = moment(this.et) - moment(this.st)
+      return moment.utc(moment.duration(diff).asMilliseconds()).format('H:mm')
+    },
+    startEndDates: function() {
+      return {
+        start_date: moment()
+          .subtract(this.week, 'w')
+          .startOf('week')
+          .format('YYYY-MM-DD'), // set to the first day of this week, 12:00 am
+        end_date: moment()
+          .subtract(this.week, 'w')
+          .endOf('week')
+          .format('YYYY-MM-DD'), // set to the first day of this week, 12:00 am
+      }
+    },
+  },
+  created() {
+    // this.getClockStatus()
+    this.request(0)
+  },
+  methods: {
+    getClockStatus() {
+      this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/getClockStatus', {
+          params: {
+            id: this.$store.getters.profile['custom:humanity'],
+            token: this.$ht,
+          },
+        })
+        .then(response => {
+          console.log(response)
+          this.clockStatus = response.data.data
+          this.loading = false
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    updateClockStatus() {
+      this.timeFigured = true
+      var command = ''
+      if (this.clockStatus === 'in') {
+        command = 'clockout'
+      } else {
+        command = 'clockin'
+      }
+      this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/createTimeClock', {
+          params: {
+            id: this.$store.getters.profile['custom:humanity'],
+            inOut: command,
+            token: this.$ht,
+          },
+        })
+        .then(response => {
+          // console.log(response.data)
+          var data = JSON.parse(response.data)
+          this.timeSheetID = data.data
+          // console.log(data.data.id)
+          // console.log(data['id'])
+          // console.log(data.id)
+          // this.clockStatus = response.data
+          this.request()
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    request() {
+      this.items = []
+      this.loading = true
+      this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/getTimeClocks', {
+          params: {
+            start_date: this.startEndDates.start_date,
+            end_date: this.startEndDates.end_date,
+            employee: this.$store.getters.profile['custom:humanity'],
+            token: this.$ht,
+          },
+        })
+        .then(response => {
+          // console.log(response)
+          this.serverPagination = false
+          // this.serverPagination.rowsNumber = response.data.total
+          for (var item of response.data) {
+            if (item.out_day !== 0) {
+              this.items.push(item)
+            }
+          }
+          this.current_length = response.data.current_length
+          this.getClockStatus()
+        })
+        .catch(error => {
+          console.log('sugar tits ', error)
+          this.loading = false
+        })
+    },
+    changeWeek(amount) {
+      console.log(amount)
+      this.week = amount
+      this.items = []
+      this.request()
+    },
+    addNote() {
+      this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/addNote', {
+          params: {
+            id: this.timeSheetID,
+            token: this.$ht,
+          },
+        })
+        .then(response => {
+          console.log(response)
+          // this.clockStatus = response.data.data
+          // this.loading = false
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+  },
+}
+</script>

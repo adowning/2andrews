@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const isDevMode = require('electron-is-dev');
-// const { injectCapacitor, CapacitorSplashScreen } = require('@capacitor/electron');
+const { injectCapacitor, CapacitorSplashScreen } = require('@capacitor/electron');
 
 // Place holders for our windows so they don't get garbage collected.
 let mainWindow = null;
@@ -9,7 +9,7 @@ let mainWindow = null;
 let splashScreen = null;
 
 //Change this if you do not wish to have a splash screen
-let useSplashScreen = false;
+let useSplashScreen = true;
 
 // Create simple menu for easy devtools access, and for demo
 const menuTemplateDev = [
@@ -45,9 +45,7 @@ async function createWindow () {
     splashScreen = new CapacitorSplashScreen(mainWindow);
     splashScreen.init();
   } else {
-    // mainWindow.loadURL(await injectCapacitor(`file://${__dirname}/app/index.html`), {baseURLForDataURL: `file://${__dirname}/app/`});
-    // mainWindow.loadURL('file://${__dirname}/app/');
-    mainWindow.loadURL('https://ashdevtools.com');
+    mainWindow.loadURL(await injectCapacitor(`file://${__dirname}/app/index.html`), {baseURLForDataURL: `file://${__dirname}/app/`});
     mainWindow.webContents.on('dom-ready', () => {
       mainWindow.show();
     });

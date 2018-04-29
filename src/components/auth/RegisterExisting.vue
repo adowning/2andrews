@@ -192,17 +192,17 @@ localStorage.clear()
 sessionStorage.clear()
 const pickerStyle = {
   picker: {
-    position: 'relative'
+    position: 'relative',
   },
   preview: {
-    maxWidth: '100%'
+    maxWidth: '100%',
   },
   img: {
     width: '100px',
     height: '100px',
     borderRadius: '50%',
     fontSize: '1.2em',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   input: {
     // width: '100px',
@@ -213,11 +213,11 @@ const pickerStyle = {
     // top: 0,
     // opacity: 0,
     // cursor: 'pointer'
-  }
+  },
 }
 
 export default {
-  data () {
+  data() {
     return {
       username: 'ash',
       photoUpdated: false,
@@ -240,12 +240,12 @@ export default {
         email: value => {
           const pattern = /^(([^<>()[\]\\.,:\s@"]+(\.[^<>()[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           return pattern.test(value) || 'Invalid e-mail.'
-        }
-      }
+        },
+      },
     }
   },
   computed: {
-    disabled: function () {
+    disabled: function() {
       if (!this.humanityEmployee.cell_phone) {
         return true
       }
@@ -265,30 +265,34 @@ export default {
       }
     },
 
-    newLogin: function () {
+    newLogin: function() {
       if (this.humanityEmployee) {
-        return (this.humanityEmployee.firstname.charAt(0) + '.' + this.humanityEmployee.lastname).toLowerCase()
+        return (
+          this.humanityEmployee.firstname.charAt(0) +
+          '.' +
+          this.humanityEmployee.lastname
+        ).toLowerCase()
       }
     },
-    form () {
+    form() {
       return this.humanityEmployee
     },
-    pickerStyle () {
+    pickerStyle() {
       return Object.assign({}, this.style.picker, pickerStyle)
     },
-    userId: function () {
-      //eslint-disable-next-line
+    userId: function() {
+      // eslint-disable-next-line
       return state.amplifyUser.userId
-    }
+    },
   },
   watch: {
-    name () {
+    name() {
       this.errorMessages = []
-    }
+    },
   },
 
   methods: {
-    getPhoto: function () {
+    getPhoto: function() {
       /* eslint-disable */
       Storage.get('avatars/' + this.newLogin).then(url => {
         this.src = url
@@ -297,9 +301,9 @@ export default {
       })
     },
     /* eslint-enable */
-    pick: function (e) {
+    pick: function(e) {
       const file = e.target.files[0]
-      //eslint-disable-next-line
+      // eslint-disable-next-line
       const { name, size, type } = file
       // console.log(file)
       // console.log('upload photo to ' + this.newLogin)
@@ -311,16 +315,16 @@ export default {
         })
         .catch(err => console.error(err))
     },
-    imageError: function (e) {
+    imageError: function(e) {
       console.error(e)
       this.src = this.defSrc
     },
-    verifyHumanity: function () {
+    verifyHumanity: function() {
       this.humanity.getData('employees/' + this.humanityID).then(res => {
         this.humanityEmployee = res.data.data
       })
     },
-    resetForm () {
+    resetForm() {
       this.errorMessages = []
       this.formHasErrors = false
 
@@ -328,12 +332,13 @@ export default {
         this.$refs[f].reset()
       })
     },
-    submit () {
+    submit() {
       this.formHasErrors = false
       var vm = this
       var username = this.newLogin
       var email = username + '@groupandrews.com'
-      var phone_number = '+1' + this.humanityEmployee.cell_phone.replace(/[^0-9.]/g, '')
+      var phoneNumber =
+        '+1' + this.humanityEmployee.cell_phone.replace(/[^0-9.]/g, '')
       var password = 'Andrews1'
 
       // user.signUp(null, {
@@ -351,9 +356,9 @@ export default {
         password,
         attributes: {
           email, // optional
-          phone_number // optional - E.164 number convention
+          phoneNumber, // optional - E.164 number convention
           // other custom attributes
-        }
+        },
       })
         .then(data => {
           console.log(data)
@@ -361,22 +366,22 @@ export default {
           user.set('username', username)
           user.set('password', 'Andrews1')
           user.set('email', email)
-          user.set('phone', '+1' + phone_number)
+          user.set('phone', '+1' + phoneNumber)
           user.set('avatarURL', 'avatars/' + this.newLogin)
           user.signUp(null, {
-            success: function (user) {
+            success: function(user) {
               console.log(user)
               vm.$router.push('/')
             },
-            error: function (user, error) {
+            error: function(user, error) {
               // Show the error message somewhere and let the user try again.
               alert('Error: ' + error.code + ' ' + error.message)
-            }
+            },
           })
         })
         .catch(err => console.log(err))
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="stylus">
