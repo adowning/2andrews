@@ -16,8 +16,7 @@ module.exports = {
     // Only allow debugger in development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
-  overrides: [
-    {
+  overrides: [{
       files: ['src/**/*', 'tests/unit/**/*', 'tests/e2e/**/*'],
       excludedFiles: 'app.config.js',
       parserOptions: {
@@ -32,10 +31,7 @@ module.exports = {
       files: ['src/**/*'],
       rules: {
         // Only allow `console.log` in development
-        'no-console':
-          process.env.NODE_ENV === 'production'
-            ? ['error', { allow: ['warn', 'error'] }]
-            : 'off',
+        'no-console': 'off'
       },
     },
     {
@@ -44,7 +40,9 @@ module.exports = {
         parser: 'babel-eslint',
         sourceType: 'module',
       },
-      env: { jest: true },
+      env: {
+        jest: true
+      },
       globals: {
         mount: false,
         mountShallow: false,

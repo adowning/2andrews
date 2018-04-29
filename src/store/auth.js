@@ -52,7 +52,7 @@ export default {
 
   actions: {
     signout: function (context, payload) {
-      console.log('store signout')
+
       context.commit('setProfile', null)
       context.commit('setAccessToken', null)
       context.commit('setIdToken', null)
@@ -66,7 +66,7 @@ export default {
       //   router.push({ name: 'error', params: { message: 'The verification state in the authentication response did not match our original request' } })
       //   return
       // }
-      console.log(payload.idToken)
+
       // if (payload.idToken === null || (jwt(payload.idToken).token_use || null) !== 'id') {
       //   router.push({ name: 'error', params: { message: 'The authentication response did not include a valid ID token' } })
       //   return
