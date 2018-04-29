@@ -350,7 +350,7 @@
 </template>
 
 <script>
-// import router from '../../router'
+import router from '../../router'
 //  let state = 'this.$store.state'
 
 export default {
@@ -451,8 +451,6 @@ export default {
       this.search = ''
     },
     signOut() {
-      console.log(this.$store.state.cognitoUser)
-      this.$store.state.cognitoUser.signOut()
       this.$store.dispatch('signout', {})
       window.sessionStorage.clear()
       window.localStorage.clear()
