@@ -4,7 +4,7 @@
   "name": "Andrews Admin App",
   "scope": "/",
   "display": "fullscreen",
-  "start_url": "https://romantic-engelbart-edc5f0.netlify.com/",
+  "start_url": "/index.html",
   "short_name": "AAA",
   "theme_color": "transparent",
   "description": "",
