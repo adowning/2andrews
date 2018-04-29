@@ -454,7 +454,7 @@ export default {
       this.$store.dispatch('signout', {})
       window.sessionStorage.clear()
       window.localStorage.clear()
-      router.push('/login')
+      router.push('/')
     },
     gotoProfile() {
       this.$router.push('/profile')
