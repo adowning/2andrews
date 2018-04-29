@@ -1,6 +1,17 @@
 {
-  "name": "andrews-admin-app",
+  "dir": "ltr",
+  "lang": "en",
+  "name": "Andrews Admin App",
+  "scope": "/",
+  "display": "browser",
+  "start_url": "https://romantic-engelbart-edc5f0.netlify.com/",
   "short_name": "AAA",
+  "theme_color": "transparent",
+  "description": "",
+  "orientation": "any",
+  "background_color": "transparent",
+  "related_applications": "",
+  "prefer_related_applications": "false",
   "icons": [{
       "src": "/static/logo.png",
       "sizes": "192x192",
@@ -11,9 +22,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  ]
 }
