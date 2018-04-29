@@ -1,0 +1,19 @@
+{
+	"ProjectName": "andrews-admin-app",
+	"ProjectPath": "/home/ash/Documents/andrews-admin-app",
+	"InitializationTime": "2018-04-28-23-17-58",
+	"LastConfigurationTime": "2018-04-28-23-17-41",
+	"LastNPMInstallTime": "",
+	"FrontendLastBuildTime": "2018-04-29-02-30-11",
+	"LastPublishTime": "2018-04-29-02-30-15",
+	"BackendLastSyncTime": "2018-04-29-04-22-57",
+	"BackendLastBuildTime": "2018-04-29-04-21-43",
+	"BackendLastPushTime": "2018-04-29-04-22-43",
+	"BackendProjectID": "2ea60518-02da-4e73-8378-0f0600a04d4a",
+	"BackendProjectName": "andrews-admin-app",
+	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/2ea60518-02da-4e73-8378-0f0600a04d4a/build",
+	"BackendProjectCreationTime": "2018-04-29T04:13:58.027Z",
+	"BackendProjectLastUpdatedTime": "2018-04-29T09:21:46.900Z",
+	"Framework": "vue",
+	"BackendLastSyncToDevTime": "2018-04-29-04-22-57"
+}
