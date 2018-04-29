@@ -70,7 +70,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function(module, count) {
+      minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
@@ -86,29 +86,38 @@ var webpackConfig = merge(baseWebpackConfig, {
       chunks: ['vendor']
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]),
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, '../static'),
+      to: config.build.assetsSubDirectory,
+      ignore: ['.*']
+    }]),
     // copy redirect
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../_redirects'),
-        to: config.build._redirects,
-        ignore: ['.*']
-      }
-    ]),
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, '../_redirects'),
+      to: config.build._redirects,
+      ignore: ['.*']
+    }]),
     // service worker caching
     new SWPrecacheWebpackPlugin({
       cacheId: 'my-vue-app',
       filename: 'service-worker.js',
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
+      // runtimeCaching: [
+      //   {
+      //     urlPattern: /^http:\/\/res\.cloudinary\.com\//,
+      //     handler: 'cacheFirst'
+      //   }
+      // ],
       minify: true,
       stripPrefix: 'dist/'
     })
+    // new SWPrecacheWebpackPlugin({
+    //   cacheId: 'my-vue-app',
+    //   filename: 'service-worker.js',
+    //   staticFileGlobs: ['dist/**/*.{js,html,css}'],
+    //   minify: true,
+    //   stripPrefix: 'dist/'
+    // })
   ]
 })
 

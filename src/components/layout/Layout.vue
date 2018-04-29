@@ -451,17 +451,12 @@ export default {
       this.search = ''
     },
     signOut() {
-      // let state = this.$store.state
-      // let newState = {}
-
-      // Object.keys(state).forEach(key => {
-      //   newState[key] = null // or = initialState[key]
-      // })
-
-      // this.$store.replaceState(newState)
-      // this.$router.push('/logout')
-      // router.push('/logout')
-      this.$router.push('/logout')
+      console.log(this.$store.state.cognitoUser)
+      this.$store.state.cognitoUser.signOut()
+      this.$store.dispatch('signout', {})
+      window.sessionStorage.clear()
+      window.localStorage.clear()
+      router.push('/login')
     },
     gotoProfile() {
       this.$router.push('/profile')

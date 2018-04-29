@@ -125,16 +125,7 @@ const router = new Router({
         auth: true
       }
     },
-    {
-      path: '/logout',
-      name: 'logout',
-      component: Logout,
-      props: true,
-      meta: {
-        title: 'Logout',
-        auth: true
-      }
-    },
+
     // {
     //   path: '*',
     //   name: 'home',
