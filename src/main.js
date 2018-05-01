@@ -18,18 +18,39 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'vuetify/dist/vuetify.min.css'
 import awsExports from '../awsmobilejs/#current-backend-info/aws-exports'
-
 import Amplify, {
   Auth,
-  Logger
+  Logger,
+  API
 } from 'aws-amplify'
+Amplify.configure(awsExports)
+Amplify.Logger.LOG_LEVEL = 'INFO'
+const logger = new Logger('MAIN')
+
+// let state = { apiResponse: null };
+
+// async function getSample() {
+//  const path = "/path-55d" // you can specify the path
+//   const apiResponse = await API.get("hrm" , path) //replace the API name
+//   console.log('response:' + apiResponse)
+//   // this.setState({ apiResponse })
+// }
+
+async function getData() {
+  let apiName = 'hrm'
+  let path = '/path-55d'
+  // let myInit = { // OPTIONAL
+  //     headers: {} // OPTIONAL
+  // }
+  return await API.get(apiName, path)
+}
+
+getData().then(result =>{
+  console.log(result)
+})
 
 Vue.config.productionTip = false
 
-Amplify.configure(awsExports)
-Amplify.Logger.LOG_LEVEL = 'INFO'
-
-const logger = new Logger('MAIN')
 
 Auth.currentUserInfo()
   .then(user => logger.info(user.attributes['custom:humanity']))

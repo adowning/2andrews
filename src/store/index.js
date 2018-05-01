@@ -84,7 +84,7 @@ const store = new Vuex.Store({
     authenticate: function (context, payload) {
       // console.log(jwt(payload.idToken.jwtToken))
       context.commit('setUser', payload.user)
-      context.commit('setProfile', payload.attributes)
+      // context.commit('setProfile', payload.attributes)
       // context.commit('setProfile', jwt(payload.idToken.jwtToken))
       // context.commit('setAccessToken', payload.accessToken)
       // context.commit('setIdToken', payload.idToken)

@@ -6,14 +6,14 @@
 	"LastNPMInstallTime": "",
 	"FrontendLastBuildTime": "2018-04-29-02-30-11",
 	"LastPublishTime": "2018-04-29-02-30-15",
-	"BackendLastSyncTime": "2018-05-01-04-49-29",
-	"BackendLastBuildTime": "2018-04-29-04-21-43",
-	"BackendLastPushTime": "2018-04-29-04-22-43",
+	"BackendLastSyncTime": "2018-05-01-12-47-31",
+	"BackendLastBuildTime": "2018-05-01-12-46-23",
+	"BackendLastPushTime": "2018-05-01-12-47-19",
 	"BackendProjectID": "2ea60518-02da-4e73-8378-0f0600a04d4a",
 	"BackendProjectName": "andrews-admin-app",
 	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/2ea60518-02da-4e73-8378-0f0600a04d4a/build",
 	"BackendProjectCreationTime": "2018-04-29T04:13:58.027Z",
-	"BackendProjectLastUpdatedTime": "2018-05-01T09:39:58.644Z",
+	"BackendProjectLastUpdatedTime": "2018-05-01T17:46:26.826Z",
 	"Framework": "vue",
-	"BackendLastSyncToDevTime": "2018-05-01-04-49-38"
+	"BackendLastSyncToDevTime": "2018-05-01-12-47-31"
 }
