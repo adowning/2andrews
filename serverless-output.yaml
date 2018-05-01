@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  TestFunction:
+    Properties:
+      CodeUri: s3://api-andrews-examplefolder/a1781357c51cd9c9270b365e6dbec799
+      Environment:
+        Variables:
+          S3_BUCKET: api-andrews-examplefolder
+      Handler: index.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

@@ -6,3 +6,5 @@
 /test/*
 /lambda/*
 /lambda-src/*
+/awsmobilejs/*
+/aws-lambda/*

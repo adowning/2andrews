@@ -417,7 +417,7 @@ export default {
         this.items = []
         this.qrItems = []
       }
-      console.log(process.env.LAMBDA_API)
+      // console.log(process.env.LAMBDA_API)
       this.$http
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getHardware')

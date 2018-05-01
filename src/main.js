@@ -5,18 +5,36 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import AppHome from './components/Home.vue'
-import AppSignin from './components/auth/Signin.vue'
-import AppRegister from './components/auth/Register.vue'
-import AppRegistered from './components/auth/Registered.vue'
-import AppForgot from './components/auth/Forgot.vue'
-import AppConfirm from './components/auth/Confirm.vue'
-import AppChanged from './components/auth/Changed.vue'
-import AppProfile from './components/Profile/'
+// import AppSignin from './components/auth/Signin.vue'
+// import AppRegister from './components/auth/Register.vue'
+// import AppRegistered from './components/auth/Registered.vue'
+// import AppForgot from './components/auth/Forgot.vue'
+// import AppConfirm from './components/auth/Confirm.vue'
+// import AppChanged from './components/auth/Changed.vue'
+// import AppProfile from './components/Profile/'
+// import fullCalendar from 'vue-fullcalendar'
 import store from './store/'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'vuetify/dist/vuetify.min.css'
-import fullCalendar from 'vue-fullcalendar'
+import awsExports from '../awsmobilejs/#current-backend-info/aws-exports'
+
+import Amplify, {
+  Auth,
+  Logger
+} from 'aws-amplify'
+
+Vue.config.productionTip = false
+
+Amplify.configure(awsExports)
+Amplify.Logger.LOG_LEVEL = 'INFO'
+
+const logger = new Logger('MAIN')
+
+Auth.currentUserInfo()
+  .then(user => logger.info(user.attributes['custom:humanity']))
+  .catch(err => logger.info(err))
+
 Vue.prototype.$ht = {}
 
 axios
@@ -56,14 +74,14 @@ Vue.component('app-layout', function (resolve) {
   require(['./components/layout/Layout.vue'], resolve)
 })
 Vue.component('app-home', AppHome)
-Vue.component('app-signin', AppSignin)
-Vue.component('app-register', AppRegister)
-Vue.component('app-registered', AppRegistered)
-Vue.component('app-forgot', AppForgot)
-Vue.component('app-confirm', AppConfirm)
-Vue.component('app-changed', AppChanged)
-Vue.component('app-profile', AppProfile)
-Vue.component('full-calendar', fullCalendar)
+// Vue.component('app-signin', AppSignin)
+// Vue.component('app-register', AppRegister)
+// Vue.component('app-registered', AppRegistered)
+// Vue.component('app-forgot', AppForgot)
+// Vue.component('app-confirm', AppConfirm)
+// Vue.component('app-changed', AppChanged)
+// Vue.component('app-profile', AppProfile)
+// Vue.component('full-calendar', fullCalendar)
 
 
 Vue.config.productionTip = false

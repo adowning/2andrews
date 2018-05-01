@@ -21,7 +21,7 @@
     "@capacitor/cli": "^1.0.0-alpha.34",
     "@capacitor/core": "^1.0.0-alpha.34",
     "amazon-cognito-identity-js": "^2.0.3",
-    "aws-amplify": "^0.2.15",
+    "aws-amplify": "^0.3.3",
     "aws-sdk": "^2.197.0",
     "axios": "^0.18.0",
     "country-list": "^1.1.0",

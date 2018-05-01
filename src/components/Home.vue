@@ -1,15 +1,15 @@
 <template>
   <v-container>
     <section>
-      <v-layout 
-        column 
-        align-center 
+      <v-layout
+        column
+        align-center
         justify-center>
-        <transition 
-          appear 
+        <transition
+          appear
           name="fadeout">
-          <img 
-            class="aws-logo mt-5 mb-4" 
+          <img
+            class="aws-logo mt-5 mb-4"
             src="../../static/logo.png">
         </transition>
         <!-- <h4 class="headline mb-0" grey--text >Andrews Admin Application</h4> -->
@@ -21,9 +21,19 @@
 
 <script>
 // import router from '../router'
+// import store from '../store'
+
+import {
+  Auth,
+} from 'aws-amplify'
 export default {
   mounted() {
+
+Auth.currentUserInfo()
+  .then(user => this.$store.commit('setProfile', user.attributes))
+  .catch(err => console.log(err))
     // var enabled = true
+
     // // Use require to add webcamjs
     // var WebCamera = require("webcamjs")
     // enabled = true

@@ -103,7 +103,7 @@
                     </v-btn>
                     <div>
                       <!-- <router-link :to="'/forgot'">Forgot password?</router-link><br> -->
-                      <router-link :to="'/login'">Go to login</router-link>
+                      <router-link :to="'/'">Go to login</router-link>
                     </div>
                   </v-card-text>
                   <!-- <button

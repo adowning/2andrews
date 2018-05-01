@@ -13,7 +13,11 @@ import Hardware from '@/components/assets/Hardware'
 import Maintenance from '@/components/assets/Maintenance'
 import Consumables from '@/components/assets/Consumables'
 import Profile from '@/components/Profile/'
-
+import {
+  Auth,
+  Logger
+} from 'aws-amplify'
+const logger = new Logger('Router')
 
 Vue.use(Router)
 
@@ -138,38 +142,72 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  // Use the page's router title to name the page
-  console.log('to: ' + to.name + '| needs_auth: ' + to.meta.auth + '| is_auth: ' + store.getters.isAuthenticated)
-  if (to.meta && to.meta.title) {
-    document.title = to.meta.title
-  }
 
-  // Redirect to the login page if not authenticated
-  // for pages that have 'auth: true' set
-  if (to.meta && to.meta.auth !== undefined) {
-    if (to.meta.auth) {
-      if (store.getters.isAuthenticated) {
-        // if (store.getters.authenticated) {
-        next()
-      } else {
-        router.push({
-          name: 'login'
+router.beforeEach((to, from, next) => {
+  // logger.info('before routing ', to.name, from.name)
+  Auth.currentAuthenticatedUser()
+    .then(user => {
+      // logger.info('before routing ', to, from)
+      // logger.info('...has user', user)
+      store.commit('setUser', user)
+      Auth.currentCredentials()
+        .then(credentials => {
+          // logger.info('...has cred', credentials.identityId)
+          store.commit('setUserId', credentials.identityId)
+          store.commit('setAuthenticated', true)
         })
+        .catch(err => logger.info('get current credentials err', err))
+      next()
+    })
+    .catch(err => {
+      logger.info('...no user', err)
+      store.commit('setUser', null)
+      try {
+        if (to.meta.auth) {
+          console.log('boooooooooom')
+
+          console.log(to.name)
+          next('/')
+        } else {
+          next()
+        }
+      } catch (err) {
+        logger.error('...fucked up route', err)
       }
-    } else {
-      if (store.getters.isAuthenticated) {
-        // if (store.getters.authenticated) {
-        router.push({
-          name: 'home'
-        })
-      } else {
-        next()
-      }
-    }
-  } else {
-    next()
-  }
+    })
 })
+// router.beforeEach((to, from, next) => {
+//   // Use the page's router title to name the page
+//   console.log('to: ' + to.name + '| needs_auth: ' + to.meta.auth + '| is_auth: ' + store.getters.isAuthenticated)
+//   if (to.meta && to.meta.title) {
+//     document.title = to.meta.title
+//   }
+
+//   // Redirect to the login page if not authenticated
+//   // for pages that have 'auth: true' set
+//   if (to.meta && to.meta.auth !== undefined) {
+//     if (to.meta.auth) {
+//       if (store.getters.isAuthenticated) {
+//         // if (store.getters.authenticated) {
+//         next()
+//       } else {
+//         router.push({
+//           name: 'login'
+//         })
+//       }
+//     } else {
+//       if (store.getters.isAuthenticated) {
+//         // if (store.getters.authenticated) {
+//         router.push({
+//           name: 'home'
+//         })
+//       } else {
+//         next()
+//       }
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

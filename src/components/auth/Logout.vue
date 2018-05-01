@@ -17,7 +17,7 @@
 //     this.$store.dispatch('signout', {})
 //     window.sessionStorage.clear()
 //     window.localStorage.clear()
-//     router.push('/login')
+//     router.push('login')
 //   },
 // }
 //

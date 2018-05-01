@@ -80,6 +80,11 @@
 </template>
 <script>
 import moment from 'moment'
+// import {
+//   Auth,
+//   // Logger
+// } from 'aws-amplify'
+// const logger = new Logger('TIMECLOCK')
 
 export default {
   data() {
@@ -129,6 +134,9 @@ export default {
   },
 
   computed: {
+    user: function(){
+        return this.$store.auth.getters.profile
+    },
     totalTime: function() {
       var diff = moment(this.et) - moment(this.st)
       return moment.utc(moment.duration(diff).asMilliseconds()).format('H:mm')
@@ -147,8 +155,14 @@ export default {
     },
   },
   created() {
+    // Auth.currentUserInfo()
+    //   .then(user => {logger.info(user.attributes)
+    //   this.user = user
+    //    this.request(0)
+    //   }
+    //   )
+this.request(0)
     // this.getClockStatus()
-    this.request(0)
   },
   methods: {
     getClockStatus() {
@@ -156,7 +170,7 @@ export default {
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getClockStatus', {
           params: {
-            id: this.$store.getters.profile['custom:humanity'],
+            id: this.user.attributes['custom:humanity'],
             token: this.$ht,
           },
         })
@@ -181,7 +195,7 @@ export default {
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/createTimeClock', {
           params: {
-            id: this.$store.getters.profile['custom:humanity'],
+            id: this.user.attributes['custom:humanity'],
             inOut: command,
             token: this.$ht,
           },
