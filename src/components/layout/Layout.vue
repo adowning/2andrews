@@ -1,9 +1,8 @@
 <template>
   <v-app>
-    <template :v-if="user">
-
+    <template v-if="!isAuthenticated">
       <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet"> -->
-      <v-navigation-drawer :mini-variant="miniVariant" v-model="drawer" mobile-break-point="964" width="250" class="blue-grey darken-4" dark persistent fixed app>
+      <v-navigation-drawer :v-if="isAuthenticated" :mini-variant="miniVariant" v-model="drawer" mobile-break-point="964" width="250" class="blue-grey darken-4" dark persistent fixed app>
         <v-toolbar flat class="transparent" dense>
           <v-list :class="{'list-border-bottom' : miniVariant}" class="pa-0">
             <v-list-tile>
@@ -14,7 +13,7 @@
               </v-list-tile-action>
               <v-list-tile-content v-if="!miniVariant">
                 <v-list-tile-title style="color: #41B883">
-                  <h3>Andrews App</h3>
+                  <h3>Andrews App {{ user }} </h3>
                 </v-list-tile-title>
               </v-list-tile-content>
               <v-list-tile-action>
@@ -241,6 +240,7 @@ export default {
     drawer: true,
     rightDrawer: false,
     searching: false,
+    isAuthenticated: false,
     search: '',
     right: '',
     attributes: {},
@@ -321,21 +321,17 @@ export default {
     menuItems: ['', 'NodeJS', 'Laravel']
   }),
   computed: {
-    isAuthenticated: function() {
-      return this.$store.getters.isAuthenticated
-    },
-        username: function() {
-      return this.$store.getters.user.username
+        user: function() {
+      return this.$store.getters.user
     }
   },
-  created: function() {
+  mounted: function() {
        this.getPhoto()
 
   },
   methods: {
     getPhoto: function() {
-      console.log(this.username)
-      Storage.get('avatars/' + this.username + '.jpg').then(url => (this.src = url))
+      Storage.get('avatars/' + this.user.username + '.jpg').then(url => (this.src = url))
     },
     gotoClock() {
       this.$router.push('/timeClock')
@@ -345,7 +341,7 @@ export default {
       this.search = ''
     },
     signOut() {
-            window.sessionStorage.clear()
+      window.sessionStorage.clear()
       window.localStorage.clear()
       this.$store.dispatch('signout', {})
       window.sessionStorage.clear()

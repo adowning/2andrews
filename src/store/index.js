@@ -53,36 +53,20 @@ const store = new Vuex.Store({
       context.commit('setUserId', null)
       context.commit('setProfile', null)
       context.commit('setAttributes', null)
-    
+      context.commit('setIsAuthenticated', null)
+
       router.push({
         name: 'login',
       })
     },
     setAttributes: function (context, payload) {
       context.commit('setAttributes', payload.attributes)
-      // context.commit('setProfile', payload.attributes)
-      // async function asyncCall() {
-      //   console.log('calling')
-      //   var profile = await Auth.currentAuthenticatedUser() 
-      //   console.log(profile);
-      //   // expected output: "resolved"
-      // }
-      // asyncCall()  
       router.push({
         name: 'home',
       })
     },
     authenticate: function (context, payload) {
       context.commit('setUser', payload.user)
-      // context.commit('setProfile', payload.attributes)
-      // async function asyncCall() {
-      //   console.log('calling')
-      //   var profile = await Auth.currentAuthenticatedUser() 
-      //   console.log(profile);
-      //   // expected output: "resolved"
-      // }
-      // asyncCall()  
-     
     },
   },
   modules: {
