@@ -21,7 +21,7 @@ import awsExports from '../awsmobilejs/#current-backend-info/aws-exports'
 import Amplify, {
   Auth,
   Logger,
-  API
+  // API
 } from 'aws-amplify'
 Amplify.configure(awsExports)
 Amplify.Logger.LOG_LEVEL = 'INFO'
@@ -36,18 +36,18 @@ const logger = new Logger('MAIN')
 //   // this.setState({ apiResponse })
 // }
 
-async function getData() {
-  let apiName = 'hrm'
-  let path = '/path-55d'
-  // let myInit = { // OPTIONAL
-  //     headers: {} // OPTIONAL
-  // }
-  return await API.get(apiName, path)
-}
+// async function getData() {
+//   let apiName = 'hrm'
+//   let path = '/path-55d'
+//   // let myInit = { // OPTIONAL
+//   //     headers: {} // OPTIONAL
+//   // }
+//   return await API.get(apiName, path)
+// }
 
-getData().then(result =>{
-  console.log(result)
-})
+// getData().then(result =>{
+//   console.log(result)
+// })
 
 Vue.config.productionTip = false
 

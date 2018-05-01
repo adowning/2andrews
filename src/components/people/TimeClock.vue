@@ -165,6 +165,36 @@ this.request(0)
     // this.getClockStatus()
   },
   methods: {
+        request() {
+      this.items = []
+      this.loading = true
+      this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/getTimeClocks', {
+          params: {
+            start_date: this.startEndDates.start_date,
+            end_date: this.startEndDates.end_date,
+            employee: this.$store.getters.attributes['custom:humanity'],
+            token: this.$ht,
+          },
+        })
+        .then(response => {
+          // console.log(response)
+          this.serverPagination = false
+          // this.serverPagination.rowsNumber = response.data.total
+          for (var item of response.data) {
+            if (item.out_day !== 0) {
+              this.items.push(item)
+            }
+          }
+          this.current_length = response.data.current_length
+          this.getClockStatus()
+        })
+        .catch(error => {
+          console.log('sugar tits ', error)
+          this.loading = false
+        })
+    },
     getClockStatus() {
       this.$http
         // eslint-disable-next-line
@@ -214,36 +244,7 @@ this.request(0)
           console.error(error)
         })
     },
-    request() {
-      this.items = []
-      this.loading = true
-      this.$http
-        // eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/getTimeClocks', {
-          params: {
-            start_date: this.startEndDates.start_date,
-            end_date: this.startEndDates.end_date,
-            employee: this.$store.getters.profile['custom:humanity'],
-            token: this.$ht,
-          },
-        })
-        .then(response => {
-          // console.log(response)
-          this.serverPagination = false
-          // this.serverPagination.rowsNumber = response.data.total
-          for (var item of response.data) {
-            if (item.out_day !== 0) {
-              this.items.push(item)
-            }
-          }
-          this.current_length = response.data.current_length
-          this.getClockStatus()
-        })
-        .catch(error => {
-          console.log('sugar tits ', error)
-          this.loading = false
-        })
-    },
+
     changeWeek(amount) {
       console.log(amount)
       this.week = amount

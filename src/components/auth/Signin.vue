@@ -158,16 +158,7 @@ export default {
     },
   },
   created() {
-    // return auth.authenticate(provider)
-    // this.authenticate()
-    Auth.currentUserInfo()
-  .then(user => {
-  if(user){
-    console.log('already logged in going home ...')
-      this.$router.push('/home')
-  }})
 
-  .catch(err => console.log(err))
   },
   methods: {
     setError: function(err) {
@@ -197,102 +188,22 @@ export default {
       this.loader = 'loading'
       const l = this.loader
       this[l] = !this[l]
-      console.log('sign in with: ' + this.email + ' ' + this.password)
 
-      // console.log('sign in with: ' + this.email + ' ' + this.password)
-      // var authenticationData = {
-      //   Username: this.email,
-      //   Password: this.password,
-      // }
-      // console.log(
-      //   'auth data: ' +
-      //     authenticationData.Username +
-      //     ' ' +
-      //     authenticationData.Password
-      // )
-      // var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
-      //   authenticationData
-      // )
-
-      // this.$store.state.userPool = new AmazonCognitoIdentity.CognitoUserPool(
-      //   config.poolData
-      // )
-      // var userData = {
-      //   Username: this.email,
-      //   Pool: this.$store.state.userPool,
-      // }
-      // this.$store.state.cognitoUser = new AmazonCognitoIdentity.CognitoUser(
-      //   userData
-      // )
         Auth.signIn(this.email, this.password)
             .then(user => {
               console.log('sign in success', user)
-              // AmplifyStore.commit('setUser', user);
-
-              return user
-            })
-            .then(user => {
-              console.log(user)
-              // that.user = user
-              // if (user.challengeName === 'SMS_MFA') {
-              //   that.confirmView = true
-              //   return
-              // }
-               Auth.currentAuthenticatedUser()
-    .then(auser => {
-      console.log(auser)
-      this.$store.dispatch('authenticate', {
-                // accessToken: result.accessToken,
-                // idToken: result.idToken,
-
-                user: auser
-                //  verification: result.verification,
-                // expiresIn: result.expiresIn,
+             this.$store.dispatch('authenticate', {
+                user: user
               })
-    })
-              // this.checkUser()
+                 Auth.currentUserInfo()
+                .then(auser => {
+                 console.log(auser)
+                this.$store.dispatch('setAttributes', {
+                attributes: auser.attributes
+              })
             })
             .catch(err => this.setError(err))
-      // this.$store.state.cognitoUser.authenticateUser(authenticationDetails, {
-      //   onSuccess: result => {
-      //     console.log(result.accessToken)
-      //     console.log(result.idToken)
-      //     // console.log(result.verification)
-      //     // console.log(result.expiresIn)
-
-      //     Auth.signIn(this.email, this.password)
-      //       .then(user => {
-      //         console.log('sign in success', user)
-      //         // AmplifyStore.commit('setUser', user);
-      //         this.$store.dispatch('authenticate', {
-      //           accessToken: result.accessToken,
-      //           idToken: result.idToken,
-      //           user: user,
-      //           //  verification: result.verification,
-      //           expiresIn: result.expiresIn,
-      //         })
-      //         return user
-      //       })
-      //       .then(user => {
-      //         that.user = user
-      //         if (user.challengeName === 'SMS_MFA') {
-      //           that.confirmView = true
-      //           return
-      //         }
-      //         this.checkUser()
-      //       })
-      //       .catch(err => this.setError(err))
-        // },
-        // onFailure: err => {
-        //   console.error(err)
-        //   // if (!this.callback) {
-        //   // console.log("sign in failure")
-        //   // this.errcode = JSON.stringify(err.code)
-        //   // this[l] = false
-        //   // this.loader = null
-        //   // }
-        // },
-      // })
+        })
     },
     navRreset: function() {
       router.push('/forgot')

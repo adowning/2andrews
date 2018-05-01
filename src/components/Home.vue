@@ -23,15 +23,13 @@
 // import router from '../router'
 // import store from '../store'
 
-import {
-  Auth,
-} from 'aws-amplify'
+// import {
+//   Auth,
+// } from 'aws-amplify'
 export default {
   mounted() {
+console.log('asdf')
 
-Auth.currentUserInfo()
-  .then(user => this.$store.commit('setProfile', user.attributes))
-  .catch(err => console.log(err))
     // var enabled = true
 
     // // Use require to add webcamjs

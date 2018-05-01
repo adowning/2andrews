@@ -21,30 +21,19 @@ const store = new Vuex.Store({
     profile: null,
     user: null,
     userId: null,
-    userVerification: [],
-    accessToken: null,
-    verification: null,
-    isAuthenticated: false,
-    count: 0,
+    attributes: null,
   },
 
   getters: {
     profile: state => state.profile,
     user: state => state.user,
     userId: state => state.userId,
-    verification: state => state.verification,
-    accessToken: state => state.accessToken,
-    idToken: state => state.idToken,
-    isAuthenticated: state => state.isAuthenticated,
+    attributes: state => state.attributes,
   },
 
   mutations: {
     setUser: (state, user) => {
-      console.log(user)
       state.user = user
-    },
-    setUserVerification(state, data) {
-      state.userVerification = data
     },
     setUserId: (state, userId) => {
       state.userId = userId
@@ -53,17 +42,8 @@ const store = new Vuex.Store({
       console.log(profile)
       state.profile = profile
     },
-    setAccessToken: (state, accessToken) => {
-      state.accessToken = accessToken
-    },
-    setIdToken: (state, idToken) => {
-      state.idToken = idToken
-    },
-    setVerification: (state, verification) => {
-      state.verification = verification
-    },
-    setAuthenticated: (state, isAuthenticated) => {
-      state.isAuthenticated = isAuthenticated
+    setAttributes: (state, attributes) => {
+      state.attributes = attributes
     },
   },
 
@@ -71,27 +51,38 @@ const store = new Vuex.Store({
     signout: function (context) {
       context.commit('setUser', null)
       context.commit('setUserId', null)
-      context.commit('setAuthenticated', false)
-
       context.commit('setProfile', null)
-      // context.commit('setAccessToken', null)
-      // context.commit('setIdToken', null)
-      // context.commit('setAuthenticated', false)
+      context.commit('setAttributes', null)
+    
       router.push({
         name: 'login',
       })
     },
-    authenticate: function (context, payload) {
-      // console.log(jwt(payload.idToken.jwtToken))
-      context.commit('setUser', payload.user)
+    setAttributes: function (context, payload) {
+      context.commit('setAttributes', payload.attributes)
       // context.commit('setProfile', payload.attributes)
-      // context.commit('setProfile', jwt(payload.idToken.jwtToken))
-      // context.commit('setAccessToken', payload.accessToken)
-      // context.commit('setIdToken', payload.idToken)
-      context.commit('setAuthenticated', true)
+      // async function asyncCall() {
+      //   console.log('calling')
+      //   var profile = await Auth.currentAuthenticatedUser() 
+      //   console.log(profile);
+      //   // expected output: "resolved"
+      // }
+      // asyncCall()  
       router.push({
         name: 'home',
       })
+    },
+    authenticate: function (context, payload) {
+      context.commit('setUser', payload.user)
+      // context.commit('setProfile', payload.attributes)
+      // async function asyncCall() {
+      //   console.log('calling')
+      //   var profile = await Auth.currentAuthenticatedUser() 
+      //   console.log(profile);
+      //   // expected output: "resolved"
+      // }
+      // asyncCall()  
+     
     },
   },
   modules: {

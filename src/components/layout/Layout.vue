@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <template v-if="isAuthenticated">
+    <template :v-if="user">
 
       <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet"> -->
       <v-navigation-drawer :mini-variant="miniVariant" v-model="drawer" mobile-break-point="964" width="250" class="blue-grey darken-4" dark persistent fixed app>

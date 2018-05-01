@@ -8,7 +8,6 @@ import Confirm from '@/components/auth/Confirm'
 import Callback from '@/components/auth/Callback'
 import ErrorMsg from '@/components/auth/ErrorMsg'
 import TimeClock from '@/components/people/TimeClock'
-
 import Hardware from '@/components/assets/Hardware'
 import Maintenance from '@/components/assets/Maintenance'
 import Consumables from '@/components/assets/Consumables'
@@ -154,7 +153,6 @@ router.beforeEach((to, from, next) => {
         .then(credentials => {
           // logger.info('...has cred', credentials.identityId)
           store.commit('setUserId', credentials.identityId)
-          store.commit('setAuthenticated', true)
         })
         .catch(err => logger.info('get current credentials err', err))
       next()
@@ -164,9 +162,6 @@ router.beforeEach((to, from, next) => {
       store.commit('setUser', null)
       try {
         if (to.meta.auth) {
-          console.log('boooooooooom')
-
-          console.log(to.name)
           next('/')
         } else {
           next()
