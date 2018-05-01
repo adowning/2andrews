@@ -7,3 +7,8 @@ aws cloudformation deploy \
    --template-file ./serverless-output.yaml \
    --stack-name api-andrews \
   --capabilities CAPABILITY_IAM
+
+awslogs get /aws/lambda/hrm-oauth2Handler-mobilehub-1405917934 --start='20m'
+
+this is the oauth2 function 
+awsmobile cloud-api invoke hrm GET /path-55d 
