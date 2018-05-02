@@ -146,8 +146,8 @@ router.beforeEach((to, from, next) => {
   // logger.info('before routing ', to.name, from.name)
   Auth.currentAuthenticatedUser()
     .then(user => {
-      // logger.info('before routing ', to, from)
-      // logger.info('...has user', user)
+      console.log('before routing ', to, from)
+      console.log('...has user', user)
       store.commit('setUser', user)
       Auth.currentCredentials()
         .then(credentials => {
@@ -158,7 +158,7 @@ router.beforeEach((to, from, next) => {
       next()
     })
     .catch(err => {
-      logger.info('...no user', err)
+      console.log('...no user', err)
       store.commit('setUser', null)
       try {
         if (to.meta.auth) {
@@ -167,7 +167,7 @@ router.beforeEach((to, from, next) => {
           next()
         }
       } catch (err) {
-        logger.error('...fucked up route', err)
+        // logger.error('...fucked up route', err)
       }
     })
 })

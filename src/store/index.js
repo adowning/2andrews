@@ -14,8 +14,8 @@ const store = new Vuex.Store({
     persist({
       namespace: 'aws-vuejs-cognito',
       initialState: {},
-      expires: 99 * 24 * 60 * 60 * 1e3 // 1 week
-    })
+      expires: 99 * 24 * 60 * 60 * 1e3, // 1 week
+    }),
   ],
   state: {
     profile: null,
@@ -30,15 +30,15 @@ const store = new Vuex.Store({
     user: state => state.user,
     userId: state => state.userId,
     attributes: state => state.attributes,
-    isAuthenticated: state => state.attributes,
+    isAuthenticated: state => state.isAuthenticated,
   },
 
   mutations: {
     setUser: (state, user) => {
       state.user = user
     },
-    isAuthenticated: (state, user) => {
-      state.user = user
+    setisAuthenticated: (state, auth) => {
+      state.isAuthenticated = auth
     },
     setUserId: (state, userId) => {
       state.userId = userId
@@ -53,26 +53,20 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    signout: function (context) {
+    signout: function(context) {
       context.commit('setUser', null)
       context.commit('setUserId', null)
       context.commit('setProfile', null)
       context.commit('setAttributes', null)
-      context.commit('setIsAuthenticated', null)
+      context.commit('setisAuthenticated', false)
 
       router.push({
         name: 'login',
       })
     },
-    // setAttributes: function (context, payload) {
-    //   context.commit('setAttributes', payload.attributes)
-    //   router.push({
-    //     name: 'home',
-    //   })
-    // },
-    authenticate: function (context, payload) {
+    authenticate: function(context, payload) {
       context.commit('setUser', payload.user)
-      context.commit('setIsAuthenticated', true)
+      context.commit('setisAuthenticated', true)
 
       router.push({
         name: 'home',
@@ -81,8 +75,8 @@ const store = new Vuex.Store({
   },
   modules: {
     // auth,
-    errors
-  }
+    errors,
+  },
 })
 
 export default store

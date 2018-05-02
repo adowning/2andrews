@@ -89,58 +89,60 @@ import moment from 'moment'
 
 export default {
   data() {
-    return {
-      loading: false,
-      timeSheetID: null,
-      current_length: {},
-      clockStatus: null,
-      timeFigured: false,
-      notes: '',
-      st: {},
-      et: {},
-      weeks: [
-        { title: 'This Week', amount: 0 },
-        { title: 'Last Week', amount: 1 },
-        { title: 'Two Weeks Ago', amount: 2 },
-      ],
-      week: null,
-      date: moment().format('LLL'),
-      serverPagination: {
-        page: 1,
+    return (
+      {
+        loading: false,
+        timeSheetID: null,
+        current_length: {},
+        clockStatus: null,
+        timeFigured: false,
+        notes: '',
+        st: {},
+        et: {},
+        weeks: [
+          { title: 'This Week', amount: 0 },
+          { title: 'Last Week', amount: 1 },
+          { title: 'Two Weeks Ago', amount: 2 }
+        ],
+        week: null,
+        date: moment().format('LLL'),
+        serverPagination: {
+          page: 1
+        },
+        headers: [
+          {
+            text: 'Length',
+            value: 'length',
+            align: 'left'
+          },
+          {
+            text: 'Clock in',
+            value: 'in_time',
+            align: 'in_time'
+          },
+          {
+            text: 'Clock out',
+            align: 'left',
+            value: 'out_time'
+          },
+          {
+            text: 'Date',
+            align: 'left',
+            value: 'model'
+          }
+        ],
+        items: []
       },
-      headers: [
-        {
-          text: 'Length',
-          value: 'length',
-          align: 'left',
-        },
-        {
-          text: 'Clock in',
-          value: 'in_time',
-          align: 'in_time',
-        },
-        {
-          text: 'Clock out',
-          align: 'left',
-          value: 'out_time',
-        },
-        {
-          text: 'Date',
-          align: 'left',
-          value: 'model',
-        },
-      ],
-      items: [],
-    },
-    this.$store.state.cognitoUser.getUserAttributes
+      this.$store.state.cognitoUser.getUserAttributes
+    )
   },
 
   computed: {
     attributes: function() {
-      return  this.$store.state.cognitoUser.getUserAttributes()
+      return this.$store.state.cognitoUser.getUserAttributes()
     },
-    user: function(){
-        return this.$store.auth.getters.profile
+    user: function() {
+      return this.$store.auth.getters.profile
     },
     totalTime: function() {
       var diff = moment(this.et) - moment(this.st)
@@ -155,37 +157,19 @@ export default {
         end_date: moment()
           .subtract(this.week, 'w')
           .endOf('week')
-          .format('YYYY-MM-DD'), // set to the first day of this week, 12:00 am
+          .format('YYYY-MM-DD') // set to the first day of this week, 12:00 am
       }
-    },
+    }
   },
   created() {
-    // Auth.currentUserInfo()
-    //   .then(user => {logger.info(user.attributes)
-    //   this.user = user
-    //    this.request(0)
-    //   }
-    //   )
-    if(this.user){
-      this.getUserAttributes()
-    }
-this.request(0)
+    // if (this.user) {
+    //   this.getUserAttributes()
+    // }
+    this.request(0)
     // this.getClockStatus()
   },
   methods: {
-    getAttributes(){
-        this.$http
-        // eslint-disable-next-line
-        .get(process.env.LAMBDA_API + '/getTimeClocks', {
-          params: {
-            start_date: this.startEndDates.start_date,
-            end_date: this.startEndDates.end_date,
-            employee: this.$store.getters.attributes['custom:humanity'],
-            token: this.$ht,
-          },
-        })
-    },
-        request() {
+    request() {
       this.items = []
       this.loading = true
       this.$http
@@ -194,9 +178,10 @@ this.request(0)
           params: {
             start_date: this.startEndDates.start_date,
             end_date: this.startEndDates.end_date,
-            employee: this.$store.getters.attributes['custom:humanity'],
-            token: this.$ht,
-          },
+            // employee: this.$store.getters.attributes['custom:humanity'],
+            employee: localStorage.getItem('humanityToken'),
+            token: this.$ht
+          }
         })
         .then(response => {
           // console.log(response)
@@ -215,14 +200,29 @@ this.request(0)
           this.loading = false
         })
     },
+    // getAttributes() {
+    //   this.$http
+    //     // eslint-disable-next-line
+    //     .get(process.env.LAMBDA_API + '/getTimeClocks', {
+    //       params: {
+    //         start_date: this.startEndDates.start_date,
+    //         end_date: this.startEndDates.end_date,
+    //         // employee: this.$store.getters.attributes['custom:humanity'],
+    //         employee: localStorage.getItem('humanityToken'),
+    //         token: this.$ht
+    //       }
+    //     })
+    // },
+
     getClockStatus() {
       this.$http
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/getClockStatus', {
           params: {
-            id: this.user.attributes['custom:humanity'],
-            token: this.$ht,
-          },
+            // id: this.user.attributes['custom:humanity'],
+            id: localStorage.getItem('humanityToken'),
+            token: this.$ht
+          }
         })
         .then(response => {
           console.log(response)
@@ -245,10 +245,10 @@ this.request(0)
         // eslint-disable-next-line
         .get(process.env.LAMBDA_API + '/createTimeClock', {
           params: {
-            id: this.user.attributes['custom:humanity'],
+            id: localStorage.getItem('humanityToken'),
             inOut: command,
-            token: this.$ht,
-          },
+            token: this.$ht
+          }
         })
         .then(response => {
           // console.log(response.data)
@@ -277,8 +277,8 @@ this.request(0)
         .get(process.env.LAMBDA_API + '/addNote', {
           params: {
             id: this.timeSheetID,
-            token: this.$ht,
-          },
+            token: this.$ht
+          }
         })
         .then(response => {
           console.log(response)
@@ -288,7 +288,7 @@ this.request(0)
         .catch(error => {
           console.error(error)
         })
-    },
-  },
+    }
+  }
 }
 </script>

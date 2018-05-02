@@ -103,6 +103,7 @@ import router from '../../router'
 // import auth from '../../services/auth'
 import store from '../../store'
 import { Auth, JS } from 'aws-amplify'
+import axios from 'axios'
 
 // var poolData = config.poolData
 // eslint-disable-next-line
@@ -123,17 +124,13 @@ export default {
         // eslint-disable-next-line
         v =>
           // eslint-disable-next-line
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          'E-mail must be valid',
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
       password: 'asdfasdf',
-      passRules: [
-        v => !!v || 'Password is required',
-        v => v.length >= 8 || 'Password must be at least 8 characters',
-      ],
+      passRules: [v => !!v || 'Password is required', v => v.length >= 8 || 'Password must be at least 8 characters'],
       hidepw: true,
       loader: false,
-      loading: false,
+      loading: false
     }
   },
   watch: {
@@ -155,11 +152,9 @@ export default {
       } else {
         this.showerr = false
       }
-    },
+    }
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     setError: function(err) {
       this.error = err.message || err
@@ -189,29 +184,32 @@ export default {
       const l = this.loader
       this[l] = !this[l]
 
-        Auth.signIn(this.email, this.password)
-            .then(user => {
-              console.log('sign in success', user)
-             this.$store.dispatch('authenticate', {
-                user: user
-              })
-            //      Auth.currentUserInfo()
-            //     .then(auser => {
-            //      console.log(auser)
-            //     this.$store.dispatch('setAttributes', {
-            //     attributes: auser.attributes
-            //   })
-            // })
-            .catch(err => this.setError(err))
+      Auth.signIn(this.email, this.password).then(user => {
+        console.log('sign in success', user)
+        this.$store.dispatch('authenticate', {
+          user: user
         })
+        axios
+          // eslint-disable-next-line
+          .get(process.env.LAMBDA_API + '/initHumanity')
+          .then(response => {
+            // Vue.prototype.$ht = response.data.access_token
+            localStorage.setItem('humanityToken', JSON.stringify(response.data.access_token))
+          })
+          .catch(error => {
+            console.log(error)
+          })
+
+          .catch(err => this.setError(err))
+      })
     },
     navRreset: function() {
       router.push('/forgot')
     },
     getMessage: function() {
       return this.message
-    },
-  },
+    }
+  }
 }
 </script>
 
