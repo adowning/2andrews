@@ -33,4 +33,4 @@ const awsmobile = {
     'aws_user_pools_web_client_id': '72pmbieu5hu95fgt21up8ecem1',
 }
 
-export default awsmobile;
+export default awsmobile

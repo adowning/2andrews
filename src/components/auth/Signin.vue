@@ -195,13 +195,13 @@ export default {
              this.$store.dispatch('authenticate', {
                 user: user
               })
-                 Auth.currentUserInfo()
-                .then(auser => {
-                 console.log(auser)
-                this.$store.dispatch('setAttributes', {
-                attributes: auser.attributes
-              })
-            })
+            //      Auth.currentUserInfo()
+            //     .then(auser => {
+            //      console.log(auser)
+            //     this.$store.dispatch('setAttributes', {
+            //     attributes: auser.attributes
+            //   })
+            // })
             .catch(err => this.setError(err))
         })
     },

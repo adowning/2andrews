@@ -22,6 +22,7 @@ const store = new Vuex.Store({
     user: null,
     userId: null,
     attributes: null,
+    isAuthenticated: null,
   },
 
   getters: {
@@ -29,10 +30,14 @@ const store = new Vuex.Store({
     user: state => state.user,
     userId: state => state.userId,
     attributes: state => state.attributes,
+    isAuthenticated: state => state.attributes,
   },
 
   mutations: {
     setUser: (state, user) => {
+      state.user = user
+    },
+    isAuthenticated: (state, user) => {
       state.user = user
     },
     setUserId: (state, userId) => {
@@ -59,14 +64,19 @@ const store = new Vuex.Store({
         name: 'login',
       })
     },
-    setAttributes: function (context, payload) {
-      context.commit('setAttributes', payload.attributes)
+    // setAttributes: function (context, payload) {
+    //   context.commit('setAttributes', payload.attributes)
+    //   router.push({
+    //     name: 'home',
+    //   })
+    // },
+    authenticate: function (context, payload) {
+      context.commit('setUser', payload.user)
+      context.commit('setIsAuthenticated', true)
+
       router.push({
         name: 'home',
       })
-    },
-    authenticate: function (context, payload) {
-      context.commit('setUser', payload.user)
     },
   },
   modules: {

@@ -1,0 +1,19 @@
+{
+  "include": [
+      "./src/**/*"
+    ],
+  "compilerOptions": {
+
+    "checkJs": false,
+    "target": "es6",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+        "paths": {
+            "components/*": [
+                "src/components/*"
+            ]
+        }
+  },
+  "exclude": ["node_modules"]
+}

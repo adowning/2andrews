@@ -80,6 +80,7 @@
 </template>
 <script>
 import moment from 'moment'
+
 // import {
 //   Auth,
 //   // Logger
@@ -130,10 +131,14 @@ export default {
         },
       ],
       items: [],
-    }
+    },
+    this.$store.state.cognitoUser.getUserAttributes
   },
 
   computed: {
+    attributes: function() {
+      return  this.$store.state.cognitoUser.getUserAttributes()
+    },
     user: function(){
         return this.$store.auth.getters.profile
     },
@@ -161,10 +166,25 @@ export default {
     //    this.request(0)
     //   }
     //   )
+    if(this.user){
+      this.getUserAttributes()
+    }
 this.request(0)
     // this.getClockStatus()
   },
   methods: {
+    getAttributes(){
+        this.$http
+        // eslint-disable-next-line
+        .get(process.env.LAMBDA_API + '/getTimeClocks', {
+          params: {
+            start_date: this.startEndDates.start_date,
+            end_date: this.startEndDates.end_date,
+            employee: this.$store.getters.attributes['custom:humanity'],
+            token: this.$ht,
+          },
+        })
+    },
         request() {
       this.items = []
       this.loading = true

@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <template v-if="!isAuthenticated">
+    <template v-if="isAuthenticated">
       <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet"> -->
-      <v-navigation-drawer :v-if="isAuthenticated" :mini-variant="miniVariant" v-model="drawer" mobile-break-point="964" width="250" class="blue-grey darken-4" dark persistent fixed app>
+      <v-navigation-drawer :mini-variant="miniVariant" v-model="drawer" mobile-break-point="964" width="250" class="blue-grey darken-4" dark persistent fixed app>
         <v-toolbar flat class="transparent" dense>
           <v-list :class="{'list-border-bottom' : miniVariant}" class="pa-0">
             <v-list-tile>
@@ -240,7 +240,6 @@ export default {
     drawer: true,
     rightDrawer: false,
     searching: false,
-    isAuthenticated: false,
     search: '',
     right: '',
     attributes: {},
@@ -323,11 +322,15 @@ export default {
   computed: {
         user: function() {
       return this.$store.getters.user
+    },
+        isAuthenticated: function() {
+      return this.$store.getters.isAuthenticated
     }
   },
   mounted: function() {
+    if(this.isAuthenticated){
        this.getPhoto()
-
+    }
   },
   methods: {
     getPhoto: function() {
