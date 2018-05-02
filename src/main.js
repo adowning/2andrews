@@ -56,17 +56,9 @@ Auth.currentUserInfo()
   .then(user => logger.info(user.attributes['custom:humanity']))
   .catch(err => logger.info(err))
 
-Vue.prototype.$ht = {}
+// Vue.prototype.$ht = {}
 
-axios
-  // eslint-disable-next-line
-  .get(process.env.LAMBDA_API + '/initHumanity')
-  .then(response => {
-    Vue.prototype.$ht = response.data.access_token
-  })
-  .catch(error => {
-    console.log(error)
-  })
+
 
 Vue.use(VueAxios, axios) // Ensure you are using css-loader
 Vue.use(Vuetify, {

@@ -3,7 +3,8 @@ import axios from "axios"
 export function handler(event, context, callback) {
   let config = {
     headers: {
-      'Content-type': 'x-www-form-urlencoded'
+      'Content-type': 'x-www-form-urlencoded',
+
     }
   };
 
@@ -22,6 +23,7 @@ export function handler(event, context, callback) {
     "data": creds,
     "headers": {
       // "content-type": "x-www-form-urlencoded"
+
     }
   }).then(result => {
     var cache = [];

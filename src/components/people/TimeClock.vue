@@ -221,7 +221,7 @@ export default {
           params: {
             // id: this.user.attributes['custom:humanity'],
             id: localStorage.getItem('humanityToken'),
-            token: this.$ht
+            token: localStorage.getItem('humanityToken')
           }
         })
         .then(response => {
@@ -277,7 +277,7 @@ export default {
         .get(process.env.LAMBDA_API + '/addNote', {
           params: {
             id: this.timeSheetID,
-            token: this.$ht
+            token: localStorage.getItem('humanityToken')
           }
         })
         .then(response => {
